@@ -145,4 +145,12 @@ class ItemsTable extends Table
                     ->execute();
     }
 
+    public function countFeatured()
+    {
+        return $this->find()
+                    ->contain(['Brands', 'Images'])
+                    ->where(['featured_flag' => 1])
+                    ->toArray();
+    }
+
 }

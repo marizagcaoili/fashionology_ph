@@ -772,6 +772,21 @@ class CatalogController extends Controller
         $this->render('test');
     }
 
+
+    public function countFeatured()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $item = TableRegistry::get('Items');
+        //$add = $brand->query();
+
+        $size = sizeof($item-> countFeatured());
+       
+        echo json_encode($size);      
+        exit();
+    }
+
     //pages/>
 
     //display
