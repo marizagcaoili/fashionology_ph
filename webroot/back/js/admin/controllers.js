@@ -723,7 +723,7 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 	EditItem.init = function() {
 		// Init functions / source
 		EditItem.parameter();
-	
+		EditItem.parents();
 
 	};
 
@@ -749,14 +749,62 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 				params : { item_id : item_id }
 			}).then(function(response) {
 				$scope.details = response.data.item[0];
-				$scope.top_category = response.data.top_parent_category;
-				$scope.parent_category = response.data.parent_category;
-				$scope.selectedBrand = response.data.item[0].brand_id;
+				$scope.gender = response.data.item[0].gender;
+				$scope.brand = response.data.item[0].brand_id;
+				$scope.code_item = response.data.item[0].item_code;
+				$scope.category_id = response.data.item[0].category_id;
+				$scope.parent_id = response.data.item[0].category.parent_id;
+	
 
-				console.log($scope.selectedBrand);
+				console.log($scope.details);
 
+
+
+				angular.forEach($scope.genders, function(value, key) {
+			  	if($scope.gender == value.gender_id) {
+			  	$scope.selectedGender = value;
+					}
+				});
+
+
+				angular.forEach($scope.brands, function(value, key) {
+			  	if($scope.brand == value.brand_id) {
+			  	$scope.selectedBrand = value;
+			  	$scope.brand_prefix = value.brand_prefix;
+					}
+				});
+
+				angular.forEach($scope.parents, function(value, key) {
+			  	if($scope.parent_id == value.category_id) {
+			  	$scope.selectedCategory = value;
+					}
+				});
+
+
+				EditItem.category($scope.parent_id);
+
+
+			  	$scope.item_code = $scope.code_item.replace($scope.brand_prefix,"");
 				$('#summernote').summernote('code', $scope.details.item_description);
 			});
+		});
+	};
+
+	EditItem.category = function (parent_id)
+	{
+
+		$http.get("/admin/catalog/second_category",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { parent_id : parent_id }
+		}).then(function(response){
+			$scope.categories = response.data;
+			
+				angular.forEach($scope.categories, function(value, key) {
+			  	if($scope.category_id == value.category_id) {
+			  	$scope.selectedCategory2 = value;
+					}
+				});
 		});
 	};
 
@@ -768,8 +816,16 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 		}).then(function(response) {
 			$scope.prefixes = response.data;
 		})
+
 	};
 	
+
+	EditItem.parents= function() {
+		$http.get("/admin/catalog/get_parents")
+		    .then(function(response) {
+		        $scope.parents = response.data;
+		    });
+	};
 
 	// EditItem.secondCategory = function (category_id){
 	// 	console.log(angular.element('#categoryid').val());
@@ -787,9 +843,14 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 
 	EditItem.init();
 
-	 	$scope.getPrefix = function() {
+	 $scope.getPrefix = function() {
 		var brand_id = $scope.selectedBrand.brand_id;
 		EditItem.prefix(brand_id);
+		$('#category2').val('');
+	};
+
+	$scope.secondCategory = function(){
+		EditItem.category($scope.selectedCategory.category_id);
 	};
 
 }]);

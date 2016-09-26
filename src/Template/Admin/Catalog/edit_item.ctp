@@ -81,10 +81,10 @@
                         <label for="item-code" class="col-xs-3 col-form-label">Item Code</label>
                       
                          <div class="input-group col-xs-9">
-                              <input type="hidden" name="brand_prefix" id="brandPrefix" ng-repeat="prefix in prefixes" class="form-control" value={{prefix.brand_prefix}}>
+                              <input type="hidden" name="brand_prefix" id="brandPrefix" ng-repeat="prefix in prefixes" class="form-control" value='brand_prefix'>
 
-                              <span class="input-group-addon" ng-repeat="prefix in prefixes">{{prefix.brand_prefix}}</span>
-                              <input type="text" name="item_code" id="itemCode" class="form-control" placeholder="Item Code" value= {{details.item_code}} aria-describedby="item-code" >
+                              <span class="input-group-addon">{{brand_prefix}}</span>
+                              <input type="text" name="item_code" id="itemCode" class="form-control" placeholder="Item Code" value= '{{item_code}}' aria-describedby="item-code" >
                           </div>
                       </div>
 
@@ -104,10 +104,10 @@
                                 <div class="form-group row">
                                     <label for="category" class="col-xs-3 col-form-label">Category</label>
                                        <div class="input-group col-xs-9">
-                                            <select id="category1" class="form-control" ng-model="selectedCategory" ng-options="firstCategory as firstCategory.category_name for firstCategory in firstCategories track by firstCategory.category_id" ng-change="firstCategory()"  aria-describedby="category">
+                                          <select id="category1" class="form-control" ng-model="selectedCategory" ng-options="parent as parent.category_name for parent in parents track by parent.category_id" ng-change="secondCategory()"  aria-describedby="category">
                                             </select><BR></BR>
                                           
-                                             <select id="category2" class="form-control" ng-model="selectedCategory2" ng-options="secondCategory as secondCategory.category_name for secondCategory in secondCategories track by secondCategory.category_id" ng-change="secondCategory()"  aria-describedby="category">
+                                             <select id="category2" class="form-control" ng-model="selectedCategory2" ng-options="category as category.category_name for category in categories track by category.category_id" aria-describedby="category">
                                             </select> <BR></BR>
                                         </div>
                                 </div>
