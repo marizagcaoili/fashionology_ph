@@ -34,6 +34,8 @@ class CatalogController extends Controller
     public function initialize()
     {
         parent::initialize();
+
+        date_default_timezone_set('Asia/Manila');
     }
 
     public function items()
@@ -107,9 +109,12 @@ class CatalogController extends Controller
         $desc = $this->request->data('desc');
         $categoryid = $this->request->data('categoryid');
         $sizes = $this->request->data('sizes');
+        $gender = $this->request->data('gender');
+
+        $date = date('Y-m-d H:i:s');
 
 
-        $result = $item->insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes);
+        $result = $item->insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date);
 
         $id = $result->lastInsertId('Items');
         echo json_encode($id);      

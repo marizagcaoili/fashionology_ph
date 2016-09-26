@@ -36,11 +36,11 @@ class ItemsTable extends Table
     }
 
     
-     public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes)
+     public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date)
     {
         return $this->query()
-        ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes'])
-        ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes])
+        ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes', 'gender','item_created'])
+        ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender, 'item_created' => $date])
         ->execute();
     }
 

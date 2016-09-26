@@ -69,56 +69,58 @@
                     <br>
 
                     <div class="box-body">
+                   <i style="position:absolute; right:50px; font-size:17px;"><label style="color:red;">*</label>Fields Required </i>
+                                             <fieldset>
+                          <legend><h4>Details</h4></legend>
                      <div class="row">
                      <div class="col-xs-6">
 
-                     <div class="form-group">
-
-                     <div class="form-group row">
-                        <label for="item-code" class="col-xs-3 col-form-label">Item Code</label>
-                      
-                         <div class="input-group col-xs-9">
-                              <input type="hidden" name="brand_prefix" id="brandPrefix" ng-repeat="prefix in prefixes" class="form-control" value={{prefix.brand_prefix}}>
-
-                              <span class="input-group-addon" ng-repeat="prefix in prefixes">{{prefix.brand_prefix}}</span>
-                              <input type="text" name="item_code" id="itemCode" class="form-control" placeholder="Item Code" aria-describedby="item-code">
-                          </div>
-                      </div>
-
+                    <div class="form-group">
                       <div class="form-group row">
-                          <label for="brand" class="col-xs-3 col-form-label">Brand</label>
+                          <label for="brand" class="col-xs-3 col-form-label">Brand<label style="color:red">*</label></label>
                            <div class="input-group col-xs-9">
                                 <select name= "brand" id="brand" ng-model="selectedBrand" ng-options="brand as brand.brand_name for brand in brands track by brand.brand_id" class="form-control" ng-change="getPrefix()" placeholder="Brand"  aria-describedby="brand">
                                 </select>
                             </div>
                       </div>
+                      
+                     <div class="form-group row">
+                        <label for="item-code" class="col-xs-3 col-form-label">Item Code<label style="color:red">*</label></label>
+                      
+                         <div class="input-group col-xs-9">
+                              <input type="hidden" name="brand_prefix" id="brandPrefix" ng-repeat="prefix in prefixes" class="form-control" value={{prefix.brand_prefix}}>
+
+                              <span class="input-group-addon" ng-repeat="prefix in prefixes">{{prefix.brand_prefix}}</span>
+                              <input  style="text-transform: uppercase;" type="text" name="item_code" id="itemCode" class="form-control" placeholder="Item Code" aria-describedby="item-code">
+                          </div>
+                      </div>
+
+
                       </div>
                     
                       </div> <!-- column1 -->
 
                          <div class="col-xs-6">
 
-<!-- 
-                            <div class="form-group row">
-                                <label for="status" class="col-xs-3 col-form-label">Status</label>  
-                                <div class="input-group col-xs-9">
-                                  <select name="status" id= "status" class="form-control" aria-describedby="status">
-                                  <option value="1">Enabled</option>
-                                  <option value="0">Disabled</option>
-                                  </select>
-                                </div>   
-                      
-                            </div>
- -->                        </div> <!-- column2 -->
+                                <div class="form-group row">
+                                    <label for="category" class="col-xs-3 col-form-label">Category<label style="color:red">*</label></label>
+                                       <div class="input-group col-xs-9">
+                                            <select id="category1" class="form-control" ng-model="selectedCategory" ng-options="firstCategory as firstCategory.category_name for firstCategory in firstCategories track by firstCategory.category_id" ng-change="firstCategory()"  aria-describedby="category">
+                                            </select><BR></BR>
+                                          
+                                             <select id="category2" class="form-control" ng-model="selectedCategory2" ng-options="secondCategory as secondCategory.category_name for secondCategory in secondCategories track by secondCategory.category_id" ng-change="secondCategory()"  aria-describedby="category">
+                                            </select> <BR></BR>
+                                        </div>
+                                </div>
+
+                       </div> <!-- column2 -->
 
                       </div><!-- row1 -->
 
-                        <fieldset class="form-group">
-                          <legend><h4>Details</h4></legend>
                           <div class="row">
                             <div class="col-xs-6">
                               <div class="form-group row">
-                                  <label for="item-name" class="col-xs-3 col-form-label">Item Name</label>   
+                                  <label for="item-name" class="col-xs-3 col-form-label">Item Name<label style="color:red">*</label></label>   
                                    <div class="input-group col-xs-9">
             
                                         <input name="item_name" id="itemName" type="text" class="form-control" placeholder="Item Name" aria-describedby="item-code">
@@ -127,7 +129,7 @@
 
 
                                   <div class="form-group row">
-                                    <label for="brand" class="col-xs-3 col-form-label">SRP</label>
+                                    <label for="brand" class="col-xs-3 col-form-label">SRP<label style="color:red">*</label></label>
                                      <div class="input-group col-xs-9">
                                           <span class="input-group-addon" id="double">PHP</span>
                                           <input name= "srp" id="srp" type="number" class="form-control" placeholder="SRP" aria-describedby="double">
@@ -138,16 +140,11 @@
 
                               <div class="col-xs-6">
                                 <div class="form-group row">
-                                    <label for="category" class="col-xs-3 col-form-label">Category</label>
+                               <label class="col-xs-3 col-form-label">Gender</label>
                                        <div class="input-group col-xs-9">
-                                            <select id="category1" class="form-control" ng-model="selectedCategory" ng-options="firstCategory as firstCategory.category_name for firstCategory in firstCategories track by firstCategory.category_id" ng-change="firstCategory()"  aria-describedby="category">
+                                            <select id="gender" class="form-control" ng-model="selectedGender" ng-options="gender as gender.gender_name for gender in genders track by gender.gender_id" ng-change="getGender()"  aria-describedby="category">
                                             </select><BR></BR>
-                                          
-                                             <select id="category2" class="form-control" ng-model="selectedCategory2" ng-options="secondCategory as secondCategory.category_name for secondCategory in secondCategories track by secondCategory.category_id" ng-change="secondCategory()"  aria-describedby="category">
-                                            </select> <BR></BR>
                                         </div>
-                                </div>
-
                               </div>
                             </div>
 
@@ -158,7 +155,7 @@
 
                               <div class="row">
                                   
-                                  <label for="item-name" class="col-xs-2 col-form-label">Item Description</label>   
+                                  <label for="item-name" class="col-xs-2 col-form-label">Item Description<label style="color:red">*</label></label>   
                                     <div class="col-xs-10">
                                      <textarea name="description" id="summernote"></textarea>
                                     </div>
@@ -167,7 +164,7 @@
 
                                 <div class="form-group row">
                                   
-                                  <label class="col-xs-2 col-form-label">Sizes</label>   
+                                  <label class="col-xs-2 col-form-label">Sizes<label style="color:red">*</label></label>   
                                     <div ng-repeat ="size in sizes" class="col-xs-2">
                                        <input style= "display:inline-block; margin-right: 2%;" type="checkbox" checklist-model="selected.sizes" checklist-value="size.size_id"><strong>{{size.size_key}}</strong> 
                                     </div>
@@ -208,7 +205,7 @@
                                         <tr>
                                           <td>
                                           Photo
-                                      <input type="file" ngf-select ng-model="picFile" name="file"    
+                                      <input type="file" ngf-select ng-model="picFile" id="picFile" name="file"    
                                              accept="image/*" ngf-max-size="2MB" required
                                              ngf-model-invalid="errorFile">
                                       <i ng-show="myForm.file.$error.required">*required</i><br></td>
@@ -216,7 +213,7 @@
                                           <td>
                                           <i ng-show="myForm.userName.$error.required">*required</i>
                                           Description <br>
-                                          <input type="text" name="userName" ng-model="username" size="31" required></td>
+                                          <input type="text" name="userName" ng-model="username" id ="image_desc" size="31" required></td>
 
                                           <td>
                                           <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> 
@@ -225,7 +222,7 @@
 
                                           <td colspan="20%"> 
                                           <button ng-click="picFile = null" ng-show="picFile"  data-toggle="tooltip" data-placement="bottom" title="Remove Image" class="btn btn-flat"><i class="fa fa-trash-o"></i></button>
-                                            <button id="uploadButton" ng-click="uploadPic(picFile)" data-toggle="tooltip" title="Upload Image" data-placement="bottom" class="btn btn-flat "><i class="fa fa-upload"></i>
+                                            <button style="display: none;" id="uploadButton" ng-click="uploadPic(picFile)" data-toggle="tooltip" title="Upload Image" data-placement="bottom" class="btn btn-flat "><i class="fa fa-upload"></i>
                                             </button>
                                             <span class="progress" ng-show="picFile.progress >= 0">
                                             <div style="width:{{picFile.progress}}%" 

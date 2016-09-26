@@ -2,8 +2,6 @@
 return [
     /**
      * Debug Level:
-
-
      *
      * Production Mode:
      * false: No error messages, errors, or warnings shown.
@@ -237,7 +235,7 @@ return [
             'password' => '',
             'database' => 'fashiono',
             'encoding' => 'utf8',
-            'timezone' => 'UTC',
+            'timezone' => '',
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
@@ -277,7 +275,7 @@ return [
         'password' => '',
         'database' => 'fashiono',
         'encoding' => 'utf8',
-        'timezone' => 'UTC',
+        'timezone' => '',
         'cacheMetadata' => true,
         'quoteIdentifiers' => false,
         'log' => false,
