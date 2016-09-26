@@ -12,7 +12,7 @@ class AccountsTable extends Table
 
     $this->table('tbl_account');
 
-    $this->belongsTo('Shippings');
+    $this->hasOne('Shippings');
 
   }
 

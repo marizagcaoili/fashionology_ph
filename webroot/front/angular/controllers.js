@@ -881,6 +881,8 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 
 						console.log($scope.cart_items_quantity);
 
+						location.href='/';
+
 						$http({
 							url : "/api/placeorder",
 							method: "POST",
@@ -893,6 +895,7 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 							},
 							data : 	{
 					  grandtotal:$scope.total,shipping_id:$scope.shipping_id,item_id:$scope.item_id,order_payment_method:$scope.PaymentMethod,account_id:$scope.userId,order_reference_number: $scope.reference} // Data to be passed to API
+
 					}
 					).then(function(response){
 
