@@ -36,6 +36,16 @@ class ItemsTable extends Table
         ->toArray();
     }
 
+    public function getRecentItemList()
+    {
+        // Query
+        return $this->find()
+        ->contain(['Images'])
+        ->order('item_created DESC')
+        ->limit(3)
+        ->toArray();
+    }
+
     public function getCategorized($category)
     {
         // Query
@@ -60,6 +70,27 @@ class ItemsTable extends Table
         ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes', 'gender','item_created'])
         ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender, 'item_created' => $date])
         ->execute();
+    }
+
+    public function getItemListByGender($gender)
+    {
+        switch ($gender) {
+            case 'men':
+                $gid = 1;
+                break;
+            case 'women':
+                $gid = 2;
+                break;
+            default:
+                $gid = 0;
+                break;
+        }
+
+        // Query
+        return $this->find()
+        ->contain(['Brands', 'Images'])
+        ->where(['gender' => $gid])
+        ->toArray();
     }
 
     public function getDetails($item_id)

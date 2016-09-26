@@ -17,7 +17,9 @@ app.directive('ngElevateZoom', function() {
 app.filter('startFrom', function() {
 	return function(input, start) {
         start = +start; //parse to int
-        return input.slice(start);
+        if (input != undefined) {
+        	return input.slice(start);	
+        }
     }
 });
 
@@ -28,6 +30,7 @@ angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $ht
 	RootManager.Init = function() {
 		RootManager.SetCartInfo();
 		RootManager.SetUserInfo();
+		RootManager.SetAuthCookies();
 	};
 
 	RootManager.SetCartInfo = function() {
@@ -65,6 +68,12 @@ angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $ht
 		}
 	};
 
+	RootManager.SetAuthCookies = function() {
+		if ($cookies.get('f_token') != undefined && $cookies.get('f_account_id')) {
+			$rootScope.authCookies = {f_token : $cookies.get('f_token'), f_account_id : $cookies.get('f_account_id')}
+		}
+	}
+
 	// rootScope functions
 	$rootScope.logout = function() {
 		$cookies.remove('f_token');
@@ -72,6 +81,15 @@ angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $ht
 		$cookies.remove('cart_items');
 		$cookies.remove('cart_items_quantity');
 		location.reload();
+	}
+
+	$rootScope.addAuthCookies = function(params) {
+		if ($rootScope.authCookies != undefined) {
+			params.f_token = $rootScope.authCookies.f_token;
+			params.f_account_id = $rootScope.authCookies.f_account_id;	
+		}
+
+		return params;
 	}
 
 	RootManager.Init();
@@ -104,7 +122,6 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 			params : { mode : "new" }
 		}).then(function(response) {
 			$scope.new_items = response.data;
-			console.log($scope.new_items);
 		});
 	};
 
@@ -113,44 +130,76 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 // -- END : HomeController -- //
 
 // -- START : ClothingController  -- //
-app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore) {
-	var ClothingController ={};
+app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore, $rootScope) {
+	var ClothingController = {};
 
 	ClothingController.init = function(){
 		ClothingController.getId();
+		ClothingController.getRecentItems();
 	}
 
-	ClothingController.getId= function(){
-		$scope.category_id=$location.search().category_id;
+	ClothingController.getId = function(){
+		$scope.category_id = $location.search().category_id;
 		$scope.brand_id = $location.search().brand_id;
-		if(($scope.category_id==undefined) && ($scope.brand_id==undefined))
-		{
+		$scope.gender = $location.search().mode;
+
+		if (($scope.category_id == undefined) && ($scope.brand_id == undefined) && ($scope.gender == undefined)) {
 			ClothingController.items();
-		}
-		else if ($scope.category_id !=undefined)
-		{
+		} else if ($scope.category_id !=undefined) {
 			ClothingController.getChildCategories($scope.category_id);
-		}
-		else
-		{
-			console.log($scope.brand_id);
+		} else if ($scope.gender != undefined && ($scope.gender == 'men' || $scope.gender == 'women')) {
+			ClothingController.getItemsByGender($scope.gender);
+		} else {
 			ClothingController.getItemsByBrand($scope.brand_id);
 		}
-
 	}
 
-	ClothingController.getItemsByBrand = function(brand_id){
-		$http.get("/admin/catalog/items_by_brand",
+	ClothingController.getRecentItems = function() {
+		$http.get("/admin/catalog/get_items",
 		{
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			params : { brand_id : brand_id }
+			params : { mode : 'recent'}
+		}).then(function(response) {
+			$scope.recent_items = response.data;
+		});	
+	}
+
+	ClothingController.getItemsByGender = function(gender) {
+		var params = $rootScope.addAuthCookies({ mode : 'gender', gender : gender });
+
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : params
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.currentPage = 0;
+				$scope.items = response.data;
+				$scope.pageSize = 12;
+				$scope.pagedItems = [];
+
+				$scope.numberOfPages = function(){
+					return Math.ceil($scope.items.length / $scope.pageSize);                
+				}
+
+				$scope.pages = $scope.items.length;
+			});
+		});	
+	};
+
+	ClothingController.getItemsByBrand = function(brand_id){
+		var params = $rootScope.addAuthCookies({ mode: 'brand', brand_id : brand_id });
+
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : params
 		}).then(function(response) {
 			$timeout(function () {
 				$scope.currentPage = 0;
 				$scope.items=response.data;
 				$scope.pageSize = 12;
 				$scope.pagedItems = [];
-
 
 				$scope.numberOfPages=function(){
 					return Math.ceil($scope.items.length/$scope.pageSize);                
@@ -174,11 +223,14 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 
 					$scope.childs[i]=$scope.categories[i].category_id;
 				}
+
 				var json = JSON.stringify($scope.childs);
-				console.log($scope.childs);
-				$http.get("/admin/catalog/items_by_category",
+
+				var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
+
+				$http.get("/admin/catalog/get_items",
 				{
-					params : { categories : json}
+					params : params
 				})
 				.then(function(response) {
 					console.log(response.data);
@@ -193,11 +245,9 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 
 					$scope.pages=$scope.items.length;
 				});
-
 			});
 		});
 	}
-
 
 	ClothingController.items = function(){
 		$scope.f_account_id=$cookies.get('f_account_id');
@@ -220,10 +270,8 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 			$scope.pageSize = 12;
 			$scope.pagedItems = [];
 
-
 			$scope.numberOfPages=function(){
-				return Math.ceil($scope.items.length/$scope.pageSize);                
-
+				return Math.ceil($scope.items.length/$scope.pageSize);
 			}
 
 			$scope.pages=$scope.items.length;
@@ -251,15 +299,13 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		 				return str.join("&");
 		 			},
 		 			data:{account_id:$scope.userId,item_id:item_id}
-		 		}).then(function(response){
-		 			console.log(response.data);
-		 		})
+		 		}).then(function(response){})
 		 	} else {
 		 		// API CALL to remove from wish list
 		 		$($event.target).attr('class', 'fa fa-heart-o');	
 		 	}
 		} else {
-			alert('Login First!');
+			$('.lognowin li').trigger('click');
 		}
 	}
 

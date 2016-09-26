@@ -77,52 +77,39 @@ class LoginController extends AppController
        exit();
   }
 
- public function getAuthentication()
- {
+   public function getAuthentication()
+   {
+       $this->autoRender = false;
+       header('Content-Type: application/json');
 
+       $f_token = $this->request->data('f_token');
 
-     $this->autoRender = false;
-     header('Content-Type: application/json');
+       $f_account_id = $this->request->data('f_account_id');
 
-     $f_token=$this->request->data('f_token');
+       $sessionDatas = TableRegistry::get('Sessions');
 
-     $f_account_id=$this->request->data('f_account_id');
+       $result = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
 
+       echo json_encode($result);
 
+       exit();
+   }
 
-     $sessionDatas=TableRegistry::get('Sessions');
+   public function fetchUserData()
+   {
+      //disable ui rendering
+      $this->autoRender = false;
 
-     $result=$sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
+      header('Content-Type: application/json');
 
+      $f_account_id=$this->request->data('f_account_id');
+      $users = TableRegistry::get('Accounts'); // Create Table Object
 
-     echo json_encode($result);
+      $result = $users->fetchUserData($f_account_id);
 
+      echo json_encode($result);
 
-
-     exit();
-
- }
-
- public function fetchUserData()
- {
-
-
-        //disable ui rendering
-    $this->autoRender = false;
-
-    header('Content-Type: application/json');
-
-
-    $f_account_id=$this->request->data('f_account_id');
-        $users = TableRegistry::get('Accounts'); // Create Table Object
-
-        $result = $users->fetchUserData($f_account_id);
-
-        echo json_encode($result);
-
-        exit();
-
-
+      exit();
     }
 
     public function destroySession()

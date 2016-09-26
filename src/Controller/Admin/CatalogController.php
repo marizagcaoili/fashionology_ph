@@ -73,9 +73,53 @@ class CatalogController extends Controller
             case 'new': // New In
                 $result = $items->getNewItemList();
                 break;
+            case 'recent' :
+                $result = $items->getRecentItemList();
+                break;
+            case 'gender' :
+                $result = $items->getItemListByGender($this->request->query('gender'));
+                break;
+            case 'brand':
+                $result = $items->itemsByBrand($this->request->query('brand_id'));
+                break;
+            case 'category':
+                $result = $items->itemsByCategory(json_decode($this->request->query('category')));
             default: // Default list
                 $result = $items->getItemList();
                 break;
+        }
+
+        //Default value wished to false
+        foreach ($result as $key => $item) {
+            $result[$key]['wished'] = false;
+        }
+
+
+        // Authenticated user
+        $f_token = $this->request->query('f_token');
+        $f_account_id = $this->request->query('f_account_id');
+
+        if (isset($f_token) && isset($f_account_id)) {
+            $sessionDatas = TableRegistry::get('Sessions');
+            $session = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
+
+            if (sizeof($session)) {
+                $item = TableRegistry::get('Wishlist');
+                $wishlist = $item->showWishlist($f_account_id);
+
+                $wishlist_arr = array();
+                foreach ($wishlist as $value) {
+                    $wishlist_arr[] = $value['item_id'];
+                }
+
+                foreach ($result as $key => $item) {
+                    if (in_array($item['item_id'], $wishlist_arr)) {
+                        $result[$key]['wished'] = true;
+                    } else {
+                        $result[$key]['wished'] = false;
+                    }
+                }
+            }
         }
 
         echo json_encode($result);
@@ -101,7 +145,6 @@ class CatalogController extends Controller
     
     public function addItem()
     {
-
         $this->autoRender = false;
         header('Content-Type: application/json');
 
@@ -118,7 +161,6 @@ class CatalogController extends Controller
         $gender = $this->request->data('gender');
 
         $date = date('Y-m-d H:i:s');
-
 
         $result = $item->insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date);
 
@@ -211,40 +253,6 @@ class CatalogController extends Controller
         echo json_encode($result);
         exit();
     }
-
-    public function itemsByCategory()
-    {
-        //disable ui rendering
-        $this->autoRender = false;
-        header('Content-Type: application/json');
-
-        $item = TableRegistry::get('Items');
-
-        $categories = json_decode($this->request->query('categories'));
-
-        $result= $item->itemsByCategory($categories);
-
-        echo json_encode($result);
-        exit();
-    }
-
-
-    public function itemsByBrand()
-    {
-        //disable ui rendering
-        $this->autoRender = false;
-        header('Content-Type: application/json');
-
-        $item = TableRegistry::get('Items');
-
-        $brand_id = $this->request->query('brand_id');
-
-        $result= $item->itemsByBrand($brand_id);
-
-        echo json_encode($result);
-        exit();
-    }
-
 
     public function getParents()
     {

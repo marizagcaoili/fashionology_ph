@@ -22,7 +22,6 @@ class SessionsTable extends Table
 
     public function retrieveSessionData($account_id,$session_type,$session_token)
     {
-
         return $this->find()
         ->where(['account_id' => $account_id,'session_type'=>$session_type,'session_token'=>$session_token,'session_status'=>'0'])
         ->toArray();

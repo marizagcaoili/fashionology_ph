@@ -15,7 +15,7 @@
 
 				<div class='category-list'>
 					<ul>
-						<li ng-repeat= "parent in parents"><a href='/clothing?category_id={{parent.category_id}}'>{{parent.category_name}}</a>
+						<li ng-repeat= "parent in parents"><a href='/clothing?mode=category&category_id={{parent.category_id}}'>{{parent.category_name}}</a>
 						</li>
 					</ul>
 
@@ -37,7 +37,7 @@
 
 				<div class='category-list'>
 					<ul>
-					<li ng-repeat= "brand in brands"><a href='/clothing?brand_id={{brand.brand_id}}'>{{brand.brand_name}}</a>
+					<li ng-repeat= "brand in brands"><a href='/clothing?mode=brand&brand_id={{brand.brand_id}}'>{{brand.brand_name}}</a>
 						</li>
 					</ul>
 
