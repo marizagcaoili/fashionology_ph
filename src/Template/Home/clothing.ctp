@@ -80,8 +80,6 @@
                      <a  class="count-cart" style="position:absolute;
                         font-size:8px;
                         padding: 4px 8px;
-                        margin-top: -18px;
-                        margin-left: 240px;
                         border-radius:50%;
                         background: #e74c3c;" ng-if='cart_items_count>0'>
                         <li>{{cart_items_count}}</li>
@@ -125,11 +123,10 @@
                         <p class="found-count"><span style="color:#a60400;">00{{pages}}</span> PRODUCTS FOUND.</p>
                         <select class="form-control select-sort" style="width:110px;margin-top: -24px;
                            margin-left: 20px;" >
-                           <option value="one">sort by</option>
-                           <option value="two">Popularity</option>
-                           <option value="three">Most liked</option>
-                           <option value="four">A-Z</option>
-                           <option value="five">Z-A</option>
+                           <option value="">sort by</option>
+                           <option value="latest">Latest</option>
+                           <option value="name">Item Name</option>
+                           <option value="print">Price</option>
                         </select>
                         <div class="item-page">
                            <ul class="pagination pagination-info">

@@ -110,10 +110,8 @@
                <a class="count-cart" style="position:absolute;
                   font-size:8px;
                   padding: 4px 8px;
-                  margin-top: -18px;
-                  margin-left: 240px;
                   border-radius:50%;
-                  background: #e74c3c;" ng-if='cart_items_count>0'>
+                  background: #e74c3c;" ng-if='cart_items_count > 0'>
                   <li>{{cart_items_count}}</li>
                </a>
             </ul>

@@ -103,6 +103,8 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 	HomeManager.Init = function() {
 		HomeManager.GetFeaturedItems();
 		HomeManager.GetNewItems();
+
+		console.log($rootScope.cart_items_count);
 	};
 
 	HomeManager.GetFeaturedItems = function() {
@@ -128,6 +130,101 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 	HomeManager.Init();
 });
 // -- END : HomeController -- //
+
+// -- START : CartHomeController -- //
+app.controller('CartController',function($scope, $http, $cookies, $cookieStore, $rootScope) {
+	var CartManager = {};
+
+	CartManager.Init = function() {
+		$scope.total = 0;
+		CartManager.LoadOrderedItems();
+	}
+
+	CartManager.LoadOrderedItems = function () {
+		$http.get("/api/viewToCart")
+		.then(function(response) {
+			var items = [];
+			angular.forEach($rootScope.cart_items, function(item){
+				angular.forEach(response.data, function(data){
+					if(item == data.item_id) {
+						items.push(data);
+					}
+				});
+			});
+
+			$scope.items = items;
+		});
+	}
+
+	// Function scopes
+	$scope.add_quantity = function(item_id, item_quantity, item_price) {
+		if (item_quantity <= 99) {
+			angular.forEach($rootScope.cart_items, function(value, key) {
+				if (item_id === value) {
+					$rootScope.cart_items_quantity[key] = (item_quantity * 1) + 1;
+					$cookies.put('cart_items_quantity', JSON.stringify($rootScope.cart_items_quantity));
+					$scope.total += item_price; 
+				}
+			});
+		}
+	}
+
+	$scope.subtract_quantity = function(item_id, item_quantity, item_price){
+		if (item_quantity > 1) {
+			angular.forEach($rootScope.cart_items, function(value, key) {
+				if (item_id === value) {
+					$rootScope.cart_items_quantity[key] = (item_quantity * 1) - 1;
+					$cookies.put('cart_items_quantity', JSON.stringify($rootScope.cart_items_quantity));
+					$scope.total -= item_price;				
+				}
+			});
+		}
+	}
+
+	$scope.removeCart = function(item_id, cart_items_quantity, item_price) {
+		var cartQuantity = JSON.parse($cookies.get('cart_items_quantity')),
+		cartItems = JSON.parse($cookies.get('cart_items'));
+
+		var index = cartItems.indexOf(item_id);
+
+		console.log(index);
+
+		if (index >- 1) {
+			cartQuantity.splice(index, 1);
+			cartItems.splice(index, 1);
+
+			$cookies.put('cart_items_quantity', JSON.stringify(cartQuantity));		
+			$cookies.put('cart_items', JSON.stringify(cartItems));
+
+			$rootScope.cart_items_quantity = cartQuantity;
+			$rootScope.cart_items = cartItems;		
+
+			if (cartItems.length > 0) {
+				$http.get("/api/viewToCart")
+				.then(function(response) {
+					var items = [];
+					angular.forEach($rootScope.cart_items, function(item){
+						angular.forEach(response.data, function(data){
+							if(item == data.item_id) {
+								items.push(data);
+							}
+						});
+					});
+
+					$scope.items = items;
+					$scope.total -= cart_items_quantity * item_price;
+				});
+			} else {
+				$scope.items = [];
+				$scope.total = 0;
+			}
+			
+		}
+	}
+
+	CartManager.Init();
+});
+// -- END : CartHomeController -- //
 
 // -- START : ClothingController  -- //
 app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore, $rootScope) {
@@ -336,16 +433,16 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
 		}
 
-		$scope.cart_items = JSON.parse($cookies.get('cart_items'));
-		$scope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
+		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
+		$rootScope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
 
 		// Update cart
-		$scope.cart_items_count = cart.length;
+		$rootScope.cart_items_count = cart.length;
 
 		$http.get("/api/viewToCart")
 		.then(function(response) {
 			var items = [];
-			angular.forEach($scope.cart_items, function(item){
+			angular.forEach($rootScope.cart_items, function(item){
 				angular.forEach(response.data, function(data){
 					if(item == data.item_id) {
 						items.push(data);
@@ -363,7 +460,7 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 // -- END : ClothingController -- //
 
 // -- START : accountController -- //
-app.controller('accountController',function($scope,$http){
+app.controller('accountController',function($scope, $http, $rootScope){
 	var user={};
 
 	user.init=function(){};
@@ -496,70 +593,17 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore,$ro
 // -- END : LoginController -- //
 
 // -- START : testController -- //
-app.controller('testController', function($scope, $http, $cookies, $cookieStore) {
+app.controller('testController', function($scope, $http, $cookies, $cookieStore, $rootScope) {
 	$scope.secD = function() {
 		$scope.method = $cookies.get('method_payment');
 
 		if ($scope.method == null) {
 			alert('Please select payment method first!');
-		} else if ($scope.cart_items == null) {
+		} else if ($rootScope.cart_items == null) {
 			alert('no item placed!');
 		} else {
 			$('.sec-c').collapse('hide');
 		}
-	}
-
-	$scope.removeCart = function(item_id,cart_items_quantity) {
-		var cartQuantity = JSON.parse($cookies.get('cart_items_quantity')),
-		cartItems = JSON.parse($cookies.get('cart_items'));
-
-		var index = cartItems.indexOf(item_id);
-
-		if (index>-1 ) {
-			cartQuantity.splice(index,1);
-			cartItems.splice(index,1);
-
-			$cookies.put('cart_items_quantity', JSON.stringify(cartQuantity));		
-			$cookies.put('cart_items', JSON.stringify(cartItems));		
-
-			$http.get("/api/viewToCart")
-			.then(function(response) {
-				var items = [];
-				angular.forEach($scope.cart_items, function(item){
-					angular.forEach(response.data, function(data){
-						if(item == data.item_id) {
-							items.push(data);
-						}
-					});
-				});
-
-				$scope.item = items;
-			});
-		}
-	}
-
-	$scope.f_account_id = $cookies.get('f_account_id');
-
-	if ($scope.f_account_id != null) {
-		$('.signmeup').hide();
-		$('.lognowin').hide();
-
-		$('.userHi').show();
-		$('.getLog').show();
-
-		$('.welcome-user').show();
-		$('.logcheckoutin').hide();
-	}
-
-	if ($scope.f_account_id == null) {
-		$('.signmeup').show();
-		$('.lognowin').show();
-
-		$('.userHi').hide();
-		$('.getLog').hide();
-
-		$('.welcome-user').hide();
-		$('.logcheckoutin').show();
 	}
 
 	$scope.inquiry = function() {
@@ -768,8 +812,6 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 
 		$scope.PaymentMethod = $cookies.get('method_payment');
 
-		console.log($scope.cart_items_quantity);
-
 		$http({
 			url : "/api/placeorder",
 			method: "POST",
@@ -830,7 +872,7 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 
 			for (var i = $scope.item.length - 1; i >= 0; i--) {
 				var item_id = $scope.item[i].item_id;
-				var item_quantity = $scope.cart_items_quantity[i];
+				var item_quantity = $rootScope.cart_items_quantity[i];
 				$http({
 					url : "/order/add_ordered_item",
 					method: "POST",
@@ -875,48 +917,8 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 		$cookies.put('payment_method', 'Pick Up');
 	}
 
-	$scope.qtyminus = function(item_id) {
-		var txtVal = $('.quantity').val();
-		//set
-		var txtminus = (txtVal*1)-1;
-
-		$('.quantity').val((txtVal*1)-1);
-
-		angular.forEach($scope.cart_items, function(value, key) {
-			if (item_id === value) {
-				console.log(key);
-				$scope.cart_items_quantity[key] = txtminus;
-				$cookies.put('cart_items_quantity', JSON.stringify($scope.cart_items_quantity));
-			}
-		});
-	}
-
-	$scope.qtyplus = function(item_id){
-		console.log(item_id);
-		var txtVal = $('.quantity').val();
-		//set
-		var txtplus = (txtVal*1)+1;
-
-		$('.quantity').val((txtVal*1)+1);
-
-		angular.forEach($scope.cart_items, function(value, key) {
-			if (item_id === value) {
-				$scope.cart_items_quantity[key]=txtplus;
-				$cookies.put('cart_items_quantity', JSON.stringify($scope.cart_items_quantity));					
-			}
-		});
-	}
-
 	$scope.clothing=function(){
 		window.location='/clothing';
-	}
-
-	if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined) {
-		$scope.cart_items = JSON.parse($cookies.get('cart_items'));
-		$scope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
-		$scope.cart_items_count = $scope.cart_items.length;
-	} else {
-		$scope.cart_items_count = 0;
 	}
 
 	//controllers for ngclick
@@ -970,7 +972,7 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 // -- END : testController -- //
 
 // -- START : ItemDetailsController -- //
-app.controller('ItemDetailsController',['$location','$scope','$http','$timeout', '$cookies',  function($location,$scope,$http,$timeout,$cookies) {
+app.controller('ItemDetailsController',['$location','$scope','$http','$timeout', '$cookies',  function($location,$scope,$http,$timeout,$cookies,$rootScope) {
 
 
 	var ItemDetail = {};
@@ -1032,11 +1034,11 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 			$('.quantity').val((txtVal*1)-1);
 
 
-			angular.forEach($scope.cart_items, function(value, key) {
+			angular.forEach($rootScope.cart_items, function(value, key) {
 				if(item_id===value){
 					console.log(key);
-					$scope.cart_items_quantity[key]=txtminus;
-					$cookies.put('cart_items_quantity', JSON.stringify($scope.cart_items_quantity));
+					$rootScope.cart_items_quantity[key]=txtminus;
+					$cookies.put('cart_items_quantity', JSON.stringify($rootScope.cart_items_quantity));
 
 				}
 			});
@@ -1065,10 +1067,10 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 			$('.quantity').val((txtVal*1)+1);
 
 
-			angular.forEach($scope.cart_items, function(value, key) {
+			angular.forEach($rootScope.cart_items, function(value, key) {
 				if(item_id===value){
-					$scope.cart_items_quantity[key]=txtplus;
-					$cookies.put('cart_items_quantity', JSON.stringify($scope.cart_items_quantity));					}
+					$rootScope.cart_items_quantity[key]=txtplus;
+					$cookies.put('cart_items_quantity', JSON.stringify($rootScope.cart_items_quantity));					}
 				});
 		}
 	}
@@ -1102,16 +1104,16 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
 		}
 
-		$scope.cart_items = JSON.parse($cookies.get('cart_items'));
-		$scope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
+		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
+		$rootScope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
 
 		// Update cart
-		$scope.cart_items_count = cart.length;
+		$rootScope.cart_items_count = cart.length;
 
 		$http.get("/api/viewToCart")
 		.then(function(response) {
 			var items = [];
-			angular.forEach($scope.cart_items, function(item){
+			angular.forEach($rootScope.cart_items, function(item){
 				angular.forEach(response.data, function(data){
 					if(item == data.item_id) {
 						items.push(data);
@@ -1169,7 +1171,7 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 // -- END : ItemDetailsController -- //
 
 // -- START : CategoryBrandController -- //
-app.controller('CategoryBrandController',function($scope,$http){
+app.controller('CategoryBrandController',function($scope,$http,$rootScope){
 	var CategoryBrand = {};
 
 	CategoryBrand.init = function() {
