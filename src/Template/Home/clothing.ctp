@@ -62,8 +62,6 @@
 
 
 
-
-
    <header class="masthead">  
     <img src="/front/public/img/logo-black.png" class="logo" style='width:210px;'>
 
@@ -114,15 +112,43 @@
         <p class="indicator-by" style='display: none;'>Filter By <i class="fa fa-filter" aria-hidden="true"></i></p>
 
         <div class="filter-group">
+
+          <div class='filter-it-by'>
+            <div class='header-filters'>
+              <p>Filter By: Price</p>
+            </div>
+
+            <div class='filter-it-body'>
+
+            <select class='filter-select'>
+              <option>PHP 1200.00 - PHP 12000.00</option>
+            </select>
+
+            </div>
+          </div>
+
+          <div class='category-it-by' ng-controller='CategoryPrintController'>
+
+            <p class='category-top'>TOP CATEGORIES</p>
+
+           <script type="text/ng-template" id="categoryTree">
+           <p class='parent'>{{ parent.category_name }}</p>
+            <ul  ng-if="parent.categories">
+            <span><li ng-repeat="parent in parent.categories" ng-include="'categoryTree'" class='child'>   
+            </li></span>
+            </ul>
+          </script>
           <ul>
 
-            <li>Tops</li>
+            <li ng-repeat="parent in parents" ng-include="'categoryTree'" ></li>
+          </ul>    
 
-          </ul>
+          </div>
+
         </div>
 
         <div class="recent-group" >
-          <p class="indicator-by" style="top:16px;width:190px;">Recent Products</p>
+          <p class="indicator-by" style="width:190px;">Recent Products</p>
 
           <div class="recent-added-group">
             <ul class="recent-ul-added" >

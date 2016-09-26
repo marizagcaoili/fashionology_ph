@@ -252,12 +252,12 @@
 	margin-bottom:8px;
 	background: transparent;
 	border:1px solid;
-z-index:999;
+	z-index:999;
 
-&:hover{
-	background:#111;
-	color:#fff;
-}
+	&:hover{
+		background:#111;
+		color:#fff;
+	}
 }
 
 .cart-price{
@@ -387,12 +387,16 @@ z-index:999;
 	margin-bottom:20px;
 }
 
+/**sidebar styles**/
+
 .filter-group{
 	position:relative;
-	top:48px;
-	width:82%;
-	border:solid 1px #fff;
+	margin-top:90px;
+	width:88%;
+	height:auto;
 	float:right;
+	margin-right:6px;
+	margin-bottom:80px;
 
 	ul{
 		list-style: none;
@@ -400,6 +404,122 @@ z-index:999;
 		padding:0;
 	}
 }
+.filter-it-by{
+	height:auto;
+	background:#fff;
+}
+.child{
+	font-size:16px;
+	font-family:Moon;
+	background:#efefef;
+	transition:all 0.4s;
+	
+
+	&:hover{
+		background:#dddcdc;
+		cursor: pointer;
+	}
+}
+
+.parent{
+	margin:0;
+	padding-left:10px;
+	font-family:Moon;
+	font-size:18px;
+	padding-top:4px;
+	padding-bottom:4px;
+	border-bottom:1px solid #d7d7d7;
+
+}
+
+.category-top{
+	font-family:Moon;
+	font-size:20px;
+	font-weight:bold;
+	padding-bottom:10px;
+	padding-left:4px;
+	color:#333;
+}
+
+.category-it-by{
+	margin-top:60px;
+	height:auto;
+
+
+
+	ul:nth-child(1){
+		height: 420px;
+		a{
+			color:#111;
+		}
+		li{
+			height:auto;
+			margin:0;
+			padding:0;
+			color:#fff;
+			font-weight: bold;
+			transition:all 0.4s;
+			word-spacing:6px;
+			&:hover{
+				background:#d0d0d0;
+				cursor: pointer
+			}
+			ul{
+				position: relative;
+
+				// height: 40px;
+				margin:0;
+				padding: 0;
+
+				a{
+					font-family:Moon;
+				}
+
+				li{
+					padding-top:8px;
+					padding-left:10px;
+
+				}
+			}
+
+			p{
+				margin:0;
+				font-family: Moon;
+				font-size: 18px;
+				word-spacing: 4px;
+				padding-left:10px;
+				padding-top:2px;
+			}
+		}
+	}
+}
+.header-filters{
+	border-bottom:1px solid #f3f1f1;
+	height:42px;
+
+	p{
+		font-size:18px;
+		font-family: Moon;
+		padding-top:6px;
+		padding-left:10px;
+		font-weight: bold;
+	}
+}
+.filter-it-body{
+	height:110px;
+}
+.filter-select{
+	padding:10px 6px;
+	font-family:Moon;
+	font-weight:bold;
+	width:226px;
+	position: relative;
+	left:10px;
+	top:30px;
+}
+
+/**end of sidebar**/
+
 .label-tag{
 	font-family:Moon;		
 	font-size:16px;
