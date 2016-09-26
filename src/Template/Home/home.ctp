@@ -898,7 +898,7 @@
 			</section>
 
 
-			<section class='contact-us' style='display: none;'>
+			<section class='contact-us'>
 				<section class='contact-headline'>
 					<p>Get in Touch with Us!</p>
 					<p>The Fashionology PH would like to hear a concern from you. Provide the following details below.</p>
@@ -949,9 +949,6 @@
 						</section>
 
 
-					</section>
-
-					<section class='contact-flex'>
 					</section>
 
 					<section class='contact-flex'>
