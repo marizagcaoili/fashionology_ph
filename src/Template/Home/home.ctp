@@ -5,28 +5,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Fashionology PH</title>
-
 	<?php include LAYOUT_DIR . 'front-script.ctp'; ?>
-
-
-
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
 
-
 	<script>
-
 		$(document).ready(function(){
-
 			$("#carda").flip();
 			$("#cardb").flip();
-
 			$("#cardc").flip();
-
 			$("#cardd").flip();
-
 			$("#carde").flip();
-
 			$('.sidebarreveal').click(function(){
 				$('.sidebar').fadeIn();
 			})
@@ -39,15 +28,9 @@
 
 			$('.revealcategory').mouseenter(function(){
 				$('.category').toggle();
-
-
 			})
-
 		});
-
-
 	</script>
-
 
 	<!-- Core CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -56,63 +39,41 @@
 	<link href="/front/assets/css/material-kit.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="/front/public/css/main-style.css">
 
-
-
 	<!-- Core Javascript -->
 	<script src="https://storage.googleapis.com/code.getmdl.io/1.0.1/material.min.js"></script>
-
-
 	<link rel="stylesheet" href="/front/public/css/hottest-style.css" />
-
-
-
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-
 </head>
 <body class="index-page" id='skrollr-body' ng-app="SampleApp"  ng-controller="testController"  style='border:none;'>
-
-
-
 	<?php include LAYOUT_DIR . 'front-control.ctp'; ?>
 
-
 	<script>
-
 		jQuery(function($) {
 			function fixDiv() {
 				var $featured = $('.featured-sec');
-      // class='each-li-div'
-      var $male=$('.section-hot');
-      if ($(window).scrollTop() > 300)
-      {
-      	$featured.fadeIn('slow');
-      	$('.home-index').fadeOut('slow');
-      }
-      else
-      {
-      	$featured.fadeOut('slow');
-      }
+				// class='each-li-div'
+				var $male=$('.section-hot');
+				if ($(window).scrollTop() > 300) {
+					$featured.fadeIn('slow');
+					$('.home-index').fadeOut('slow');
+				} else {
+					$featured.fadeOut('slow');
+				}
 
-      if ($(window).scrollTop() > 800)
-      {
-      	$male.fadeIn('slow');
-      }
-      else
-      {
-      	$male.fadeOut('slow');
-
-      }
-
-
-  }
-  $(window).scroll(fixDiv);
-  fixDiv();
-});
+				if ($(window).scrollTop() > 800) {
+					$male.fadeIn('slow');
+				} else {
+					$male.fadeOut('slow');
+				}
+ 			}
+  			
+  			$(window).scroll(fixDiv);
+  			
+  			fixDiv();
+		});
 
 
 		/**search box**/
-
 		$(function () {
 			$('a[href="#search"]').on('click', function(event) {
 				event.preventDefault();
@@ -126,14 +87,12 @@
 				}
 			});
 
-
-    //Do not include! This prevents the form from submitting for DEMO purposes only!
-    $('form').submit(function(event) {
-    	event.preventDefault();
-    	return false;
-    })
-});
-
+		    //Do not include! This prevents the form from submitting for DEMO purposes only!
+		    $('form').submit(function(event) {
+		    	event.preventDefault();
+		    	return false;
+		    })
+		});
 
 		$(document).ready(function(){
 			$('.control-center').hide();
@@ -185,12 +144,7 @@
 
 	<?php include LAYOUT_DIR . 'front-category.ctp'; ?>
 
-
-
-	<?php include LAYOUT_DIR . 'front-sidebar.ctp'; ?>
-
 	<!--main content-->
-
 	<div class="category_bar_header" >
 		<nav class="sub-nav">
 			<ul>
@@ -216,7 +170,7 @@
 		<p style="color:#000;font-size:16px;">Fashion is not something that exists in dresses only. Fashion is in the sky, in the street, fashion has to do with ideas, the way we live, what is happening. 
 		</p>
 
-		<a href="#" class="shop-now">Shop Now</a>
+		<a href="/clothing" class="shop-now">Shop Now</a>
 
 	</article>
 
@@ -1066,29 +1020,22 @@
 <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
 <script src="/front/assets/js/material-kit.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-
+<!-- <script type="text/javascript">
 	$().ready(function(){
 		$('.status-sent').hide();
-            // the body of this function is in assets/material-kit.js
-            materialKit.initSliders();
-            window_width = $(window).width();
+        // the body of this function is in assets/material-kit.js
+        materialKit.initSliders();
+        window_width = $(window).width();
 
-            if (window_width >= 992){
-            	big_image = $('.wrapper > .header');
+        if (window_width >= 992){
+        	big_image = $('.wrapper > .header');
 
-            	$(window).on('scroll', materialKitDemo.checkScrollForParallax);
-            }
-
-        });
-
+        	$(window).on('scroll', materialKitDemo.checkScrollForParallax);
+        }
+    });
     // var s=skrollr.init();
-</script>
-
-
-
+</script> -->
 </body>
-
 <!-- <script src='/front/public/js/scripts-modal.js'></script>
 -->
 </html>

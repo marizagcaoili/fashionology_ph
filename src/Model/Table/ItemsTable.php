@@ -35,8 +35,15 @@ class ItemsTable extends Table
         ->toArray();
     }
 
-    
-     public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes)
+    public function getFeaturedItems()
+    {
+        // Query
+        return $this->find()
+        ->where(array('featured_from <= ' => date('Y/m/d h:i:s a', time()), 'featured_to >= ' => date('Y/m/d h:i:s a', time())))
+        ->toArray();
+    }
+
+    public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes)
     {
         return $this->query()
         ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes'])

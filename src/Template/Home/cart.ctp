@@ -138,8 +138,8 @@
 							</div>
 
 							<div class='set-button'>
-								<a class='btn-secure' href='/checkout' style='color:#111;'>SECURE CHECKOUT</a>
-								<button class='btn-cont' ng-click='continueShop()'>CONTINUE SHOPPING</button>
+								<a class='btn-secure' href='/checkout'>SECURE CHECKOUT</a>
+								<button class='btn-cont'><a href="/">CONTINUE SHOPPING</a></button>
 							</div>
 
 							<div class='enter-pro'>
