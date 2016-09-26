@@ -68,6 +68,9 @@ class CatalogController extends Controller
             case 'featured': // Featured
                 $result = $items->getFeaturedItems();
                 break;
+            case 'new': // New In
+                $result = $items->getNewItemList();
+                break;
             default: // Default list
                 $result = $items->getItemList();
                 break;

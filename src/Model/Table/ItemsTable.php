@@ -26,6 +26,16 @@ class ItemsTable extends Table
         ->toArray();
     }
 
+    public function getNewItemList()
+    {
+        // Query
+        return $this->find()
+        ->contain(['Images'])
+        ->order('item_created DESC')
+        ->limit(8)
+        ->toArray();
+    }
+
     public function getCategorized($category)
     {
         // Query
@@ -39,7 +49,8 @@ class ItemsTable extends Table
     {
         // Query
         return $this->find()
-        ->where(array('featured_from <= ' => date('Y/m/d h:i:s a', time()), 'featured_to >= ' => date('Y/m/d h:i:s a', time())))
+        ->contain(['Images'])
+        ->where(array('featured_flag' => 1))
         ->toArray();
     }
 

@@ -21,6 +21,124 @@ app.filter('startFrom', function() {
     }
 });
 
+// Initialize rootScope
+angular.module('SampleApp').run(function($rootScope, $cookies) {
+	var RootManager = {};
+
+	RootManager.Init = function() {
+		RootManager.SetCartInfo();
+		
+		$rootScope.f_account_id = $cookies.get('f_account_id');
+	};
+
+	RootManager.SetCartInfo = function() {
+		// Check cart items
+		if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined) {
+			// Cookies already defined
+			$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
+			$rootScope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
+			$rootScope.cart_items_count = $rootScope.cart_items.length;
+		} else {
+			// Cookies were not yet defined
+			$rootScope.cart_items_count = 0;
+		}
+	};
+});
+
+// -- START : HomeController -- //
+app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, $rootScope) {
+
+	var HomeManager = {};
+
+	HomeManager.init = function() {
+		HomeManager.GetFeaturedItems();
+		HomeManager.GetNewItems();
+
+		if ($scope.account_id > 1) {
+			$('.logmein').hide();
+			$('.account-control').show();
+			$('.sign-up').hide();
+			$('.wishlist').show();
+			
+			$http({
+				url : "/user/information/",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
+				data : 	{f_account_id:$cookies.get('f_account_id')} // Data to be passed to API
+			}).then(function(response){
+				$scope.userInfos=response.data[0];
+			});
+
+			$('.account-control').hide();
+			$('.logmein').show();
+		}
+
+		if ($scope.account_id > 1) {
+			$http({
+				url : "/user/information/",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
+				data : {f_account_id : $cookies.get('f_account_id')} // Data to be passed to API
+			}).then(function(response) {
+				$scope.welcomeUser = response.data;
+			});
+		}
+
+		$http({
+			url : "/authentication",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data : {f_token:$cookies.get('f_token'),f_account_id:$cookies.get('f_account_id')} // Data to be passed to API
+		}).then(function(response){
+			console.log(response.data);						
+		});
+
+		$scope.branch = $cookies.get('branch_id');
+	};
+
+	HomeManager.GetFeaturedItems = function() {
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { mode : "featured" }
+		}).then(function(response) {
+			$scope.featured_items = response.data;
+		});
+	};
+
+	HomeManager.GetNewItems = function() {
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { mode : "new" }
+		}).then(function(response) {
+			$scope.new_items = response.data;
+			console.log($scope.new_items);
+		});
+	};
+
+	HomeManager.init();
+});
+// -- END : HomeController -- //
+
 // -- START : ClothingController  -- //
 app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore) {
 	$scope.logout=function(){
