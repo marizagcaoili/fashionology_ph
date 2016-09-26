@@ -40,23 +40,19 @@ class CatalogController extends Controller
 
     public function items()
     {
-         $session = $this->request->session();
-         $user= $session->read('user.username');
+        $session = $this->request->session();
+        $user= $session->read('user.username');
 
-         if($user == null){
- 
-            return $this->redirect(
-            array('controller' => 'login', 'action' => 'index'));
-        }
-        else{
-        $this->render('item_list');
+        if($user == null) {
+            return $this->redirect(array('controller' => 'login', 'action' => 'index'));
+        } else {
+            $this->render('item_list');
         }
     }
 
 
     public function angularjs()
     {
-
         $this->render('angularjs');
     }
 
@@ -68,10 +64,20 @@ class CatalogController extends Controller
 
         $items = TableRegistry::get('Items'); // Create Table Object
 
-        $result = $items->getItemList();
+        $mode = $this->request->query('mode');
 
-        // Expose result to UI
-        // $this->set('items', $result);  
+        switch ($mode) {
+            case 'featured': // Featured
+                $result = $items->getFeaturedItems();
+                break;
+            case 'new': // New In
+                $result = $items->getNewItemList();
+                break;
+            default: // Default list
+                $result = $items->getItemList();
+                break;
+        }
+
         echo json_encode($result);
         exit(); 
     }

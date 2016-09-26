@@ -26,6 +26,16 @@ class ItemsTable extends Table
         ->toArray();
     }
 
+    public function getNewItemList()
+    {
+        // Query
+        return $this->find()
+        ->contain(['Images'])
+        ->order('item_created DESC')
+        ->limit(8)
+        ->toArray();
+    }
+
     public function getCategorized($category)
     {
         // Query
@@ -35,8 +45,16 @@ class ItemsTable extends Table
         ->toArray();
     }
 
-    
-     public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date)
+    public function getFeaturedItems()
+    {
+        // Query
+        return $this->find()
+        ->contain(['Images'])
+        ->where(array('featured_flag' => 1))
+        ->toArray();
+    }
+
+    public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date)
     {
         return $this->query()
         ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes', 'gender','item_created'])
