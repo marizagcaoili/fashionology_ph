@@ -124,6 +124,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/user/information/', ['controller' => 'login','action' => 'fetchUserData']);
 
+
 //end login
 
     /**wishlist section**/
@@ -141,6 +142,12 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     /**end of customization**/
 
+    /**updating shipping information***/
+
+     $routes->connect('/order/update/bill', ['controller' => 'billing','action' => 'updateBill']);
+   
+
+    /**updating end**/
 
     /**delivery**/
     $routes->connect('/order/process/delivery', ['controller' => 'order','action' => 'placeDeliver']);

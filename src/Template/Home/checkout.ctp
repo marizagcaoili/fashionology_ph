@@ -26,6 +26,8 @@
                <p><span ><i class="fa fa-map-marker" aria-hidden="true"></i></span> delivery address </p>
             </div>
             <div class='sec-b collapse' style='margin-bottom: 1px;'>
+               
+            </style>
                <div class='billing-info'>
                   <div >
                      <div class='title-addrs'>
@@ -95,7 +97,7 @@
                      <div class='select-grping'>
                         <ul>
                            <li>
-                              <div class='select-div' data-toggle="modal" data-target="#deliverySelect">
+                              <div class='select-div' id='cash' data-toggle="modal" data-target="#deliverySelect">
                                  <div class='cash-on'>
                                     <div class='cash-desc'>
                                        <p>Cash on Delivery</p>
@@ -108,7 +110,7 @@
                               </div>
                            </li>
                            <li>
-                              <div class='select-div' data-toggle="modal" data-target="#branchSelect">
+                              <div class='select-div' id='pickup'data-toggle="modal" data-target="#branchSelect">
                                  <div class='cash-on'>
                                     <div class='cash-desc'>
                                        <p>Pick Up</p>
@@ -119,12 +121,9 @@
                                        <div class='under-desc-flex' style='border:none;'>
                                           <div class='flexible-a' style='border:none;'>
                                              <p><b>TIME OF PICKUP</b></p>
-                                             <p>9:00 AM</p>
+                                             <p style='position: relative;top:10px;'>{{pickUpTime}}</p>
                                           </div>
-                                          <div class='flexible-a'>
-                                             <p><b>DATE OF PICKUP</b></p>
-                                             <p>10.10.16</p>
-                                          </div>
+                                        
                                        </div>
                                     </div>
                                  </div>
@@ -328,23 +327,18 @@
                   <div class="modal-body" style='height:200px;'>
                      <div class='setdate-wrap'>
                         <div class='setdatewrap-a'>
-                           <p><b>Note</b></p>
-                           <p style='margin-top: 6px;'>Please kindly specify the date of delivery. </p>
+                           <p><b>A friendly reminder from Fashionology PH</b></p>
+                          
                         </div>
-                        <div class='setdatewrap-a' style='margin-top: 10px;'>
-                           <p><b>Date of Delivery</b></p>
-                           <div class='timeof'>
-                              <div class='timeof-flex'>
-                                 <div class='each-timeof'>
-                                    <input type='date' class='timeof-select' style='width: 250px;' id='date'>
-                                 </div>
-                              </div>
-                           </div>
+                        <div class='setdatewrap-a' style='margin-top: -44px;'>
+                           <p>Once your delivery date was already confirmed. You will receive an ongoing call from our Customer Support. For further notice, you might wanted to check your Delivery Status under "Track my Order" module in User Dashboard!. <br>
+                           Thank you and Happy Shopping!</p>
+                           
                         </div>
                      </div>
                   </div>
                   <div class="modal-footer">
-                     <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setDelivery()'>Set Schedule</button>
+                     <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setDelivery()'>Set as Delivery</button>
                      <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
                   </div>
                </div>
@@ -359,6 +353,7 @@
       $(".collapse").collapse();
       
       $(document).ready(function(){
+         $('#deliverySelect').modal('toggle');
       	$('.each-branch').click(function(){
       		$('branches_name').show();
       	});
@@ -369,8 +364,8 @@
       	})
       });
       
-      $('.select-div').click(function(){
-      	$(this).addClass('shadow');
-      })
+      // $('.select-div').click(function(){
+      // 	$(this).addClass('shadow');
+      // })
    </script>
 </html>

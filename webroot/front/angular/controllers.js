@@ -232,6 +232,7 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 	CheckoutManager.Init = function() {
 		CheckoutManager.LoadOrderedItems();
+		CheckoutManager.PickupTime();
 	}
 
 	CheckoutManager.LoadOrderedItems = function () {
@@ -248,6 +249,44 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 			$scope.items = items;
 		});
+	}
+
+	CheckoutManager.PickupTime=function(){
+		$scope.pickUpTime=$cookies.get('time_of_pickup');
+
+		if($scope.pickUpTime==null){
+			$scope.pickUpTime='Please select a time of pick up first';
+		}
+	}
+
+	$scope.updateData=function(shipping_id){
+		var fname=$('#fname').val(),
+		lname=$('#lname').val(),
+		contact=$('#contact').val(),
+		landmark=$('#landmark').val(),
+		city=$('#city').val(),
+		postal=$('#postal').val(),
+		address=$('#address').val();
+
+
+		$http({
+			url:'/order/update/bill',
+			method:'POST',
+			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data:{shipping_id:shipping_id,fname:fname,lname:lname,contact:contact,landmark:landmark,city:city,postal:postal,address:address}
+		}).then(function(response){
+			$scope.userInfos=$rootScope.userInfos;
+		})
+
+
+
+
 	}
 
 	// Function scopes
@@ -272,6 +311,19 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 		$cookies.put('time_of_pickup', JSON.stringify($scope.timeValue));
 		$cookies.put('method_payment', 'Pick Up');
+
+		var payment=$cookies.get('method_payment');
+
+		if(payment=='Pick Up'){
+			$('#pickup').addClass('shadow');
+			$('#cash').removeClass('shadow');
+
+		}
+
+		$scope.pickUpTime=$cookies.get('time_of_pickup');
+
+
+
 	}
 
 	$scope.setDelivery = function() {
@@ -279,6 +331,16 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 		$cookies.put('delivery_status','pending');
 		$cookies.put('method_payment', 'Delivery');
+
+		var payment=$cookies.get('method_payment');
+
+
+		if(payment=='Delivery'){
+
+			$('#cash').addClass('shadow');
+			$('#pickup').removeClass('shadow');
+
+		}
 	}
 
 	$scope.delivery = function(account_fname) {
@@ -304,6 +366,22 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 	ClothingController.init = function(){
 		ClothingController.getId();
 		ClothingController.getRecentItems();
+		ClothingController.getGender();
+	}
+
+	ClothingController.getGender=function(){
+
+		var gender=$location.search().mode;
+
+		if(gender=='men'){
+			$('.women').hide();
+		}else if(gender=='women'){
+			$('.men').hide();
+		}else{
+			$('.women').hide();
+		}
+
+
 	}
 
 	ClothingController.getId = function(){
@@ -472,12 +550,12 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		 		// API CALL to remove from wish list
 		 		$($event.target).attr('class', 'fa fa-heart-o');	
 		 	}
-		} else {
-			$('.lognowin li').trigger('click');
+		 } else {
+		 	$('.lognowin li').trigger('click');
+		 }
 		}
-	}
 
-	$scope.addItem = function(item_id) {
+		$scope.addItem = function(item_id) {
 
 		// Check if Cart Cookie exists
 		if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined ) {
@@ -594,15 +672,6 @@ app.controller('accountController',function($scope, $http, $rootScope){
 app.controller('LoginController',function($scope,$http,$cookies,$cookieStore,$rootScope){
 	$scope.f_account_id = $cookies.get('f_account_id');
 
-	$scope.updateData=function(){
-		var fname=$('#fname').val(),
-		lname=$('#lname').val(),
-		contact=$('#contact').val(),
-		landmark=$('#landmark').val(),
-		city=$('#city').val(),
-		postal=$('#postal').val(),
-		address=$('#address').val();
-	}
 
 	$scope.register = function(){
 		window.location='/register';
@@ -959,35 +1028,35 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 
 	//controllers for ngclick
 
-	 $scope.checkout = function(){
-	 	location.href = "/checkout";
-	 }
+	$scope.checkout = function(){
+		location.href = "/checkout";
+	}
 
-	 $scope.viewcart = function(){
-	 	location.href = "/cart";
-	 }
+	$scope.viewcart = function(){
+		location.href = "/cart";
+	}
 
-	 /**wishlist controller**/
-	 $scope.userId = $cookies.get('f_account_id');
+	/**wishlist controller**/
+	$scope.userId = $cookies.get('f_account_id');
 
 
-	 if ($scope.userId > 1) {
-	 	$http({
-	 		url:'/display/Wishlist',
-	 		method:'POST',
-	 		headers:{'Content-Type':'application/x-www-form-urlencoded'},
-	 		transformRequest: function(obj) {
-	 			var str = [];
-	 			for(var p in obj)
-	 				str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-	 			return str.join("&");
-	 		},
-	 		data:{account_id:$scope.userId}
-	 	}).then(function(response){
-	 		console.log(response.data);
-	 		$scope.wishlistItem = response.data;
-	 	});
-	 }
+	if ($scope.userId > 1) {
+		$http({
+			url:'/display/Wishlist',
+			method:'POST',
+			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data:{account_id:$scope.userId}
+		}).then(function(response){
+			console.log(response.data);
+			$scope.wishlistItem = response.data;
+		});
+	}
 
 	 //controllers for placing an order
 	 $scope.placeOrder = function() {
@@ -1004,7 +1073,7 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 
 	 	alert('Order Placed!');
 	 }
-});
+	});
 // -- END : testController -- //
 
 // -- START : ItemDetailsController -- //
@@ -1195,9 +1264,9 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 
 		});
 	// /product/review/view
-	}
+}
 
-	ItemDetail.init();
+ItemDetail.init();
 	// scope Vars to view
 	$scope.var = "";
 
@@ -1235,19 +1304,19 @@ app.controller('CategoryBrandController',function($scope,$http,$rootScope){
 
 // -- START : CategoryController -- //
 app.controller('CategoryPrintController', function ($scope, $http){
-		var CategoryPrint = {};
-		$scope.parents = [];
-		$scope.parents.categories = [];
-		CategoryPrint.init = function(){
-			$http.get("/admin/catalog/get_parents")
-		    .then(function(response) {
-		        $scope.parents = response.data;
-		        CategoryPrint.forLoop();
-		    });
+	var CategoryPrint = {};
+	$scope.parents = [];
+	$scope.parents.categories = [];
+	CategoryPrint.init = function(){
+		$http.get("/admin/catalog/get_parents")
+		.then(function(response) {
+			$scope.parents = response.data;
+			CategoryPrint.forLoop();
+		});
 
-		};
+	};
 
-		CategoryPrint.forLoop = function(){
+	CategoryPrint.forLoop = function(){
 		console.log($scope.parents.length);
 		var ind = $scope.parents.length - 1;
 		for (var i = $scope.parents.length - 1; i >= 0; i--) {    		
@@ -1264,7 +1333,7 @@ app.controller('CategoryPrintController', function ($scope, $http){
 			});
 		}
 	};
-		CategoryPrint.init();
+	CategoryPrint.init();
 
-	});
+});
 // -- END : CategoryController //

@@ -88,11 +88,14 @@
                </nav>
             </header>
             <main class="container_14" style="border:none;">
-               <script src="/front/public/js/jquery17.js"></script>
+               <script src="/front/public /js/jquery17.js"></script>
                <script src="/front/public/js/scroller.js"></script>
                <section class="top-header-disp" >
                   <p class="header-p" style="opacity: 1;">Shop by Category</p>
-                  <div class='top-header-img'>
+                  <div class='top-header-img men' style=' background:url(/front/public/img/cover.png);'>
+                  </div>
+
+                  <div class='top-header-img women' style=' background:url(/front/public/img/coverwomen.png);'>
                   </div>
                </section>
                <div class="content-group">
@@ -110,7 +113,7 @@
                                  </select>
                               </div>
                            </div>
-                           <div class='category-it-by' ng-controller='CategoryPrintController'>
+                           <div class='category-it-by' ng-controller='CategoryPrintController' style='display:none;'>
                               <p class='category-top'>TOP CATEGORIES</p>
                               <script type="text/ng-template" id="categoryTree">
                                  <p class='parent'>{{ parent.category_name }}</p>

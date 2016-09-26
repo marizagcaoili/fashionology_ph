@@ -30,5 +30,18 @@ class ShippingsTable extends Table
     ->execute();
   }
 
+  public function updateBilling($shipping_id,$fname,$lname,$contact,$landmark,$city,$postal,$address)
+  {
+
+    return $this->query()->update()
+    ->set(['shipping_fname'=>$fname,'shipping_lname'=>$lname,'shipping_contact'=>$contact,
+           'shipping_landmark'=>$landmark,'shipping_city'=>$city,'shipping_zipcode'=>$postal,
+           'shipping_address'=>$address])
+    ->where(['shipping_id' => $shipping_id])
+    ->execute();
+
+
+  }
+
 
 }
