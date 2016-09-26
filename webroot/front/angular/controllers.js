@@ -32,6 +32,16 @@ app.filter('startFrom', function() {
 app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore){
 
 
+	$scope.logout=function(){
+
+		$cookies.remove('f_account_id');
+
+		$cookies.remove('f_token');
+
+		location.reload();
+
+	}
+
 	$scope.f_account_id=$cookies.get('f_account_id');
 
 	if($scope.f_account_id!=null){
@@ -361,7 +371,7 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
 
 	// 	$('.userHi').show();
 	// 	$('.getLog').show();
-		
+
 	// 	$('.welcome-user').show();
 	// }
 
@@ -406,7 +416,7 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
 
 
 
-				location.reload();
+		location.reload();
 		$scope.username=$('#username').val();
 		$scope.password=$('#password').val();
 
@@ -483,6 +493,9 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
 
 	$scope.seca=function(){
 		$('.sec-a').collapse('hide');
+		$('.sec-b').collapse('show');
+		
+
 		$('.notespan').slideUp('slow');
 	}
 
@@ -492,53 +505,71 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
 
 app.controller('testController', function($scope, $http, $cookies, $cookieStore) {
 
-				$scope.removeCart=function(item_id,cart_items_quantity){
+	
+	$scope.secD=function(){
 
 
-					var cartQuantity = JSON.parse($cookies.get('cart_items_quantity')),
-					cartItems=JSON.parse($cookies.get('cart_items'));
+		$scope.method=$cookies.get('method_payment');
 
-					var index=cartItems.indexOf(item_id);
+		if($scope.method==null){
+			alert('Please select payment method first!');
+		}else if($scope.cart_items==null){
+			alert('no item placed!');
+		}else{
+			$('.sec-c').collapse('hide');
+		}
 
+	}
 
-					if(index>-1 ){
-
-						cartQuantity.splice(index,1);
-						cartItems.splice(index,1);
-
-						$cookies.put('cart_items_quantity', JSON.stringify(cartQuantity));		
-						$cookies.put('cart_items', JSON.stringify(cartItems));		
-
-
-						$http.get("/api/viewToCart")
-						.then(function(response) {
-							var items = [];
-							angular.forEach($scope.cart_items, function(item){
-								angular.forEach(response.data, function(data){
-									if(item == data.item_id) {
-										items.push(data);
-									}
-								});
-							});
-
-							$scope.item = items;
-						});
+	$scope.removeCart=function(item_id,cart_items_quantity){
 
 
-					}
+		var cartQuantity = JSON.parse($cookies.get('cart_items_quantity')),
+		cartItems=JSON.parse($cookies.get('cart_items'));
 
-				}
+		var index=cartItems.indexOf(item_id);
+
+
+		if(index>-1 ){
+
+			cartQuantity.splice(index,1);
+			cartItems.splice(index,1);
+
+			$cookies.put('cart_items_quantity', JSON.stringify(cartQuantity));		
+			$cookies.put('cart_items', JSON.stringify(cartItems));		
+
+
+			$http.get("/api/viewToCart")
+			.then(function(response) {
+				var items = [];
+				angular.forEach($scope.cart_items, function(item){
+					angular.forEach(response.data, function(data){
+						if(item == data.item_id) {
+							items.push(data);
+						}
+					});
+				});
+
+				$scope.item = items;
+			});
+
+
+		}
+
+	}
 
 	$scope.f_account_id=$cookies.get('f_account_id');
 
 	if($scope.f_account_id!=null){
 		$('.signmeup').hide();
-		$('.logmein').hide();
+		$('.lognowin').hide();
 
 		$('.userHi').show();
 		$('.getLog').show();
 
 		$('.welcome-user').show();
+		$('.logcheckoutin').hide();
+
 
 	}
 
@@ -547,10 +578,15 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore)
 		// $('userDetails').show();
 
 		$('.signmeup').show();
-		$('.logmein').show();
+		$('.lognowin').show();
 
 		$('.userHi').hide();
 		$('.getLog').hide();
+
+		$('.welcome-user').hide();
+		$('.logcheckoutin').show();
+
+
 
 	}
 

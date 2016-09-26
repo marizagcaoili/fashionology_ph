@@ -38,9 +38,9 @@
   <?php include LAYOUT_DIR . 'front-category.ctp'; ?>
 
 
- 
 
- <?php include LAYOUT_DIR . 'front-control.ctp'; ?>
+
+  <?php include LAYOUT_DIR . 'front-control.ctp'; ?>
 
 
 
@@ -51,11 +51,11 @@
     $(document).ready(function(){
 
 
-  $('.control-center').hide();
+      $('.control-center').hide();
 
-  $('.control-down').click(function(){
-    $('.control-center').slideToggle();
-  })
+      $('.control-down').click(function(){
+        $('.control-center').slideToggle();
+      })
 
 
       $('.category').hide();
@@ -119,18 +119,18 @@
         <a target="_self" style="color:#a8a8a8;" href="/"><li>home </li></a>
         <a target="_self" class='revealcategory' href='/clothing'><li>clothing <i class="fa fa-angle-down category-show" aria-hidden="true"></i></li></a>
         <a target="_self" href="/load/canvas"><li>mix n match</li></a>
-        <a target="_self" href="#"><li>contact us</li></a>
+        <a target="_self" href="#"><li>lookbook</li></a>
       </ul>
     </nav>
 
-  <nav class="nav-b" >
+    <nav class="nav-b" ng-controller='testController'>
       <ul>
-        <a  class='logmein' style='color:#333;'data-toggle="modal" data-target="#loginModal"><li>login</li></a>
+        <a  class='lognowin' style='color:#333;'data-toggle="modal" data-target="#loginModal"><li>login</li></a>
         <a  class='signmeup' href='/register' style='color:#333;' target="_self" ><li>sign up</li></a>
 
         <a  class='userHi' style='color:#333;' href='/user/dashboard' target='_self'><li>Hi, User</li></a>
 
-        <a class='getLog' style='color:#333;' target='_self'><li>logout</li></a>
+        <a class='getLog' style='color:#333;'ng-click='logout()'><li>logout</li></a>
 
 
 
@@ -138,7 +138,7 @@
         <a href="/cart" style='color:#333;' target='_self'><li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li></a>
 
 
-        <a class="count-cart" style="position:absolute;
+        <a  class="count-cart" style="position:absolute;
         font-size:8px;
         padding: 4px 8px;
         margin-top: -18px;
@@ -151,154 +151,70 @@
 
 
 
-<?php include LAYOUT_DIR . 'front-sidebar.ctp'; ?>
+  <?php include LAYOUT_DIR . 'front-sidebar.ctp'; ?>
 
 
-<main class="container_14" style="border:none;">
+  <main class="container_14" style="border:none;">
 
-<script src="/front/public/js/jquery17.js"></script>
-<script src="/front/public/js/scroller.js"></script>
-
-
-
-<section class="top-header-disp" >
-  <p class="header-p" style="opacity: 1;">Shop by Category</p>
-
-  <div class='top-header-img'>
-  </div>
-</section>
+    <script src="/front/public/js/jquery17.js"></script>
+    <script src="/front/public/js/scroller.js"></script>
 
 
 
+    <section class="top-header-disp" >
+      <p class="header-p" style="opacity: 1;">Shop by Category</p>
 
-<div class="content-group">
+      <div class='top-header-img'>
+      </div>
+    </section>
 
-  <section class="group-filter-recent" >
-    <p class="indicator-by" style='display: none;'>Filter By <i class="fa fa-filter" aria-hidden="true"></i></p>
 
-    <div class="filter-group">
-      <ul>
-        <li><div class="filter-group-div" style='display: none;'>
-          <p class="label-tag">Gender</p>
 
-          <ul class="gender-group" style="margin-top: -34px;">
-            <a href="#"><li>M</li></a>
-            <a href="#"><li>F </li></a>
-            <a href="#"><li>All </li></a>
+
+    <div class="content-group">
+
+      <section class="group-filter-recent" >
+        <p class="indicator-by" style='display: none;'>Filter By <i class="fa fa-filter" aria-hidden="true"></i></p>
+
+        <div class="filter-group">
+          <ul>
+
+            <li>Tops</li>
+
           </ul>
+        </div>
 
-        </div></li>
-        <li style='display: none;'><div class="filter-group-div" style="height:90px;">
-          <p class="label-tag">Color</p>
+        <div class="recent-group" >
+          <p class="indicator-by" style="top:16px;width:190px;">Recent Products</p>
 
-          <ul class="color-group" >
-            <li>
-             <div class="radio" data-toggle="tooltip" data-placement="top" title="Pink" data-container="body">
-              <label>
-                <input type="radio" name="optionsRadios"  checked="true" >
+          <div class="recent-added-group">
+            <ul class="recent-ul-added" >
+              <li><div class="recent-each-item" style='width:96%;'>
+                <img src="/front/public/img/a.jpg">
+                <p class="product-recent-name">Product Name</p>
+                <p class="product-recent-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper pulvinar erat eget auctor. Pellentesque facilisis sed massa nec gravida. Integer semper maximus metus at fringilla.</p>
+              </div>
+            </li>
 
-              </label>
+            <li><div class="recent-each-item" style='width:96%;'>
+              <img src="/front/public/img/a.jpg">
+              <p class="product-recent-name">Product Name</p>
+              <p class="product-recent-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper pulvinar erat eget auctor. Pellentesque facilisis sed massa nec gravida. Integer semper maximus metus at fringilla.</p>
             </div>
           </li>
-          <li>
 
-           <div class="radio">
-            <label data-toggle="tooltip" data-placement="top" title="Pink" data-container="body">
-              <input type="radio" name="optionsRadios" checked="true">
-            </label>
+          <li><div class="recent-each-item" style='width:96%;'>
+            <img src="/front/public/img/a.jpg">
+            <p class="product-recent-name">Product Name</p>
+            <p class="product-recent-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper pulvinar erat eget auctor. Pellentesque facilisis sed massa nec gravida. Integer semper maximus metus at fringilla.</p>
           </div>
         </li>
 
-        <li>
 
-         <div class="radio">
-          <label data-toggle="tooltip" data-placement="top" title="Pink" data-container="body">
-            <input type="radio" name="optionsRadios" checked="true">
 
-          </label>
-        </div>
-      </li>
-
-      <li>
-       <div class="radio">
-        <label data-toggle="tooltip" data-placement="top" title="Pink" data-container="body">
-          <input type="radio" name="optionsRadios" >
-
-        </label>
-      </div>
-    </li>
-    <li>
-
-     <div class="radio">
-      <label data-toggle="tooltip" data-placement="top" title="Pink" data-container="body">
-        <input type="radio" name="optionsRadios" >
-
-      </label>
+      </ul>
     </div>
-  </li>
-
-  <li>
-
-   <div class="radio">
-    <label data-toggle="tooltip" data-placement="top" title="Pink" data-container="body">
-      <input type="radio" name="optionsRadios" checked="true">
-
-    </label>
   </div>
-</li>
-</ul>
-
-</div></li>
-<li><div class="filter-group-div" style='display: none;'>
-  <p class="label-tag" style="margin-top:-30px;">Size</p>
-
-  <ul class="size-group" style="height:10px;" > <!--size group-->
-    <a><li>S</li></a>
-    <a><li>M</li></a>
-    <a><li>L</li></a>
-    <a><li>X</li></a>
-    <a><li>XXL</li></a>
-
-  </ul>
-
-</div></li>
-<li><div class="filter-group-div" style='display: none;'>
-  <p class="label-tag">Price 
-    <div id="sliderDouble" class="slider slider-info"></div></p></div></li>
-  </ul>
-</div>
-
-<div class="recent-group" >
-  <p class="indicator-by" style="top:16px;width:190px;">Recent Products</p>
-
-  <div class="recent-added-group">
-    <ul class="recent-ul-added" >
-      <li><div class="recent-each-item" style='width:96%;'>
-        <img src="/front/public/img/a.jpg">
-        <p class="product-recent-name">Product Name</p>
-        <p class="product-recent-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper pulvinar erat eget auctor. Pellentesque facilisis sed massa nec gravida. Integer semper maximus metus at fringilla.</p>
-      </div>
-    </li>
-
-    <li><div class="recent-each-item" style='width:96%;'>
-      <img src="/front/public/img/a.jpg">
-      <p class="product-recent-name">Product Name</p>
-      <p class="product-recent-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper pulvinar erat eget auctor. Pellentesque facilisis sed massa nec gravida. Integer semper maximus metus at fringilla.</p>
-    </div>
-  </li>
-
-  <li><div class="recent-each-item" style='width:96%;'>
-    <img src="/front/public/img/a.jpg">
-    <p class="product-recent-name">Product Name</p>
-    <p class="product-recent-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus semper pulvinar erat eget auctor. Pellentesque facilisis sed massa nec gravida. Integer semper maximus metus at fringilla.</p>
-  </div>
-</li>
-
-
-
-</ul>
-</div>
-</div>
 
 
 </section>

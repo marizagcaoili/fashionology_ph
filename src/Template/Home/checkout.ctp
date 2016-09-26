@@ -43,10 +43,10 @@
 
 					<div class='sec-a collapse' ng-controller='LoginController' style='margin-bottom: 1px;' >
 
-						<div class='signin logmein' >
+						<div class='signin logmein'>
 
 
-							<div class='signin-flex' id='signin'>
+							<div class='signin-flex logcheckoutin' id='signin'>
 
 								<div class='signin-a' style='border-right:1px solid;'>
 
@@ -107,8 +107,8 @@
 
 
 
-						<div class='signin welcome-user' id='userDetails' style='display: none;'>
-							<div class='userDetails-welcome' ng-repeat='user in welcomeUser' >
+						<div class='signin welcome-user'>
+							<div class='userDetails-welcome' >
 								<p class='welcomeback'>Welcome back {{userInfos.account_username}} !</p>
 								<p style='font-family: Moon;font-size: 18px;font-weight: bold;margin-top:-10px;color:#555555;'>you may now be able to place an order</p>
 

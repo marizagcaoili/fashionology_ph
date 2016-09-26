@@ -117,7 +117,7 @@
 				</div>
 
 				<div class='color-view'>
-					<p>Choose a Color</p>
+					<!-- <p>Choose a Color</p> -->
 
 					<div class="color-view-choose">
 

@@ -153,18 +153,18 @@
 				<a style="color:#a8a8a8;" href="/"><li>home </li></a>
 				<a class='revealcategory' href='/clothing'><li>clothing <i class="fa fa-angle-down category-show" aria-hidden="true"></i></li></a>
 				<a href="/load/canvas"><li>mix n match</li></a>
-				<a href="#"><li>contact us</li></a>
+				<a href="#"><li>lookbook</li></a>
 			</ul>
 		</nav>
 
 		<nav class="nav-b" >
 			<ul>
-				<a  class='logmein' style='color:#fff;'data-toggle="modal" data-target="#loginModal"><li>login</li></a>
+				<a  class='lognowin' style='color:#fff;'data-toggle="modal" data-target="#loginModal"><li>login</li></a>
 				<a  class='signmeup' href='/register' style='color:#fff;' ><li>sign up</li></a>
 
 				<a  class='userHi' style='color:#fff;' href='/user/dashboard'><li>Hi, User</li></a>
 
-				<a class='getLog' style='color:#fff;' href='/user/dashboard'><li>logout</li></a>
+				<a class='getLog' style='color:#fff;' ng-click='logout()'><li>logout</li></a>
 
 
 
