@@ -74,13 +74,7 @@
 
     			</div>
 
-    			<div style='position: relative;margin-top:60px;'>
-    				<p style='font-family: Coves;font-size:16px;color:#333;'><b>To confirm your orders:</b></p>
-    				<a href='fashionologyph.com'><p>http://fashionologyph.com/confirm?orders=12</p></a>
-
-    				<p style='font-family: Coves;font-size:16px;position: relative;top:20px;color:#333;'><b>To cancel your orders:</b></p>
-    				<a href='fashionologyph.com' style='position: relative;top:18px;'><p>http://fashionologyph.com/confirm?orders=12</p></a>
-    			</div>
+    			
 
     			<div style='position: relative;margin-top:144px;height:120px;'>
     				<a href='fashionologyph.com' style='font-family:Coves;font-size:16px;color:#111;border:2px solid;

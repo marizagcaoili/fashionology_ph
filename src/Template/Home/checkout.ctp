@@ -139,7 +139,7 @@
                <div class='checkout-header'>
                   <p><span> <i class="fa fa-shopping-bag" aria-hidden="true"></i></span> review and place order</p>
                </div>
-               <div class='sec-d collapse in ' id='reviewplace'  ng-init='total=0'>
+               <div class='sec-d collapse in' id='reviewplace'  ng-init='total=0'>
                   <div class='flex-set'>
                      <div class='left-flex'>
                         <ul>
@@ -149,9 +149,9 @@
                                  <div class='each-of-detail'>
                                     <p class='itemname'>{{item.item.item_name}}</p>
                                     <p class='check-desc'>{{item.item.item_description}}</p>
-                                    <p class='check-desc' ng-init="$parent.total = $parent.total + (item.item.item_srp * cart_items_quantity[$index])" ><b>Quantity:</b> {{cart_items_quantity[$index]}}</p>
+                                    <p class='check-desc' style='position:relative;top:34px;left:-142px;text-transform: uppercase;font-weight: bold;font-family: Moon;' ng-init="$parent.total = $parent.total + (item.item.item_srp * cart_items_quantity[$index])" ><b>Quantity:</b> {{cart_items_quantity[$index]}}</p>
                                     <div class='close-x'>
-                                       <p><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                       <p ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'><i class="fa fa-trash-o" aria-hidden="true"></i></p>
                                     </div>
                                  </div>
                               </div>
@@ -164,16 +164,16 @@
                               <div class='total-this-flex-menu'>
                                  <div class='total-direction'>
                                     <div class='total-content-direction'>
-                                       <p style='font-weight:bold;'>sub total</p>
-                                       <p style='font-weight:bold;'>shipping fee</p>
-                                       <p style='font-weight:bold;'>VOUCHER</p>
+                                       <p style='font-weight:bold;'>No. of Items Placed</p>
+                                   <!--     <p style='font-weight:bold;'>shipping fee</p> -->
+                                 <!--       <p style='font-weight:bold;'>VOUCHER</p> -->
                                     </div>
                                  </div>
                                  <div class='total-this-direction'>
                                     <div class='total-content-direction' style='padding-left:10px;'>
-                                       <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>PHP {{total}}.00</p>
-                                       <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>NO FEE</p>
-                                       <p style='color:#464646;text-align: left;font-family:Moon;font-size: 18px;font-weight: bold;'>0.00 %</p>
+                                       <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>{{cart_items_count}}</p>
+                              <!--          <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>NO FEE</p> -->
+                                  <!--      <p style='color:#464646;text-align: left;font-family:Moon;font-size: 18px;font-weight: bold;'>0.00 %</p> -->
                                     </div>
                                  </div>
                               </div>
@@ -353,8 +353,7 @@
       $(".collapse").collapse();
       
       $(document).ready(function(){
-         $('#deliverySelect').modal('toggle');
-      	$('.each-branch').click(function(){
+         $('.each-branch').click(function(){
       		$('branches_name').show();
       	});
       	// $('#signin').hide();

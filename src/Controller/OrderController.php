@@ -18,6 +18,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Mailer\Email;
 
 
 /**
@@ -180,9 +181,53 @@ public function placePickup()
 
 
   exit();
+}
+
+
+
+public function emailNotify()
+{
+
+  $this->autoRender=false;
+  header('Content-Type: application/json');
+
+
+  $email_address =$this->request->data('email_address');
+  $message = 'Thank you for ordering to Fashionology PH!';
+  $subject = 'Welcome';
+
+  Email::configTransport('gmail', [
+    'host' => 'ssl://smtp.gmail.com',
+    'port' =>  465,
+    'username' => 'fashionologyph@gmail.com',
+    'password' => 'fashiono',
+    'className' => 'Smtp',
+    ]);
+
+
+  $email = new Email('default');
+  $email->template('welcome','default')
+  ->emailFormat('html')
+  ->from(['fashionologyph@gmail.com' => 'Fashionology'])
+  ->to($email_address)
+  ->subject($subject)
+  ->attachments(array(
+    array(
+      'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
+      'mimetype'=>'image/png',
+      'contentId'=>'12345'
+      ),
+    ))
+  ->transport('gmail')
+  ->send();
+
+  exit();  
+
+
 
 
 }
+
 
 
 
