@@ -321,8 +321,8 @@
 .child {
   font-size: 16px;
   font-family: Moon;
-  background: #efefef;
-  transition: all 0.4s; }
+  transition: all 0.4s;
+  font-weight: bold; }
   .child:hover {
     background: #dddcdc;
     cursor: pointer; }
