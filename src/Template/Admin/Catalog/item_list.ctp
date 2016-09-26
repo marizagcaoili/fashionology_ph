@@ -84,7 +84,7 @@
                   <th>Item Code</th>
                   <th>Item Name</th>
                   <th>Brand</th>
-                  <th width="23%">Status</th>
+                  <th width="23%">Featured</th>
                   <th>SRP</th>
                   <th>Thumbnail</th>
                   <th width= 10% colspan="3">Actions</th>
@@ -97,7 +97,7 @@
                     <td>{{item.brand.brand_name}}</td>  
                     <td><input
                           bs-switch
-                          ng-model="item.item_status"
+                          ng-model="item.featured_flag"
                           type="checkbox"
                           switch-active="{{ isActive }}"
                           switch-on-text="{{ onText }}"

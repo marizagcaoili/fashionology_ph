@@ -47,7 +47,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
-
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
 
@@ -269,6 +268,8 @@ Router::prefix('Admin', function ($routes) {
 
            $routes->connect('/admin/catalog/delete_item', ['controller' => 'catalog', 'action' => 'deleteItem']); 
 
+           $routes->connect('/admin/catalog/update_item', ['controller' => 'catalog', 'action' => 'updateItem']); 
+
            $routes->connect('/admin/catalog/update_item_status', ['controller' => 'catalog', 'action' => 'updateItemStatus']);
     
         //---/>ITEM
@@ -336,6 +337,8 @@ Router::prefix('Admin', function ($routes) {
         //IMAGE
 
            $routes->connect('/admin/catalog/upload_image', ['controller' => 'catalog', 'action' => 'uploadImage']);
+
+           $routes->connect('/admin/catalog/update_image', ['controller' => 'catalog', 'action' => 'updateImage']);
 
            $routes->connect('/admin/catalog/last_inserted', ['controller' => 'catalog', 'action' => 'lastInserted']);
 

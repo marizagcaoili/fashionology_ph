@@ -22,18 +22,18 @@ class ItemsTable extends Table
     {
     	// Query
         return $this->find()
-        ->contain(['Brands', 'Images'])
-        ->toArray();
+                    ->contain(['Brands', 'Images'])
+                    ->toArray();
     }
 
     public function getNewItemList()
     {
         // Query
         return $this->find()
-        ->contain(['Images'])
-        ->order('item_created DESC')
-        ->limit(8)
-        ->toArray();
+                    ->contain(['Images'])
+                    ->order('item_created DESC')
+                    ->limit(8)
+                    ->toArray();
     }
 
     public function getRecentItemList()
@@ -50,26 +50,26 @@ class ItemsTable extends Table
     {
         // Query
         return $this->find()
-        ->contain(['Brands'])
-        ->where(['category_id' => $category])
-        ->toArray();
+                    ->contain(['Brands'])
+                    ->where(['category_id' => $category])
+                    ->toArray();
     }
 
     public function getFeaturedItems()
     {
         // Query
         return $this->find()
-        ->contain(['Images'])
-        ->where(array('featured_flag' => 1))
-        ->toArray();
+                    ->contain(['Images'])
+                    ->where(array('featured_flag' => 1))
+                    ->toArray();
     }
 
     public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date)
     {
         return $this->query()
-        ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes', 'gender','item_created'])
-        ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender, 'item_created' => $date])
-        ->execute();
+                    ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes', 'gender','item_created'])
+                    ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender, 'item_created' => $date])
+                    ->execute();
     }
 
     public function getItemListByGender($gender)
@@ -96,25 +96,27 @@ class ItemsTable extends Table
     public function getDetails($item_id)
     {
         return $this->find()
-        ->contain(['Brands', 'Categories'])
-        ->where(['item_id' => $item_id])
-        ->toArray();
+                    ->contain(['Brands', 'Categories', 'Images'])
+                    ->where(['Items.item_id' => $item_id])
+                    ->toArray();
     }
 
 
     public function deleteItem($item_id)
     {
-        return $this->query()->delete()
-        ->where(['item_id' => $item_id])
-        ->execute();
+        return $this->query()
+                    ->delete()
+                    ->where(['item_id' => $item_id])
+                    ->execute();
     } 
 
     public function updateItemStatus($item_id, $status)
     {
-        return $this->query()->update()
-        ->set(['item_status' => $status])
-        ->where(['item_id' => $item_id])
-        ->execute();
+        return $this->query()
+                    ->update()
+                    ->set(['featured_flag' => $status])
+                    ->where(['item_id' => $item_id])
+                    ->execute();
     }
 
 
@@ -129,9 +131,18 @@ class ItemsTable extends Table
     public function itemsByBrand($brand_id)
     {
         return $this->find()
-        ->contain(['Brands', 'Images'])
-        ->where(['Items.brand_id' => $brand_id])
-        ->toArray();
+                    ->contain(['Brands', 'Images'])
+                    ->where(['Items.brand_id' => $brand_id])
+                    ->toArray();
+    }
+
+    public function updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender)
+    {
+        return $this->query()
+                    ->update()
+                    ->set(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender])
+                    ->where(['item_id' => $item_id])
+                    ->execute();
     }
 
 }

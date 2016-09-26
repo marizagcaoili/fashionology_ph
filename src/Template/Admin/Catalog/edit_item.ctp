@@ -28,7 +28,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Add Item
+        Edit Item
        <!--  <small>Optional description</small> -->
       </h1>
       <ol class="breadcrumb">
@@ -59,7 +59,7 @@
                   </ul>
                   </div>
                   <div class="col-xs-1">
-                    <button type="submit" ng-click="addItem()" class= "btn bg-primary btn-flat" name=""><i class="fa fa-save"> </i></button>
+                    <button type="submit" ng-click="updateItem()" class= "btn bg-primary btn-flat" name=""><i class="fa fa-save"> </i></button>
                   </div>
                 </div>
 
@@ -81,10 +81,10 @@
                         <label for="item-code" class="col-xs-3 col-form-label">Item Code</label>
                       
                          <div class="input-group col-xs-9">
-                              <input type="hidden" name="brand_prefix" id="brandPrefix" ng-repeat="prefix in prefixes" class="form-control" value='brand_prefix'>
+                              <input type="hidden" name="brand_prefix" id="brandPrefix" ng-repeat="prefix in prefixes" class="form-control" value='{{brand_prefix}}'>
 
                               <span class="input-group-addon">{{brand_prefix}}</span>
-                              <input type="text" name="item_code" id="itemCode" class="form-control" placeholder="Item Code" value= '{{item_code}}' aria-describedby="item-code" >
+                              <input  style="text-transform: uppercase;" type="text" name="item_code" id="itemCode" class="form-control" placeholder="Item Code" value= '{{item_code}}' aria-describedby="item-code" >
                           </div>
                       </div>
 
@@ -107,7 +107,7 @@
                                           <select id="category1" class="form-control" ng-model="selectedCategory" ng-options="parent as parent.category_name for parent in parents track by parent.category_id" ng-change="secondCategory()"  aria-describedby="category">
                                             </select><BR></BR>
                                           
-                                             <select id="category2" class="form-control" ng-model="selectedCategory2" ng-options="category as category.category_name for category in categories track by category.category_id" aria-describedby="category">
+                                             <select id="category2" class="form-control" ng-model="selectedCategory2" ng-options="category as category.category_name for category in categories track by category.category_id" aria-describedby="category" ng-change="selectedChild()">
                                             </select> <BR></BR>
                                         </div>
                                 </div>
@@ -178,7 +178,7 @@
 
 
                                              <div class="tab-pane" id="resp-tab2">
-                         <div ng-app="admin" ng-controller="AddItemController">
+                         <div >
 
                             <div class="box-body">
         
@@ -211,7 +211,7 @@
                                           <td>
                                           <i ng-show="myForm.userName.$error.required">*required</i>
                                           Description <br>
-                                          <input type="text" name="userName" ng-model="username" id ="image_desc" size="31" required></td>
+                                          <input type="text" name="userName" ng-model="image_desc" id ="image_desc" size="31" required></td>
 
                                           <td>
                                           <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> 
