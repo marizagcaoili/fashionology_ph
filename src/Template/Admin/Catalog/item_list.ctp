@@ -114,10 +114,10 @@
                           switch-wrapper="{{ wrapper }}"
                           ng-true-value="1"
                           ng-false-value="0"
-                          switch-change="toggle(item.item_id, item.item_status)"></td>
+                          switch-change="toggle(item.item_id, item.featured_flag)"></td>
                     <td>{{item.item_srp}}.00</td>
                     <td><center><img style= "width:50px;" src="{{item.image.file_key}}"></center></td>
-                   <td> <span data-toggle= "modal" data-target="#addStock"><button data-toggle="tooltip" data-placement="bottom" title="Add Stocks" type="submit" ng-click="getSizes(item.item_id, item.sizes)" class= "btn bg-success btn-flat" name=""><i class="fa fa-plus-circle"> </i></button></a></span></td>
+<!--                    <td> <span data-toggle= "modal" data-target="#addStock"><button data-toggle="tooltip" data-placement="bottom" title="Add Stocks" type="submit" ng-click="getSizes(item.item_id, item.sizes)" class= "btn bg-success btn-flat" name=""><i class="fa fa-plus-circle"> </i></button></a></span></td> -->
                     <td><a href="/admin/catalog/edit_item?item_id={{item.item_id}}"><button type="submit" class= "btn bg-primary btn-flat" name=""><i class="fa fa-pencil"> </i></button></a></td>
                      <td><button type="submit" ng-click="deleteItem(item.item_id)" class= "btn bg-red btn-flat" name=""><i class="fa fa-trash"> </i></button></td>
 

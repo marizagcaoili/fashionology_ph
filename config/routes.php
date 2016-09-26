@@ -271,6 +271,8 @@ Router::prefix('Admin', function ($routes) {
            $routes->connect('/admin/catalog/update_item', ['controller' => 'catalog', 'action' => 'updateItem']); 
 
            $routes->connect('/admin/catalog/update_item_status', ['controller' => 'catalog', 'action' => 'updateItemStatus']);
+
+           $routes->connect('/admin/catalog/count_featured', ['controller' => 'catalog', 'action' => 'countFeatured']);
     
         //---/>ITEM
 
