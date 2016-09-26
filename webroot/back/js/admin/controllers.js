@@ -450,7 +450,7 @@ app.controller('AddItemController', ['$scope', 'Upload', '$timeout', '$http', fu
 
 
 	
-	$scope.addItem = function (categoryid) {
+	$scope.addItem = function () {
 		var item_code = $('#brandPrefix').val() + $('#itemCode').val().toUpperCase();
 		var category_id = $scope.categoryid;
 		var brand = $('#brand').val();
@@ -537,8 +537,8 @@ app.controller('ItemListController', function($scope, $http, $timeout) {
 	ItemList.init();
 	// scope Vars to view
 
-	$scope.onText = 'Available';
-    $scope.offText = 'Not Available';
+	$scope.onText = 'Featured';
+    $scope.offText = 'Not Featured';
     $scope.isActive = true;
     $scope.size = 'mini';
     $scope.animate = true;
@@ -699,12 +699,7 @@ app.controller('ItemListController', function($scope, $http, $timeout) {
 });
 
 
-app.controller('EditItemController', ["$location", "$scope", "$http", function($location, $scope, $http) {
-    $scope.$watch('categoryid', function(val) {
-        if (val) {
-            console.log(val);
-        }
-    });
+app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope", "$http", function($timeout, Upload, $location, $scope, $http) {
     $scope.genders = 
 	  [{ 
           gender_id: '0',
@@ -724,11 +719,13 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 		// Init functions / source
 		EditItem.parameter();
 		EditItem.parents();
+		EditItem.sizeList();
 
 	};
 
 	EditItem.parameter = function() {
 		var item_id = $location.search().item_id;
+		$scope.item_id = item_id;
 		console.log(item_id);
 		EditItem.getDetails(item_id);
 
@@ -748,13 +745,16 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				params : { item_id : item_id }
 			}).then(function(response) {
-				$scope.details = response.data.item[0];
-				$scope.gender = response.data.item[0].gender;
-				$scope.brand = response.data.item[0].brand_id;
-				$scope.code_item = response.data.item[0].item_code;
-				$scope.category_id = response.data.item[0].category_id;
-				$scope.parent_id = response.data.item[0].category.parent_id;
-	
+				$scope.details = response.data[0];
+				$scope.gender = response.data[0].gender;
+				$scope.brand = response.data[0].brand_id;
+				$scope.code_item = response.data[0].item_code;
+				$scope.category_id = response.data[0].category_id;
+				$scope.parent_id = response.data[0].category.parent_id;
+				$scope.temp = response.data[0].image.file_key;
+				$scope.picFile = response.data[0].image.file_key;
+				$scope.image_desc = response.data[0].image.img_description;
+				var sizes = response.data[0].sizes;
 
 				console.log($scope.details);
 
@@ -782,7 +782,10 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 
 
 				EditItem.category($scope.parent_id);
+				var size =  (sizes).split(",").map(function(t){return parseInt(t)});
+				console.log(size);
 
+				$scope.selected = {sizes: size};
 
 			  	$scope.item_code = $scope.code_item.replace($scope.brand_prefix,"");
 				$('#summernote').summernote('code', $scope.details.item_description);
@@ -799,7 +802,7 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 			params : { parent_id : parent_id }
 		}).then(function(response){
 			$scope.categories = response.data;
-			
+
 				angular.forEach($scope.categories, function(value, key) {
 			  	if($scope.category_id == value.category_id) {
 			  	$scope.selectedCategory2 = value;
@@ -814,11 +817,45 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			params : { brand_id : brandId }
 		}).then(function(response) {
-			$scope.prefixes = response.data;
+			$scope.brand_prefix = response.data[0].brand_prefix;
 		})
 
 	};
 	
+	EditItem.sizeList = function() {
+		$http.get("/admin/catalog/get_sizes")
+		    .then(function(response) {
+		        $scope.sizes = response.data;
+		    });
+	};
+
+
+	EditItem.updateItem = function (item_code, brand, srp, item_name, desc, categoryid, sizes, gender){
+			$http({
+				url : "/admin/catalog/update_item",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			    transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data : 	{item_id : $scope.item_id, item_code: item_code, brand : brand, srp : srp, item_name : item_name, desc : desc, categoryid : categoryid, sizes: sizes, gender:gender} // Data to be passed to API
+			})
+		    .then(function(response) {
+		    	$timeout(function () {
+		    		if ($scope.picFile == $scope.temp)
+		    		{
+		    		  alert('Item Successfully Updated!');
+		    		  window.location.href= "/admin/catalog/items";
+		    		}
+		    		else{
+		       		$('#uploadButton').click();
+		       		}
+			     }); 	
+		    });
+	};
 
 	EditItem.parents= function() {
 		$http.get("/admin/catalog/get_parents")
@@ -843,15 +880,70 @@ app.controller('EditItemController', ["$location", "$scope", "$http", function($
 
 	EditItem.init();
 
+
+	$scope.updateItem = function () {
+		var item_code = $scope.brand_prefix + $('#itemCode').val().toUpperCase();
+		var category_id = $scope.category_id;
+		var brand = $scope.selectedBrand.brand_id;
+		var srp = $('#srp').val();
+		var item_name = $('#itemName').val();
+		var desc = $('#summernote').val();
+		var sizes = $scope.selected.sizes;
+		var gender = $scope.selectedGender.gender_id;
+
+		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" || sizes == "" || $scope.picFile == undefined || $scope.picFile == "" || $scope.image_desc == ""){
+			alert("You must fill all the required fields!");
+		}
+		else{
+		EditItem.updateItem(item_code, brand, srp, item_name, desc, category_id, sizes, gender);
+		}
+	};
+
 	 $scope.getPrefix = function() {
 		var brand_id = $scope.selectedBrand.brand_id;
 		EditItem.prefix(brand_id);
-		$('#category2').val('');
+
 	};
 
 	$scope.secondCategory = function(){
 		EditItem.category($scope.selectedCategory.category_id);
+		$('#category2').val('');
 	};
+
+	$scope.selectedChild = function(){
+		$scope.category_id = $scope.selectedCategory2.category_id;
+	};
+
+	$scope.uploadPic = function(file) {
+		if ($scope.picFile == undefined || $scope.picFile == "")
+		{
+			alert("You must select a photo for your item!");
+		}
+		else{
+
+	    file.upload = Upload.upload({
+		     method:"POST",        		
+		      url: '/admin/catalog/update_image',
+		      data: {description: $scope.image_desc, file: file, item_id : $scope.item_id},
+	    });
+		}
+
+	    file.upload.then(function (response) {
+	      $timeout(function () {
+	       file.result = response.data;
+	      });
+	    }, function (response) {
+	      if (response.status > 0)
+	        $scope.errorMsg = response.status + ': ' + response.data;
+	    }, function (evt) {
+	      // Math.min is to fix IE which reports 200% sometimes
+	      file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+	      console.log(file.progress);
+	      window.alert("Item Successfully Updated!");
+	      window.location.href= "/admin/catalog/items";
+
+    });
+    };
 
 }]);
 
@@ -951,7 +1043,8 @@ app.controller('SizeController', function($scope, $http) {
 	    	Size.sizeList();
 	    });
 
-	}
+	};
+
 
 });
 

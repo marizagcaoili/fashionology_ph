@@ -179,8 +179,8 @@
                                       </form>
 
 
-                                             <div class="tab-pane" id="resp-tab2">
-                         <div ng-app="admin" ng-controller="AddItemController">
+                          <div class="tab-pane" id="resp-tab2">
+                         <div>
 
                             <div class="box-body">
         

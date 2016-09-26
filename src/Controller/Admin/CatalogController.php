@@ -127,6 +127,34 @@ class CatalogController extends Controller
         exit();
     }
 
+    public function updateItem()
+    {
+
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $item = TableRegistry::get('Items');
+        //$add = $brand->query();
+
+        $item_id = $this->request->data('item_id');
+        $item_code   = $this->request->data('item_code');
+        $brand  = $this->request->data('brand');
+        $srp   = $this->request->data('srp');
+        $item_name = $this->request->data('item_name');
+        $desc = $this->request->data('desc');
+        $categoryid = $this->request->data('categoryid');
+        $sizes = $this->request->data('sizes');
+        $gender = $this->request->data('gender');
+
+        $date = date('Y-m-d H:i:s');
+
+
+         $item->updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender);
+
+        echo json_encode('updated!');      
+        exit();
+    }
+
     public function updateItemStatus()
     {
         //disable ui rendering
@@ -157,12 +185,7 @@ class CatalogController extends Controller
        
         $details = $item->getDetails($item_id);
 
-        $response['item'] = $details;
-
-        $response['parent_category'] = $category->getCatDetails($details[0]['category']['parent_id']);
-        $response['top_parent_category'] = $category->getCatDetails($details[0]['category']['top_parent']);
-
-        echo json_encode($response);
+        echo json_encode($details);
         exit();
 
     }
@@ -522,6 +545,36 @@ class CatalogController extends Controller
         
         exit();
     }
+
+    public function updateImage()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        $image = TableRegistry::get('Images');
+
+        $description = $this->request->data('description');
+        $file   = $this->request->data('file');
+        $item_id = $this->request->data('item_id');
+
+        $imageFileType= pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
+        $imageFileName= pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME);
+
+        
+        $filename = basename($_FILES['file']['name']);
+
+        $fileKey= md5(microtime().$imageFileName).".".$imageFileType;
+
+        $filePath = "/img/".$fileKey;
+
+        $target_file = IMAGE_DIR . $fileKey;
+        move_uploaded_file($_FILES["file"]["tmp_name"], $target_file);
+
+        $image->updateImage($description, $filename, $filePath, $item_id);
+        echo true;
+        
+        exit();
+    }
+
 
     public function sizes()
     {
