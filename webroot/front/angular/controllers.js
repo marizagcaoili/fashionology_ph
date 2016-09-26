@@ -187,17 +187,12 @@ app.controller('CartController',function($scope, $http, $cookies, $cookieStore, 
 
 		var index = cartItems.indexOf(item_id);
 
-		console.log(index);
-
 		if (index >- 1) {
 			cartQuantity.splice(index, 1);
 			cartItems.splice(index, 1);
 
 			$cookies.put('cart_items_quantity', JSON.stringify(cartQuantity));		
 			$cookies.put('cart_items', JSON.stringify(cartItems));
-
-			$rootScope.cart_items_quantity = cartQuantity;
-			$rootScope.cart_items = cartItems;		
 
 			if (cartItems.length > 0) {
 				$http.get("/api/viewToCart")
@@ -217,14 +212,90 @@ app.controller('CartController',function($scope, $http, $cookies, $cookieStore, 
 			} else {
 				$scope.items = [];
 				$scope.total = 0;
+				$('.btn-secure').remove();
 			}
 			
+			// Update root scopes
+			$rootScope.cart_items_quantity = cartQuantity;
+			$rootScope.cart_items = cartItems;
+			$rootScope.cart_items_count = $rootScope.cart_items.length;	
 		}
 	}
 
 	CartManager.Init();
 });
 // -- END : CartHomeController -- //
+
+// -- START : CartHomeController -- //
+app.controller('CheckoutController',function($scope, $http, $cookies, $cookieStore, $rootScope) {
+	var CheckoutManager = {};
+
+	CheckoutManager.Init = function() {
+		CheckoutManager.LoadOrderedItems();
+	}
+
+	CheckoutManager.LoadOrderedItems = function () {
+		$http.get("/api/viewToCart")
+		.then(function(response) {
+			var items = [];
+			angular.forEach($rootScope.cart_items, function(item){
+				angular.forEach(response.data, function(data){
+					if(item == data.item_id) {
+						items.push(data);
+					}
+				});
+			});
+
+			$scope.items = items;
+		});
+	}
+
+	// Function scopes
+	$scope.secD = function() {
+		$scope.method = $cookies.get('method_payment');
+
+		if ($scope.method == null) {
+			alert('Please select payment method first!');
+		} else if ($rootScope.cart_items == null) {
+			alert('no item placed!');
+		} else {
+			$('.sec-c').collapse('hide');
+		}
+	}
+
+	$scope.setSchedule = function() {
+		var hours = $('#hours').val(),
+		minutes = $('#minutes').val(),
+		format = $('#format').val();
+
+		$scope.timeValue = hours + minutes + format;
+
+		$cookies.put('time_of_pickup', JSON.stringify($scope.timeValue));
+		$cookies.put('method_payment', 'Pick Up');
+	}
+
+	$scope.setDelivery = function() {
+		var date = $('#setDate').val();
+
+		$cookies.put('delivery_status','pending');
+		$cookies.put('method_payment', 'Delivery');
+	}
+
+	$scope.delivery = function(account_fname) {
+		$('.sec-b').collapse('hide');
+		$('.sec-c').collapse('show');
+	};
+
+	$scope.nextStep = function(){
+		window.location='/checkout/process';
+	}
+
+	$scope.backToStore = function(){
+		window.location='/';
+	}
+
+	CheckoutManager.Init();
+});
 
 // -- START : ClothingController  -- //
 app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore, $rootScope) {
@@ -594,18 +665,6 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore,$ro
 
 // -- START : testController -- //
 app.controller('testController', function($scope, $http, $cookies, $cookieStore, $rootScope) {
-	$scope.secD = function() {
-		$scope.method = $cookies.get('method_payment');
-
-		if ($scope.method == null) {
-			alert('Please select payment method first!');
-		} else if ($rootScope.cart_items == null) {
-			alert('no item placed!');
-		} else {
-			$('.sec-c').collapse('hide');
-		}
-	}
-
 	$scope.inquiry = function() {
 		$('.status-sent').fadeIn();
 		$('.contact-forms').fadeOut();
@@ -664,32 +723,13 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 		});
 	}
 
-	$scope.setSchedule = function() {
-		var hours = $('#hours').val(),
-		minutes = $('#minutes').val(),
-		format = $('#format').val();
-
-		$scope.timeValue = hours + minutes + format;
-
-		$cookies.put('time_of_pickup', JSON.stringify($scope.timeValue));
-		$cookies.put('method_payment', 'Pick Up');
-	}
-
-	$scope.setDelivery = function() {
-		var date = $('#setDate').val();
-
-		$cookies.put('delivery_status','pending');
-		$cookies.put('method_payment', 'Delivery');
-	}
+	
 
 	$scope.ItemsReveal = function() {
 		$('.mixnmb-items').show();
 	}
 
-	$scope.delivery = function(account_fname) {
-		$('.sec-b').collapse('hide');
-		$('.sec-c').collapse('show');
-	};
+	
 
 	$scope.account_id = $cookies.get('f_account_id');
 
@@ -756,13 +796,9 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 
 	$scope.branch = $cookies.get('branch_id');
 
-	$scope.nextStep = function(){
-		window.location='/checkout/process';
-	}
+	
 
-	$scope.backToStore = function(){
-		window.location='/';
-	}
+	
 
 	var Summary = {};
 	var item_ids = [];

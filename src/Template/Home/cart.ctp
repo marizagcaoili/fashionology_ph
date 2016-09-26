@@ -80,6 +80,9 @@
                      </ul>
                   </div>
                </div>
+
+               <?php include LAYOUT_DIR . 'front-login.ctp'; ?>
+
                <div class='cart-container-b'>
                   <div class='instructions'>
                      <div class='instructions-head'>
@@ -94,13 +97,16 @@
                         </div>
                      </div>
                      <div class='set-button'>
-                        <a class='btn-secure' href='/checkout'>SECURE CHECKOUT</a>
+                        <a class='btn-secure' ng-show="{{(f_account_id != null || f_account_id > 0) && cart_items_count > 0}}" href="/checkout?f_token={{authCookies.f_token}}&f_account_id={{authCookies.f_account_id}}">SECURE CHECKOUT</a>
+
+                        <a class='btn-secure' ng-show="{{f_account_id == null && cart_items_count > 0}}" data-toggle="modal" data-target="#loginModal">SECURE CHECKOUT</a>
+
                         <button class='btn-cont'><a href="/">CONTINUE SHOPPING</a></button>
                      </div>
                   </div>
                </div>
             </div>
-         </div>
+         </div>)
       </main>
    </body>
 </html>
