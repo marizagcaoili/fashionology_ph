@@ -9,75 +9,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>Fashionology PH</title>
 
-
   <?php include LAYOUT_DIR . 'front-script.ctp'; ?>
-
 
   <script src='/front/public/js/script-sub.js'></script>
 
-
   <!-- Core CSS -->
-
   <?php include LAYOUT_DIR . 'front-css.ctp'; ?>
-
-
   <!--scripts-->
-
-
   <style>
-
     .arrow-up{
       display: none;
     }
   </style>
 
-
 </head>
 <body class="index-page " ng-controller="ClothingController"  ng-app="SampleApp">
-
   <?php include LAYOUT_DIR . 'front-category.ctp'; ?>
-
-
-
-
-  <?php include LAYOUT_DIR . 'front-control.ctp'; ?>
-
-
-
-
-
   <script>
-
     $(document).ready(function(){
-
-
-      $('.control-center').hide();
-
-      $('.control-down').click(function(){
-        $('.control-center').slideToggle();
-      })
-
-
       $('.category').hide();
-      $('.sidebar').hide();
-
-      $('.sidebarreveal').click(function(){
-       $('.sidebar').slideDown();
-     })
-
-      $('.closer').click(function(){
-        $('.sidebar').slideUp();
-      })
-
-
       $('.revealcategory').mouseenter(function(){
         $('.category').toggle();
-
-
       });
-
     });
-
 
     /**search box**/
 
@@ -93,7 +47,6 @@
           $(this).removeClass('open');
         }
       });
-
 
     //Do not include! This prevents the form from submitting for DEMO purposes only!
     $('form').submit(function(event) {
@@ -125,19 +78,8 @@
 
     <nav class="nav-b" ng-controller='testController'>
       <ul>
-        <a  class='lognowin' style='color:#333;'data-toggle="modal" data-target="#loginModal"><li>login</li></a>
-        <a  class='signmeup' href='/register' style='color:#333;' target="_self" ><li>sign up</li></a>
-
-        <a  class='userHi' style='color:#333;' href='/user/dashboard' target='_self'><li>Hi, User</li></a>
-
-        <a class='getLog' style='color:#333;'ng-click='logout()'><li>logout</li></a>
-
-
-
-        <a href="#search" style='color:#333;' ><li><i class="fa fa-search" aria-hidden="true"></i></li></a>
+        <?php include LAYOUT_DIR . 'user_actions_black.ctp'; ?>
         <a href="/cart" style='color:#333;' target='_self'><li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li></a>
-
-
         <a  class="count-cart" style="position:absolute;
         font-size:8px;
         padding: 4px 8px;
@@ -148,11 +90,6 @@
       </ul>
     </nav>
   </header>
-
-
-
-  <?php include LAYOUT_DIR . 'front-sidebar.ctp'; ?>
-
 
   <main class="container_14" style="border:none;">
 

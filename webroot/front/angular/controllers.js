@@ -22,13 +22,12 @@ app.filter('startFrom', function() {
 });
 
 // Initialize rootScope
-angular.module('SampleApp').run(function($rootScope, $cookies) {
+angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $http) {
 	var RootManager = {};
 
 	RootManager.Init = function() {
 		RootManager.SetCartInfo();
-		
-		$rootScope.f_account_id = $cookies.get('f_account_id');
+		RootManager.SetUserInfo();
 	};
 
 	RootManager.SetCartInfo = function() {
@@ -43,6 +42,39 @@ angular.module('SampleApp').run(function($rootScope, $cookies) {
 			$rootScope.cart_items_count = 0;
 		}
 	};
+
+	RootManager.SetUserInfo = function() {
+		$rootScope.f_account_id = $cookies.get('f_account_id');
+
+		if ($rootScope.f_account_id > 0) {
+			$http({
+				url : "/user/information/",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
+				data : 	{f_account_id : $rootScope.f_account_id} // Data to be passed to API
+			}).then(function(response){
+				$rootScope.userInfos = response.data[0];
+				$rootScope.user = response.data[0].account_fname;
+			});
+		}
+	};
+
+	// rootScope functions
+	$rootScope.logout = function() {
+		$cookies.remove('f_token');
+		$cookies.remove('f_account_id');
+		$cookies.remove('cart_items');
+		$cookies.remove('cart_items_quantity');
+		location.reload();
+	}
+
+	RootManager.Init();
 });
 
 // -- START : HomeController -- //
@@ -50,68 +82,9 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 
 	var HomeManager = {};
 
-	HomeManager.init = function() {
+	HomeManager.Init = function() {
 		HomeManager.GetFeaturedItems();
 		HomeManager.GetNewItems();
-
-		if ($scope.account_id > 1) {
-			$('.logmein').hide();
-			$('.account-control').show();
-			$('.sign-up').hide();
-			$('.wishlist').show();
-			
-			$http({
-				url : "/user/information/",
-				method: "POST",
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-					var str = [];
-					for(var p in obj)
-						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-					return str.join("&");
-				},
-				data : 	{f_account_id:$cookies.get('f_account_id')} // Data to be passed to API
-			}).then(function(response){
-				$scope.userInfos=response.data[0];
-			});
-
-			$('.account-control').hide();
-			$('.logmein').show();
-		}
-
-		if ($scope.account_id > 1) {
-			$http({
-				url : "/user/information/",
-				method: "POST",
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				transformRequest: function(obj) {
-					var str = [];
-					for(var p in obj)
-						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-					return str.join("&");
-				},
-				data : {f_account_id : $cookies.get('f_account_id')} // Data to be passed to API
-			}).then(function(response) {
-				$scope.welcomeUser = response.data;
-			});
-		}
-
-		$http({
-			url : "/authentication",
-			method: "POST",
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj)
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				return str.join("&");
-			},
-			data : {f_token:$cookies.get('f_token'),f_account_id:$cookies.get('f_account_id')} // Data to be passed to API
-		}).then(function(response){
-			console.log(response.data);						
-		});
-
-		$scope.branch = $cookies.get('branch_id');
 	};
 
 	HomeManager.GetFeaturedItems = function() {
@@ -135,36 +108,12 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 		});
 	};
 
-	HomeManager.init();
+	HomeManager.Init();
 });
 // -- END : HomeController -- //
 
 // -- START : ClothingController  -- //
 app.controller('ClothingController', function($timeout, $location, $scope,$http, $cookies, $cookieStore) {
-	$scope.logout=function(){
-		$cookies.remove('f_account_id');
-		$cookies.remove('f_token');
-		location.reload();
-	}
-
-	$scope.f_account_id=$cookies.get('f_account_id');
-
-	if($scope.f_account_id!=null){
-		$('.signmeup').hide();
-		$('.logmein').hide();
-
-		$('.userHi').show();
-		$('.getLog').show();
-	}
-
-	if($scope.f_account_id==null){
-		$('.signmeup').show();
-		$('.logmein').show();
-
-		$('.userHi').hide();
-		$('.getLog').hide();
-	}
-
 	var ClothingController ={};
 
 	ClothingController.init = function(){
@@ -281,14 +230,11 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		});
 	}
 
-	ClothingController.init();
+	$scope.addtowish = function($event,item_id) {
+		var user_id = $scope.userId = $cookies.get('f_account_id');
 
-	$scope.addtowish=function($event,item_id){
-		var user_id=$scope.userId=$cookies.get('f_account_id');
-
-		if(user_id>1)
-		{
-			if($($event.target).attr('class') == 'fa fa-heart-o') {
+		if (user_id>1) {
+			if ($($event.target).attr('class') == 'fa fa-heart-o') {
 		 		// API CALL to save wish list
 		 		$($event.target).attr('class', 'fa fa-heart');	
 
@@ -324,7 +270,6 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 			// Get and Convert Cookie to Object
 			cart = JSON.parse($cookies.get('cart_items'));
 			cart_qty = JSON.parse($cookies.get('cart_items_quantity'));
-
 
 			// Check if item_id not exists
 			if(cart.indexOf(item_id) == -1) {
@@ -364,9 +309,10 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 
 			$scope.item = items;
 		});
-
-		console.log(JSON.parse($cookies.get('cart_items')));
 	};
+
+	// Clothing init
+	ClothingController.init();
 });
 // -- END : ClothingController -- //
 
@@ -431,8 +377,8 @@ app.controller('accountController',function($scope,$http){
 // -- END : accountController -- //
 
 // -- START : LoginController -- //
-app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
-	$scope.f_account_id=$cookies.get('f_account_id');
+app.controller('LoginController',function($scope,$http,$cookies,$cookieStore,$rootScope){
+	$scope.f_account_id = $cookies.get('f_account_id');
 
 	$scope.updateData=function(){
 		var fname=$('#fname').val(),
@@ -442,26 +388,30 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
 		city=$('#city').val(),
 		postal=$('#postal').val(),
 		address=$('#address').val();
-
 	}
 
-	$scope.register=function(){
+	$scope.register = function(){
 		window.location='/register';
 	}
 
-	$scope.login=function(){
-		location.reload();
-		$scope.username=$('#username').val();
-		$scope.password=$('#password').val();
+	$scope.login = function() {
+		$scope.username = $('#username').val();
+		$scope.password = $('#password').val();
 
 		$http({
 			url: "/user/login/details",
 			method: "GET",
 			params : { username : $scope.username , password: $scope.password }
 		}).then(function(response) {
-			if(response.data.status){
-				$cookies.put('f_token',response.data.f_token);
-				$cookies.put('f_account_id',response.data.f_account_id);
+			
+			if (response.data.status) {
+				$cookies.put('f_token', response.data.f_token);
+				$cookies.put('f_account_id', response.data.f_account_id);
+
+				// Set global values
+				$rootScope.f_account_id = $cookies.get('f_account_id');
+				$rootScope.userInfos = response.data.user_info;
+				$rootScope.user = response.data.user_info.account_fname;
 
 				$http.get("authentication/")
 				.then(function(response) {
@@ -480,12 +430,14 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore){
 							return str.join("&");
 						},
 						data : 	{f_token:f_token,f_account_id:f_account_id} // Data to be passed to API
-					}
-					)
+					});
+
+					location.reload();
 				});
 			} else {
 				window.alert("Incorrect username and password!");
 			}
+
 		});
 	}
 

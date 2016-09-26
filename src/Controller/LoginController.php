@@ -59,25 +59,23 @@ class LoginController extends AppController
 
         $count = $count == 1 ? true : false;
 
+        if ($count == true) {
+           $account_id = $result[0]['account_id'];
 
-        if($count==true){
+           $session_type = 'front'; 
+           $session_token = md5(microtime());
 
-         $account_id=$result[0]['account_id'];
+           $sessions = TableRegistry::get('Sessions');
 
-         $session_type='front'; 
-         $session_token=md5(microtime());
+           $result_token = $sessions->storeSessionData($account_id, $session_type, $session_token);
 
-         $sessions=TableRegistry::get('Sessions');
+           echo json_encode(array("status" => $count, "f_token" => $session_token, 'f_account_id' => $account_id, 'user_info' => $result[0]));
+       } else {
+            echo json_encode(array("status" => 0));
+       }
 
-         $result=$sessions->storeSessionData($account_id,$session_type,$session_token);
-
-
-     }
-
-     echo json_encode(array("status" => $count, "f_token" => $session_token,'f_account_id'=>$account_id));
-
-     exit();
- }
+       exit();
+  }
 
  public function getAuthentication()
  {

@@ -10,19 +10,6 @@
       <script src="https://cdn.rawgit.com/nnattawat/flip/master/dist/jquery.flip.min.js"></script>
       <script>
          $(document).ready(function(){
-         	$("#carda").flip();
-         	$("#cardb").flip();
-         	$("#cardc").flip();
-         	$("#cardd").flip();
-         	$("#carde").flip();
-         	$('.sidebarreveal').click(function(){
-         		$('.sidebar').fadeIn();
-         	})
-         
-         	$('.closer').click(function(){
-         		$('.sidebar').fadeOut();
-         	})
-         
          	$('.category').hide();
          
          	$('.revealcategory').mouseenter(function(){
@@ -41,7 +28,6 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
    </head>
    <body class="index-page" id='skrollr-body' ng-app="SampleApp"  ng-controller="HomeController"  style='border:none;'>
-      <?php include LAYOUT_DIR . 'front-control.ctp'; ?>
       <script>
          jQuery(function($) {
          	function fixDiv() {
@@ -117,21 +103,7 @@
          </nav>
          <nav class="nav-b" >
             <ul>
-               <a  class='lognowin' ng-show="{{f_account_id == null}}" style='color:#fff;'data-toggle="modal" data-target="#loginModal">
-                  <li>login</li>
-               </a>
-               <a  class='signmeup' ng-show="{{f_account_id == null}}" href='/register' style='color:#fff;' >
-                  <li>sign up</li>
-               </a>
-               <a  class='userHi' ng-show="{{f_account_id != null}}" style='color:#fff;' href='/user/dashboard'>
-                  <li>Hi, User</li>
-               </a>
-               <a class='getLog' ng-show="{{f_account_id != null}}" style='color:#fff;' ng-click='logout()'>
-                  <li>logout</li>
-               </a>
-               <a href="#search" style='color:#fff;' >
-                  <li><i class="fa fa-search" aria-hidden="true"></i></li>
-               </a>
+               <?php include LAYOUT_DIR . 'user_actions_white.ctp'; ?>
                <a href="/cart" style='color:#fff;'>
                   <li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li>
                </a>
@@ -292,7 +264,7 @@
                         margin-left:56px;margin-top:105px;">
                         <p class="gender-chc">Men</p>
                         <p class="gender-desc">Don't miss out the style you will ever love. Take the verge of being a high fashionable guy! </p>
-                        <a href="#" class="shop-now shop-adjust" style="top:54px;">shop men</a>
+                        <a href="/clothing?mode=men" class="shop-now shop-adjust" style="top:54px;">shop men</a>
                      </div>
                   </section>
                   <section style="border:solid 1px #fff;" class="gender-female">
@@ -300,7 +272,7 @@
                         margin-left:68px;margin-top:105px;">
                         <p class="gender-chc">Women</p>
                         <p class="gender-desc">Don't miss the chance of being a girl in you. You deserve to be free. Stand Up!</p>
-                        <a href="#" class="shop-now shop-adjust" style="top:54px;margin-left: 176px;">shop women</a>
+                        <a href="/clothing?mode=women" class="shop-now shop-adjust" style="top:54px;margin-left: 176px;">shop women</a>
                      </div>
                   </section>
                </div>
