@@ -1,0 +1,151 @@
+/***whats hot*/
+.section-hot{
+	position: relative;
+	top:40px;
+	height:624px;
+	width:92%;
+	margin:0 auto;
+}
+.sidebar{
+	display:none;
+}
+.section-header-hot{
+	height:auto;
+	position:relative;
+	margin-top:12px;
+
+	p:nth-child(1){
+		font-size:52px;
+		width:54%;
+		text-align: left;
+		font-family:Coves;
+		margin:0;
+		font-weight:bold;
+		display: none;
+	}
+
+	p:nth-child(2){
+		margin:0;
+		width:64%;
+		margin:0 auto;
+		text-align: center;
+		font-size:20px;
+		font-family:Coves;
+		font-weight: bold;
+	}
+}
+.group-of-hot{
+	position: relative;
+	top:48px;
+	width:84%;
+	margin:0 auto;
+	height:500px;
+	left:24px;
+
+	ul{
+		list-style:none;
+		width:100%;
+		margin:0;
+		padding:0;
+		height: 100%;
+		padding-left:9px;
+		
+		li{
+			display: inline-block;
+			margin: 0;
+			padding:0;
+			margin-right:18px;
+			margin-top: 18px;
+
+			&:hover{
+				.member-toggle{
+					top:130px;
+					height:70px;
+				}
+			}
+		}
+	}
+}
+
+.member-hot{
+	width:226px;
+	height:200px;
+}
+.content-member-hot{
+	position:absolute;
+	width:218px;
+	height:200px;
+	border:1px solid #f5f1f1;
+
+	figure{
+		position:absolute;
+		width:216px;
+		height:200px;
+
+		img{
+			width:100%;
+			height:100%;
+		}
+	}
+}
+.member-toggle{
+	position: relative;
+	top:136px;
+	height:66px;
+	transition:all 0.4s;
+	background:#fff;
+
+}
+.top-member-toggle{
+	position: relative;
+	top:-28px;
+	height:50px;
+	width:60%;
+	z-index:999;
+	margin:0 auto;
+	background:#fff;
+	p{
+		padding-top: 4px;
+		text-align: center;
+		font-size: 24px;
+		font-family: Coves;
+		font-weight:bold;
+	}
+}
+.bottom-member-toggle{
+	position: relative;
+	top:-34px;
+	height:48px;
+	z-index:999;
+	background:#fff;
+
+	p{
+		padding:2px;
+		padding-top:8px;
+		text-align: center;
+		width:94%;
+		margin:0 auto;
+		font-family: Moon;
+		font-size: 14px;
+	}
+}
+
+.latest{
+	position: relative;
+	top:38px;
+	border-bottom:1px solid #cdcdcd;
+	p{
+		font-family: Coves;
+		font-size: 20px;
+		font-weight: bold;
+	}
+}
+
+.member-of-hot{
+	position: relative;
+	top:60px;
+}
+// .section-headline-hot{
+// 	border:1px solid;
+// 	height:10px;
+// }

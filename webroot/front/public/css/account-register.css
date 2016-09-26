@@ -1,0 +1,100 @@
+@import url("webfont.css");
+.cover-reg {
+  position: relative;
+  height: 290px;
+  background: #363636; }
+
+.masthead {
+  background: #363636; }
+
+.container_14 {
+  position: relative;
+  top: 90px; }
+
+.register-wrap {
+  width: 78%;
+  margin: 0 auto; }
+
+.title-bar {
+  position: relative;
+  top: 100px;
+  left: 148px;
+  height: 70px;
+  width: 78%; }
+  .title-bar p:nth-child(1) {
+    font-family: Coves;
+    font-weight: 700;
+    font-size: 68px;
+    color: #fff; }
+  .title-bar p:nth-child(2) {
+    position: relative;
+    top: -14px;
+    font-family: Coves;
+    font-weight: 700;
+    font-size: 30px;
+    color: #acacac; }
+
+.top-space {
+  position: relative;
+  margin-top: 30px; }
+
+.content-form {
+  position: relative;
+  top: 4px;
+  width: 80%; }
+
+.content-div-by {
+  display: flex;
+  display: inline-flex;
+  width: 99%; }
+  .content-div-by div {
+    flex: 1 8 80%;
+    width: 100%; }
+  .content-div-by input[type='text'], .content-div-by input[type='date'], .content-div-by input[type='password'] {
+    width: 398px;
+    border-radius: 0px;
+    height: 54px; }
+  .content-div-by .frm-lbl {
+    line-height: 2em;
+    font-family: Coves;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333; }
+
+.noted {
+  position: relative;
+  top: -70px;
+  height: 60px;
+  padding: 8px;
+  background: #efefef; }
+  .noted p {
+    font-family: Coves;
+    font-size: 24px;
+    margin: 0;
+    padding: 8px;
+    font-weight: bold; }
+
+.billing-info {
+  position: relative;
+  top: 30px;
+  height: auto; }
+  .billing-info p {
+    font-family: Coves;
+    font-weight: 700;
+    font-size: 30px;
+    color: #111; }
+
+.sign-me-up {
+  border: 1px solid;
+  padding: 10px 34px;
+  font-size: 20px;
+  font-family: Coves;
+  font-weight: bold;
+  background: #111;
+  color: #fff;
+  transition: all 0.4s; }
+  .sign-me-up:hover {
+    background: transparent;
+    color: #111; }
+
+/*# sourceMappingURL=account-register.css.map */

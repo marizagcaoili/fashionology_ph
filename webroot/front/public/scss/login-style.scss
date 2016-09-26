@@ -1,0 +1,122 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:500&subset=devanagari,latin,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+
+
+.login-main{
+	position: relative;
+	top:84px;
+	height:800px;
+}
+
+.login-wrap{
+	position:relative;
+	border:solid 1px;
+	width:86%;
+	margin:0 auto;
+	top:20px;
+	height:530px;
+
+	display:inline-flex;
+	display:flex;
+
+	.left-login{
+		flex: 1 8 70%;
+		width: 100%;
+		border:solid 1px;
+	}
+
+	.right-login{
+		flex: 1 8 70%;
+		height:100%;
+		border:solid 1px;
+	}
+}
+
+.left-login-sub{
+	position:relative;
+	top:24px;
+	height:90px;
+}
+
+.sign-in{
+	font-size:60px;
+	font-family:Coves;
+	padding-left:34px;
+}
+
+.inst{
+	position:relative;
+	font-family:Coves;
+	padding-left:34px;
+	font-size:26px;
+	width:86%;	
+	top:-24px;
+}
+.form-input-left{
+	border-bottom:solid 1px #dddada;
+	position:relative;
+	top:90px;
+	width:80%;
+	margin-left:36px;
+	height:174px;
+}
+.form-inputs{
+	position:relative;
+	margin-top:18px;
+	img{
+		width:60px;
+		height:60px;
+}
+}
+
+.form-username{
+	position:relative;
+	width:70%;
+	height:54px;
+	margin-top:4px;
+	right:12%;
+	border-radius:0px;
+	float:right;
+	border:none;
+	border-bottom:solid 1px;
+
+}
+.btn-grp{
+	position:relative;
+	top:104px;
+	width:80%;
+	margin-left:36px;
+	height:70px;
+	ul{
+		padding:0;
+
+		li{
+			list-style: none;
+			height:100%;
+			width:128px;
+			display: inline-block;
+		}
+
+	}
+}
+
+.log-now{
+	position:absolute;
+	border:solid 1px;
+	font-size:24px;
+	background:transparent;
+	padding:4px 34px;
+	font-weight:bold;
+	font-family:Coves;
+}
+
+.dont-have{
+	position:absolute;
+	font-size:20px;
+	font-weight:bold;
+	margin-top:6px;
+	font-family:Coves;
+	margin-left:12px;
+	color:#3e606f;
+}

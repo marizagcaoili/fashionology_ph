@@ -1,0 +1,39 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+@import url(https://fonts.googleapis.com/css?family=Poppins:500&subset=devanagari,latin,latin-ext);
+@import 'https://fonts.googleapis.com/css?family=Montserrat:400,700';
+@import "https://fonts.googleapis.com/css?family=Open+Sans";
+
+@font-face {
+  font-family: "Moon";
+  src: url("/front/public/fonts/Moon Light.otf");
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Moon";
+  src: url("/front/public/fonts/Moon Bold.otf");
+  font-weight: bold; }
+
+@font-face {
+  font-family: "Coves";
+  src: url("/front/public/fonts/Coves Bold.otf");
+  font-weight: bold; }
+
+
+@font-face {
+  font-family: "Coves";
+  src: url("/front/public/fonts/Coves Light.otf");
+  font-weight: normal; }
+
+
+
+@font-face {
+  font-family: "COCOMAT";
+  src: url("/front/public/fonts/Cocomat Light.ttf");
+  font-weight: normal;
+  font-style: light; }
+@font-face {
+  font-family: "orange juice";
+  src: url("/front/public/fonts/orange juice.ttf");
+  font-weight: normal; }
+
+/*# sourceMappingURL=webfont.css.map */

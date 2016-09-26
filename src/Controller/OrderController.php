@@ -1,0 +1,190 @@
+<?php
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link      http://cakephp.org CakePHP(tm) Project
+ * @since     0.2.9
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
+namespace App\Controller;
+
+use Cake\Controller\Controller;
+use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
+
+
+/**
+ * Static content controller
+ *
+ * This controller will render views from Template/Pages/
+ *
+ * @link http://book.cakephp.org/3.0/en/controllers/pages-controller.html
+ */
+
+
+class OrderController extends Controller
+{
+
+  public function orderPlace()
+  {
+
+   $this->autoRender = false;
+   header('Content-Type: application/json');
+
+
+   $grandtotal=$this->request->data('grandtotal');
+   $reference=$this->request->data('order_reference_number');
+   $accountId=$this->request->data('account_id');
+   $paymentmethod=$this->request->data('order_payment_method');
+   $shippingid=$this->request->data('shipping_id');
+
+
+   // $item_code=1;
+
+   $item = TableRegistry::get('Orders');
+   
+   $result=$item->orderplace($grandtotal,$reference,$accountId,$paymentmethod,$shippingid);
+
+   $id = $result->lastInsertId('Orders');
+
+   echo json_encode($id);
+   exit();
+
+ }
+
+ public function userAdd()
+ {
+
+  $username = $this->request->data('account_username');
+  $email = $this->request->data('account_email');
+  $password = $this->request->data('account_password');
+  $birthday = $this->request->data('account_birthday');
+  $gender = $this->request->data('account_gender');
+  $fname = $this->request->data('account_fname');
+  $lname = $this->request->data('account_lname');
+  $contact=$this->request->data('account_contact');
+
+  // $address = $this->request->data('account_address');
+  // $city = $this->request->data('account_city');
+  // $state = $this->request->data('account_state');
+  // $postal = $this->request->data('account_postal');
+
+  $this->autoRender=false;
+  header('Content-Type: application/json');
+
+  $user=TableRegistry::get('Accounts');
+
+
+  $result=$user->userPlace($username,$email,$password,$birthday,$gender,$fname,$lname,$contact);
+
+  $id = $result->lastInsertId('Users');
+  echo json_encode($id);
+
+  exit();
+
+}
+
+public function addressAdd()  
+{
+    // $address = $this->request->data('account_address');
+  // $city = $this->request->data('account_city');
+  // $state = $this->request->data('account_state');
+  // $postal = $this->request->data('account_postal');
+
+  $this->autoRender=false;
+  header('Content-Type: application/json');
+
+  $account_id=$this->request->data('account_id');
+  $account_fname=$this->request->data('account_fname');
+  $account_lname=$this->request->data('account_lname');
+  $account_address=$this->request->data('account_address');
+  $account_city=$this->request->data('account_city');
+  $account_postal=$this->request->data('account_zipcode');
+
+
+
+  $address=TableRegistry::get('Shippings');
+
+  $address->addressInsert($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal);
+
+  // echo json_encode($account_id);
+
+  exit();
+
+}
+
+public function addOrderedItem()
+{
+
+ $this->autoRender=false;
+ header('Content-Type: application/json');
+
+ $order=TableRegistry::get('OrderedItems');
+
+ $item_id = $this->request->data('item_id');
+ $quantity = $this->request->data('quantity');
+ $order_id = $this->request->data('order_id');
+
+ $order->addOrderedItem($item_id, $quantity, $order_id);
+
+
+ exit();
+}
+
+public function placeDeliver()
+{
+
+  $this->autoRender=false;
+  header('Content-Type: application/json');
+
+  $order=TableRegistry::get('Delivery');
+
+  // $item_id = $this->request->data('item_id');
+  // $quantity = $this->request->data('quantity');
+  $account_id = $this->request->data('account_id');
+  $order_id = $this->request->data('order_id');
+  $delivery_status = $this->request->data('delivery_status');
+
+
+  $order->deliveryPlace($account_id,$order_id,$delivery_status);
+
+
+  exit();
+
+
+}
+
+
+public function placePickup()
+{
+
+  $this->autoRender=false;
+  header('Content-Type: application/json');
+
+  $order=TableRegistry::get('Pickup');
+
+  $account_id = $this->request->data('account_id');
+  $order_id = $this->request->data('order_id');
+  $pickup_time = $this->request->data('pickup_time');
+
+
+  $order->pickupPlace($account_id,$order_id,$pickup_time);
+
+
+
+  exit();
+
+
+}
+
+
+
+
+}
