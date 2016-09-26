@@ -99,9 +99,31 @@
                   <section class="group-filter-recent" >
                      <p class="indicator-by" style='display: none;'>Filter By <i class="fa fa-filter" aria-hidden="true"></i></p>
                      <div class="filter-group">
-                        <ul>
-                           <li>Tops</li>
-                        </ul>
+                        <div class="filter-group">
+                           <div class='filter-it-by'>
+                              <div class='header-filters'>
+                                 <p>Filter By: Price</p>
+                              </div>
+                              <div class='filter-it-body'>
+                                 <select class='filter-select'>
+                                    <option>PHP 1200.00 - PHP 12000.00</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class='category-it-by' ng-controller='CategoryPrintController'>
+                              <p class='category-top'>TOP CATEGORIES</p>
+                              <script type="text/ng-template" id="categoryTree">
+                                 <p class='parent'>{{ parent.category_name }}</p>
+                                  <ul  ng-if="parent.categories">
+                                  <span><li ng-repeat="parent in parent.categories" ng-include="'categoryTree'" class='child'>   
+                                  </li></span>
+                                  </ul>
+                              </script>
+                              <ul>
+                                 <li ng-repeat="parent in parents" ng-include="'categoryTree'" ></li>
+                              </ul>
+                           </div>
+                        </div>
                      </div>
                      <div class="recent-group" >
                         <p class="indicator-by" style="top:16px;width:190px;">Recent Products</p>
@@ -157,10 +179,8 @@
                               <a href ng-click='addtowish($event,item.item_id)' data-toggle="tooltip" data-placement="top" title="Add to Wishlist" data-container="body"
                                  tooltip ><li class="wlist-add"
                                  >
-
-                                 <i class='fa fa-heart-o' ng-show="!item.wished" aria-hidden="true"></i>
-                                 <i class='fa fa-heart' ng-show="item.wished" aria-hidden="true"></i>
-
+                              <i class='fa fa-heart-o' ng-show="!item.wished" aria-hidden="true"></i>
+                              <i class='fa fa-heart' ng-show="item.wished" aria-hidden="true"></i>
                               </li></a>
                               <a  style='color:#111;' href  ng:click="addItem(item.item_id,item.item_quantity)"   data-toggle="tooltip" data-placement="top" title="Add to Cart" ><li class="cart-add"> <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                               </a>

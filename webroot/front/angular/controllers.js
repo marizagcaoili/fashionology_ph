@@ -1232,3 +1232,39 @@ app.controller('CategoryBrandController',function($scope,$http,$rootScope){
 	CategoryBrand.init();
 });
 // -- END : CategoryBrandController -- //
+
+// -- START : CategoryController -- //
+app.controller('CategoryPrintController', function ($scope, $http){
+		var CategoryPrint = {};
+		$scope.parents = [];
+		$scope.parents.categories = [];
+		CategoryPrint.init = function(){
+			$http.get("/admin/catalog/get_parents")
+		    .then(function(response) {
+		        $scope.parents = response.data;
+		        CategoryPrint.forLoop();
+		    });
+
+		};
+
+		CategoryPrint.forLoop = function(){
+		console.log($scope.parents.length);
+		var ind = $scope.parents.length - 1;
+		for (var i = $scope.parents.length - 1; i >= 0; i--) {    		
+			var parent_id = $scope.parents[i].category_id;
+
+			$http.get("/admin/catalog/second_category",
+			{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { parent_id : parent_id }
+			}).then(function(response){
+				$scope.parents[ind].categories = response.data;
+				console.log($scope.parents[ind]	);
+				ind --;
+			});
+		}
+	};
+		CategoryPrint.init();
+
+	});
+// -- END : CategoryController //
