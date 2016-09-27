@@ -87,8 +87,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{order.order_subtotal}}.00</td>
                <!--  <td> <md-datepicker ng-model="myDate" md-placeholder="Enter date"
                           md-min-date=0 md-max-date="maxDate"></md-datepicker></td>  -->
-                <td><button data-toggle="tooltip" data-placement="bottom" ng-click= "updateAsDelivered(order.order_id)" title="Mark as Delivered" type="submit" class= "btn btn-success btn-flat" name=""><i class="fa fa-check-square-o"> </i></button></td> 
+                <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmOrder(order.order_id)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name=""><small>CONFIRM</small></button></span></td>
+
+                <td><button data-toggle="tooltip" data-placement="bottom" ng-click= "updateAsDelivered(order.order_id)" title="Mark as Delivered" type="submit" class= "btn btn-success btn-flat" name=""><i class="fa fa-check-square-o"> </i></button></td>
+
                 <td><a href="/admin/order/view_order?order_id={{order.order_id}}"><button data-toggle="tooltip" data-placement="bottom" title="View Order" type="submit" class= "btn bg-primary btn-flat" name=""><i class="fa fa-eye"> </i></button></a></td> 
+
                 <td><button data-toggle="tooltip" data-placement="bottom" title="Delete Order" type="submit" class= "btn bg-red btn-flat" name="" ng-click= "archive()"><i class="fa fa-trash"> </i></button></td>
                 </tr>
                 </tbody>
@@ -105,21 +109,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </div>
   <!-- /.content-wrapper -->
   <!-- Modal -->
-<div class="modal" id="setDelivery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
+<div class="modal" id="confirmOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">Set Delivery Date</h4>
+        <h4 class="modal-title" id="myModalLabel">Confirm Order</h4>
+        <h5  style="text-align:left;"><i ">Reference No. </i><span style="color:red">{{reference_number}}</span></h5>
       </div>
       <div class="modal-body">
             <div class="form-group row">
-                <label for="brand" class="col-xs-3 col-form-label">Date</label>
-                 <div class="col-xs-9">
-                     <md-datepicker ng-model="myDate" md-placeholder="Enter date"
-                          md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
+                <div class="col-xs-1"></div>
+                <label for="brand" class="col-xs-3 col-form-label">Delivery Date</label>
+                 <div class="col-xs-8">
+                     <input type="date" ng-model="myDate"></datepicker>
               
                   </div>
 

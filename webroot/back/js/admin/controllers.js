@@ -1394,6 +1394,15 @@ app.controller('OrderController', function($scope, $http) {
 		console.log($scope.deliverydate);
 	};
 
+	$scope.confirmOrder = function(order_id){
+	   $http.get("/admin/order/order_details",
+		{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { order_id : order_id }
+		}).then(function(response) {
+				$scope.reference_number = response.data[0].order_reference_number;
+		});
+	}
 });
 
 // app.controller('TestController', function($scope, $http) {
