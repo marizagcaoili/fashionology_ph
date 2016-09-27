@@ -474,6 +474,43 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		ClothingController.getId();
 		ClothingController.getRecentItems();
 		ClothingController.getGender();
+		ClothingController.account();
+	}
+
+	ClothingController.account=function(){
+		var account=$scope.itemId=$location.search().account_id;
+
+
+
+
+		$http({
+			url:'/user/account/confirmed',
+			method:'POST',
+			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data:{account_id:account}
+		}).then(function(response){
+			console.log(response.data);
+		})
+
+
+		$scope.f_account_id=$cookies.get('f_account_id');
+
+
+
+
+
+		if(account>0){
+
+			$('.lognowin li').trigger('click');
+
+		}
+
 	}
 
 	ClothingController.getGender=function(){
@@ -490,6 +527,14 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 
 
 	}
+
+
+	ClothingController.confirmation=function(){
+
+		$scope.accountLink=$location.search().user_id;
+
+	}
+
 
 	ClothingController.getId = function(){
 		$scope.category_id = $location.search().category_id;
@@ -636,6 +681,9 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		});
 	}
 
+
+
+
 	$scope.addtowish = function($event,item_id) {
 		var user_id = $scope.userId = $cookies.get('f_account_id');
 
@@ -660,7 +708,33 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		 		}).then(function(response){})
 		 	} else {
 		 		// API CALL to remove from wish list
-		 		$($event.target).attr('class', 'fa fa-heart-o');	
+		 		if($($event.target).attr('class', 'fa fa-heart-o')){
+
+
+
+		 			var wishlist_id=item_id;
+
+		 			// alert(wishlist_id);
+
+		 			$http({
+		 				url : "/action/wishlist/remove",
+		 				method: "POST",
+		 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		 				transformRequest: function(obj) {
+		 					var str = [];
+		 					for(var p in obj)
+		 						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		 					return str.join("&");
+		 				},
+				data : 	{wishlist_id:wishlist_id} // Data to be passed to API
+			})
+
+		 		}	
+
+
+
+
+
 		 	}
 		 } else {
 		 	$('.lognowin li').trigger('click');
@@ -742,7 +816,28 @@ app.controller('accountController',function($scope, $http, $rootScope){
 			})
 		.then(function(response){
 
+
+			$('.register-wrap').fadeOut();
+			$('.confirmation-link').fadeIn();
+
+
 			$scope.account_id = response.data;
+
+
+			$http({
+				url:'/email/confirmation',
+				method:'POST',
+				headers:{'Content-Type':'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
+				data:{account_id:$scope.account_id,account_email:email}
+			})
+
+
 
 			$http({
 				url:'/api/address',
@@ -1601,6 +1696,7 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 
 	Dashboard.init = function(){
 		Dashboard.Wishlist();
+		Dashboard.trackOrder();
 	};
 
 
@@ -1626,9 +1722,34 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 		}
 	}
 
-	$scope.addItem = function(item_id) {
 
-		alert(item_id);
+	Dashboard.trackOrder=function(){
+
+		$rootScope.f_account_id = $cookies.get('f_account_id');
+
+
+		$http({
+			url : "/data/trackorder",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+				data : 	{f_account_id : $rootScope.f_account_id} // Data to be passed to API
+			}).then(function(response){
+
+				$scope.order_details = response.data;
+			})
+
+		}
+
+
+		$scope.addItem = function(item_id) {
+
+			alert(item_id);
 
 		// Check if Cart Cookie exists
 		if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined ) {
@@ -1696,19 +1817,44 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 				data : 	{wishlist_id:wishlist_id} // Data to be passed to API
 			}).then(function(response){
 
-				alert(response.data);
+
+				$scope.userId = $cookies.get('f_account_id');
+				if ($scope.userId > 1) {
+					$http({
+						url:'/display/Wishlist',
+						method:'POST',
+						headers:{'Content-Type':'application/x-www-form-urlencoded'},
+						transformRequest: function(obj) {
+							var str = [];
+							for(var p in obj)
+								str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+							return str.join("&");
+						},
+						data:{account_id:$scope.userId}
+					}).then(function(response){
+
+						$scope.wishlistItem = response.data;
+					});
+				}
+
+
+
+
+
+
+
 			})
 
 
 
 
-	}
+		}	
+
+		
 
 
 
+		Dashboard.init();
 
-
-	Dashboard.init();
-
-}]);
+	}]);
 // -- END : CategoryController //

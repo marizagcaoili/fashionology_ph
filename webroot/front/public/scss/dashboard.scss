@@ -417,4 +417,14 @@
 	position:relative;
 	top:60px;
 }
+
+.ban{
+	transition:all 0.4s;
+}
+
+.ban:hover{
+	cursor:pointer;
+	background:#111;
+	color:#fff;
+}
 /**end of information**/
