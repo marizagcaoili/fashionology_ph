@@ -268,6 +268,8 @@ Router::prefix('Admin', function ($routes) {
 
   $routes->connect('/admin/catalog/angularjs', ['controller' => 'catalog', 'action' => 'angularjs']);
 
+  $routes->connect('/admin/dashboard/count', ['controller' => 'dashboard', 'action' => 'count']);
+
     //Catalog
 
         //ITEM
@@ -405,6 +407,8 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/order/update_order_status', ['controller' => 'order', 'action' => 'updateOrderStatus']);  
 
   $routes->connect('/admin/order/confirm_order', ['controller' => 'order', 'action' => 'confirmOrder']);    
+
+  $routes->connect('/admin/order/update_seen', ['controller' => 'order', 'action' => 'updateSeen']); 
         //--/>ORDERS
 
         //LOGIN
@@ -437,9 +441,14 @@ Router::prefix('Admin', function ($routes) {
 
   $routes->connect('/admin/catalog/test', ['controller' => 'inquiry', 'action' => 'test']);
 
-
-
        //--/>INQUIRY
+
+          //ACCOUNT
+
+  $routes->connect('/admin/account', ['controller' => 'account', 'action' => 'index']);
+
+  $routes->connect('/admin/account/get_accounts', ['controller' => 'account', 'action' => 'getAccounts']);
+        //--/>ACCOUNT
 
   $routes->fallbacks('DashedRoute');
 

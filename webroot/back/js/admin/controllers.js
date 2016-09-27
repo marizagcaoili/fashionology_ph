@@ -1093,24 +1093,6 @@ app.controller('SizeController', function($scope, $http) {
 		};	
 	});
 
-	app.controller('DashboardController', function($scope, $http,  $cookies, $cookieStore) {
-		var Dashboard = {};
-		Dashboard.init = function() {
-		};
-
-		Dashboard.init();
-
-		$scope.logout = function () {
-			$http({
-				url : "/admin/login/destroy_session",
-				method: "GET"// Data to be passed to API
-			}).then(function(response){
-				window.location.href = "/admin/login";
-			});
-		};
-
-	});
-
 	app.controller('CategoryPrintController', function ($scope, $http){
 		var CategoryPrint = {};
 		$scope.parents = [];
@@ -1277,6 +1259,7 @@ app.controller('SizeController', function($scope, $http) {
 			}).then(function(response){
 				console.log($scope.inquiry_email,  $('#message').val());
 				window.alert("Mail Sent!");
+				Inquiry.refresh();
 			});
 		};
 
@@ -1349,6 +1332,7 @@ app.controller('OrderController', function($scope, $http) {
 	Order.init = function() {
 		Order.orderList();
 		Order.datePicker();
+		$http.get("/admin/order/update_seen")
 	};
 
 	Order.orderList = function (){
@@ -1358,6 +1342,7 @@ app.controller('OrderController', function($scope, $http) {
 		        console.log(response.data);
 		    });
 	};
+
 	Order.datePicker = function(){
 		  $scope.myDate = new Date();
 		  $scope.minDate = 0;
@@ -1417,11 +1402,112 @@ app.controller('OrderController', function($scope, $http) {
 			data : 	{order_id : $scope.order_id, deliverydate : $scope.datepicker, status : status, email_add : $scope.email_add, note : note} // Data to be passed to API
 		})
 	    .then(function(response) {
+	    	window.alert('Order has been confirmed!');
+	    	$('#modal-close').click();
+	    	
 	    });	
 
 	};
 
 });
+
+
+app.controller('TestController', function($scope, $http) {
+	var Test = {};
+	Test.init = function() {
+		Test.ItemList();
+	};
+
+
+	Test.ItemList = function() {
+		$http.get("/admin/catalog/get_items")
+		    .then(function(response) {
+		        $scope.items = response.data;
+		        console.log($scope.items);
+		    });
+	};
+
+	Test.init();
+	// scope Vars to view
+	$scope.var = "";
+	// scope function to view
+	$scope.toTop = function(image){
+		$scope.top = image;
+	};
+
+	$scope.toBottom = function(image){
+		$scope.bottom = image;
+	};
+
+	$scope.toFootwear = function(image){
+		$scope.footwear = image;
+	};
+
+	$scope.toAccessory = function(image){
+		$scope.accessory = image;
+	};
+
+});
+
+
+app.controller('DashboardController', function($scope, $http,  $cookies, $cookieStore) {
+		var Dashboard = {};
+		Dashboard.init = function() {
+		Dashboard.count();
+		};
+
+		Dashboard.count = function (){
+			$http.get("/admin/dashboard/count")
+		    .then(function(response) {
+		        $scope.count = response.data;
+		    });
+		};
+
+		Dashboard.init();
+
+		$scope.order = function(){
+			window.location.href = "/admin/order";
+		};
+
+		$scope.inquiry = function(){
+			window.location.href = "/admin/inquiry";
+		};
+
+		$scope.account = function(){
+			window.location.href = "/admin/account";
+		};
+		$scope.logout = function () {
+			$http({
+				url : "/admin/login/destroy_session",
+				method: "GET"// Data to be passed to API
+			}).then(function(response){
+				window.location.href = "/admin/login";
+			});
+		};
+
+});
+
+
+app.controller('AccountController', function($scope, $http) {
+	var Account = {};
+	Account.init = function() {
+		Account.getAccounts();
+	};
+
+	Account.getAccounts = function(){
+		$http({
+				url : "/admin/account/get_accounts",
+				method: "GET"// Data to be passed to API
+			}).then(function(response){
+				$scope.accounts = response.data;
+				console.log($scope.acocounts)
+			});
+	};
+
+	Account.init();
+	// scope Vars to view
+});
+
 
 // app.controller('TestController', function($scope, $http) {
 // 	var Test = {};

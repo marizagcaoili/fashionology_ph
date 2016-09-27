@@ -55,5 +55,19 @@ class OrdersTable extends Table
                     ->toArray();
       }
 
+      public function getUnseen()
+      {
+        return $this->find()
+                    ->where(['seen_flag'=>0])
+                    ->toArray();
+      }
+
+      public function updateSeen()
+      {
+        return $this->query()->update()
+                    ->set(['seen_flag' => 1])
+                    ->where(['seen_flag' => 0])
+                    ->execute();
+      }
 
 }

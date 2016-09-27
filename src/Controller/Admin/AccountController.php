@@ -22,7 +22,7 @@ use Cake\Mailer\Email;
 /**
  * Dashboard Controller
  */
-class DashboardController extends Controller
+class AccountController extends Controller
 {
 
     /**
@@ -48,34 +48,22 @@ class DashboardController extends Controller
         }
         else{
                   
-            $this->render('dashboard');  
+            $this->render('account');  
         }         
              
     }
 
-    public function archive()
+    public function getAccounts()
     {
-          $this->render('archive');  
-    }
-
-    public function count()
-    {
-
         $this->autoRender = false;
         header('Content-Type: application/json');
 
-        $orders = TableRegistry::get('Orders');
-        $inquiries = TableRegistry::get('Inquiries');
         $accounts = TableRegistry::get('Accounts');
 
-        $order = sizeof($orders->getUnseen());
-        $inquiry = sizeof($inquiries->getUnreadInquiries());
-        $account = sizeof($accounts->getActivated());
+        $result = $accounts->getAccounts();
 
-        $count = array("orders"=>$order, "inquiries"=>$inquiry, "accounts"=>$account);
+        echo json_encode($result);
 
-        echo json_encode($count);
-        exit(); 
-
+        exit();
     }
 }

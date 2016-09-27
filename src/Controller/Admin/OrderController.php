@@ -165,5 +165,17 @@ class OrderController extends Controller
         exit();
     }
 
+    public function updateSeen()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $orders = TableRegistry::get('Orders');
+
+        $orders->updateSeen();
+
+        exit();
+    }
+
 }
 

@@ -89,7 +89,7 @@
 					-->
 
 					<div ng-repeat="obj in droppedObjects1" ng-drag="true"ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)">
-						<img width='750px;' src='{{obj.image.file_key}}' />
+						<img width='1000px;' src='{{obj.image.file_key}}' />
 					</div>
 
 
@@ -112,7 +112,7 @@
 						<div class='mixnmb-items'>
 							<ul>
 								<li >
-									<div class="drag-object" ng-repeat="obj in draggableObjects" ng-if="obj.allowClone !== false">
+									<div class="drag-object" ng-repeat="obj in draggableObjects">
 
 										<img src='{{obj.image.file_key}}' width='250px' height='250px'/>
 
