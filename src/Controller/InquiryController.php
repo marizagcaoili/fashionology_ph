@@ -71,45 +71,6 @@ class InquiryController extends Controller
 
     }
 
-    public function inquiryReply()
-    {
-        $this->autoRender = false;
-        
-        header('Content-Type: application/json');
-
-        $email_address =$this->request->data('email_address');
-        $message = 'Thank you for ordering to Fashionology PH!';
-        $subject = 'Welcome';
-
-        Email::configTransport('gmail', [
-            'host' => 'ssl://smtp.gmail.com',
-            'port' =>  465,
-            'username' => 'fashionologyph@gmail.com',
-            'password' => 'fashiono',
-            'className' => 'Smtp',
-            ]);
-
-
-        $email = new Email('default');
-        $email->template('welcome','default')
-        ->emailFormat('html')
-        ->from(['fashionologyph@gmail.com' => 'Fashionology'])
-        ->to($email_address)
-        ->subject($subject)
-        ->attachments(array(
-            array(
-                'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
-                'mimetype'=>'image/png',
-                'contentId'=>'12345'
-                ),
-            ))
-        ->transport('gmail')
-        ->send();
-
-        exit();  
-
-    }
-
     public function inquiryHome()
     {
        $this->autoRender = false;
@@ -118,7 +79,7 @@ class InquiryController extends Controller
 
         $email_address =$this->request->data('email_address');
         
-        $message = 'Thank you for sending your inquiry to Fashionology PH!';
+        $message = 'Thank you for sending your inquiry to Fashionology PH! We will send a reply to you within 48 hours';
         $subject = 'Gratitude!';
 
         Email::configTransport('gmail', [
@@ -131,7 +92,7 @@ class InquiryController extends Controller
 
 
         $email = new Email('default');
-        $email->template('welcome')
+        $email->template('default')
         ->emailFormat('html')
         ->from(['fashionologyph@gmail.com' => 'Fashionology'])
         ->to($email_address)

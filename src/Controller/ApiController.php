@@ -92,6 +92,38 @@ class ApiController extends AppController
 
         $result = $items->detailFilter($item_id);
 
+        //Default value wished to false
+        foreach ($result as $key => $item) {
+            $result[$key]['wished'] = false;
+        }
+
+        // Authenticated user
+        $f_token = $this->request->query('f_token');
+        $f_account_id = $this->request->query('f_account_id');
+
+        if (isset($f_token) && isset($f_account_id)) {
+            $sessionDatas = TableRegistry::get('Sessions');
+            $session = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
+
+            if (sizeof($session)) {
+                $item = TableRegistry::get('Wishlist');
+                $wishlist = $item->showWishlist($f_account_id);
+
+                $wishlist_arr = array();
+                foreach ($wishlist as $value) {
+                    $wishlist_arr[] = $value['item_id'];
+                }
+
+                foreach ($result as $key => $item) {
+                    if (in_array($item['item_id'], $wishlist_arr)) {
+                        $result[$key]['wished'] = true;
+                    } else {
+                        $result[$key]['wished'] = false;
+                    }
+                }
+            }
+        }
+
         echo json_encode($result);
         exit();
 

@@ -12,11 +12,11 @@ class DeliveryTable extends Table
     $this->table('tbl_delivery_details');
   }
 
-  public function deliveryPlace($account_id,$order_id,$delivery_status)
+  public function deliveryPlace($call,$order_id)
   {
     return $this->query()
-               ->insert(['account_id','order_id','delivery_status'])
-               ->values(['account_id'=>$account_id,'order_id'=>$order_id,'delivery_status'=>$delivery_status])
+               ->insert(['order_id','call_time'])
+               ->values(['order_id'=>$order_id,'call_time'=>$call])
                ->execute();
 
   }

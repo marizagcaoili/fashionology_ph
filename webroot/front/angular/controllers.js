@@ -70,7 +70,7 @@ angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $ht
 	};
 
 	RootManager.SetAuthCookies = function() {
-		if ($cookies.get('f_token') != undefined && $cookies.get('f_account_id')) {
+		if ($cookies.get('f_token') != undefined && $cookies.get('f_account_id') != undefined) {
 			$rootScope.authCookies = {f_token : $cookies.get('f_token'), f_account_id : $cookies.get('f_account_id')}
 		}
 	}
@@ -127,6 +127,67 @@ app.controller('HomeController',function($scope, $http, $cookies, $cookieStore, 
 			$scope.new_items = response.data;
 		});
 	};
+
+
+	$scope.emailInquiry = function() {
+		var email = $('#email').val();
+
+		$http({
+			url : "/email/inquiry",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data : 	{email_address:email} // Data to be passed to API
+		});
+	}
+
+	$scope.sendEmail = function() {
+		var email = $('#email').val();
+
+		$http({
+			url : "/order/email/send",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data : 	{email_address:email} // Data to be passed to API
+		});
+	}
+
+	$scope.inquiry = function() {
+		$('.contact-content').fadeIn();
+		$('.contact-forms').fadeOut();
+
+		var name = $('#name').val(),
+		contact  = $('#contact').val(),
+		email    = $('#email').val(),
+		subject  = $('#subject').val(),
+		message  = $('#message').val();
+
+		$http({
+			url : "/index/inquiry",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data : {name:name,contact:contact,email:email,subject:subject,message:message} // Data to be passed to API
+		});
+	}
+
+
 
 	HomeManager.Init();
 });
@@ -373,9 +434,9 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 	}
 
 	$scope.setDelivery = function() {
-		var date = $('#setDate').val();
+		var timetocall = $('#timetoCall').val();
 
-		$cookies.put('delivery_status','pending');
+		$cookies.put('delivery_time',timetocall);
 		$cookies.put('method_payment', 'Delivery');
 
 		var payment=$cookies.get('method_payment');
@@ -542,6 +603,7 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 	}
 
 	ClothingController.items = function(){
+		var params = $rootScope.addAuthCookies({});
 		$scope.f_account_id=$cookies.get('f_account_id');
 
 		if($scope.f_account_id>1){
@@ -555,7 +617,11 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 			$('.logmein').show();
 		}
 
-		$http.get("/admin/catalog/get_items")
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : params
+		})
 		.then(function(response) {
 			$scope.currentPage = 0;
 			$scope.items=response.data;
@@ -780,64 +846,7 @@ app.controller('LoginController',function($scope,$http,$cookies,$cookieStore,$ro
 
 // -- START : testController -- //
 app.controller('testController', function($scope, $http, $cookies, $cookieStore, $rootScope) {
-	$scope.inquiry = function() {
-		$('.status-sent').fadeIn();
-		$('.contact-forms').fadeOut();
-
-		var name = $('#name').val(),
-		contact  = $('#contact').val(),
-		email    = $('#email').val(),
-		subject  = $('#subject').val(),
-		message  = $('#message').val();
-
-		$http({
-			url : "/index/inquiry",
-			method: "POST",
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj)
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				return str.join("&");
-			},
-			data : {name:name,contact:contact,email:email,subject:subject,message:message} // Data to be passed to API
-		});
-	}
-
-	$scope.emailInquiry = function() {
-		var email = $('#email').val();
-
-		$http({
-			url : "/email/inquiry",
-			method: "POST",
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj)
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				return str.join("&");
-			},
-			data : 	{email_address:email} // Data to be passed to API
-		});
-	}
-
-	$scope.sendEmail = function() {
-		var email = $('#email').val();
-
-		$http({
-			url : "/order/email/send",
-			method: "POST",
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj)
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				return str.join("&");
-			},
-			data : 	{email_address:email} // Data to be passed to API
-		});
-	}
-
+	
 	
 
 	$scope.ItemsReveal = function() {
@@ -990,26 +999,6 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 	}
 
 	/**wishlist controller**/
-	$scope.userId = $cookies.get('f_account_id');
-
-
-	if ($scope.userId > 1) {
-		$http({
-			url:'/display/Wishlist',
-			method:'POST',
-			headers:{'Content-Type':'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj)
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				return str.join("&");
-			},
-			data:{account_id:$scope.userId}
-		}).then(function(response){
-			console.log(response.data);
-			$scope.wishlistItem = response.data;
-		});
-	}
 
 	 //controllers for placing an order
 	 $scope.placeOrder = function() {
@@ -1030,11 +1019,9 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 // -- END : testController -- //
 
 // -- START : ItemDetailsController -- //
-app.controller('ItemDetailsController',['$location','$scope','$http','$timeout', '$cookies',  function($location,$scope,$http,$timeout,$cookies,$rootScope) {
-
+app.controller('ItemDetailsController',['$location','$scope','$http','$timeout', '$cookies','$rootScope',  function($location,$scope,$http,$timeout,$cookies,$rootScope) {
 
 	var ItemDetail = {};
-
 
 	ItemDetail.init = function() {
 		// Init functions / source
@@ -1061,9 +1048,11 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 	}
 
 	ItemDetail.getDetails=function(item_id){
+		var params = $rootScope.addAuthCookies({item_id:item_id});
+
 		$http.get('/clothing/fetchDetails',{
 			headers:{'Content-Type':'application/x-www-form-urlencoded'},
-			params: {item_id:item_id}
+			params: params
 		}).then(function(response){
 			$scope.details=response.data;
 			$timeout(function () {
@@ -1078,6 +1067,40 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 			});
 		});
 	};
+
+
+
+	
+	$scope.addtowish = function($event,item_id) {
+		var user_id = $scope.userId = $cookies.get('f_account_id');
+
+		if (user_id>1) {
+			if ($($event.target).attr('class') == 'fa fa-heart-o') {
+		 		// API CALL to save wish list
+		 		$($event.target).attr('class', 'fa fa-heart');	
+
+		 		$scope.userId=$cookies.get('f_account_id');
+
+		 		$http({
+		 			url:'/add/Wishlist',
+		 			method:'POST',
+		 			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+		 			transformRequest: function(obj) {
+		 				var str = [];
+		 				for(var p in obj)
+		 					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		 				return str.join("&");
+		 			},
+		 			data:{account_id:$scope.userId,item_id:item_id}
+		 		}).then(function(response){})
+		 	} else {
+		 		// API CALL to remove from wish list
+		 		$($event.target).attr('class', 'fa fa-heart-o');	
+		 	}
+		 } else {
+		 	$('#loginModal').modal('toggle');
+		 }
+		}
 
 
 	//review
@@ -1366,6 +1389,7 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 
 	$scope.orderNow=function(total,shipping_id,email){
 
+		$scope.email=email;
 
 		$('.loadingBar').fadeIn();
 		$('.receipt-wrap').fadeOut();
@@ -1417,22 +1441,7 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 			$scope.statusDeliver=$cookies.get('delivery_status');
 			$scope.timePick=$cookies.get('time_of_pickup');
 
-			/*delivery method***/
 
-			if ($scope.PaymentMethod == 'Delivery') {
-				$http({
-					url : "/order/process/delivery",
-					method: "POST",
-					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-					transformRequest: function(obj) {
-						var str = [];
-						for(var p in obj)
-							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-						return str.join("&");
-					},
-					data : {account_id:$scope.userId,order_id:$scope.order_id,delivery_status:$scope.statusDeliver} // Data to be passed to API
-				});
-			}
 
 			/**pick up method**/
 
@@ -1451,6 +1460,29 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 				}).then(function(response){
 					console.log(response.data);
 				});
+			}else if($scope.PaymentMethod=='Delivery'){
+
+
+				var timeToCall=$cookies.get('delivery_time');
+				var email=email;
+
+
+				$http({
+					url : "/order/process/delivery",
+					method: "POST",
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					transformRequest: function(obj) {
+						var str = [];
+						for(var p in obj)
+							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+						return str.join("&");
+					},
+					data : 	{order_id:$scope.order_id,call_time:timeToCall,email_address:$scope.email} // Data to be passed to API
+				}).then(function(response){
+					console.log(response.data);
+				});
+
+
 			}
 
 			$scope.order_id = response.data;
@@ -1517,7 +1549,11 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 
 
 	$scope.goHome=function(){
+
+		$cookies.remove('cart_items');
+		$cookies.remove('cart_items_quantity');
 		location.href='/';
+
 	}
 
 
@@ -1530,3 +1566,149 @@ OrderSummary.init();
 
 });
 // -- END : OrderSummaryController //
+
+// -- START : CategoryBrandController -- //
+app.controller('CategoryBrandController',function($scope,$http,$rootScope){
+	var CategoryBrand = {};
+
+	CategoryBrand.init = function() {
+		CategoryBrand.parents();
+		CategoryBrand.brands();
+	};
+
+	CategoryBrand.parents = function(){
+		$http.get("/admin/catalog/get_parents")
+		.then(function(response) {
+			$scope.parents = response.data;
+		});
+	}
+
+	CategoryBrand.brands = function(){
+		$http.get("/admin/catalog/get_brands")
+		.then(function(response) {
+			$scope.brands = response.data;
+		});
+	}
+
+	CategoryBrand.init();
+});
+// -- END : CategoryBrandController -- //
+
+// -- START : CategoryController -- //
+app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookies','$rootScope',  function($scope,$http,$timeout,$cookies,$rootScope){
+
+	var Dashboard = {};
+
+	Dashboard.init = function(){
+		Dashboard.Wishlist();
+	};
+
+
+	Dashboard.Wishlist=function(){
+
+		$scope.userId = $cookies.get('f_account_id');
+		if ($scope.userId > 1) {
+			$http({
+				url:'/display/Wishlist',
+				method:'POST',
+				headers:{'Content-Type':'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
+				data:{account_id:$scope.userId}
+			}).then(function(response){
+
+				$scope.wishlistItem = response.data;
+			});
+		}
+	}
+
+	$scope.addItem = function(item_id) {
+
+		alert(item_id);
+
+		// Check if Cart Cookie exists
+		if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined ) {
+			// Get and Convert Cookie to Object
+			cart = JSON.parse($cookies.get('cart_items'));
+			cart_qty = JSON.parse($cookies.get('cart_items_quantity'));
+
+			// Check if item_id not exists
+			if(cart.indexOf(item_id) == -1) {
+				cart.push(item_id);
+				cart_qty.push(1);
+			}
+
+			// Save to Cookie
+			$cookies.put('cart_items', JSON.stringify(cart));
+			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
+		} else {
+			// Cookie Template
+			var cart = [item_id];
+			var cart_qty = [1];
+
+			// Save and covert cookie to string
+			$cookies.put('cart_items', JSON.stringify(cart));
+			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
+		}
+
+		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
+		$rootScope.cart_items_quantity = JSON.parse($cookies.get('cart_items_quantity'));
+
+		// Update cart
+		$rootScope.cart_items_count = cart.length;
+
+		$http.get("/api/viewToCart")
+		.then(function(response) {
+			var items = [];
+			angular.forEach($rootScope.cart_items, function(item){
+				angular.forEach(response.data, function(data){
+					if(item == data.item_id) {
+						items.push(data);
+					}
+				});
+			});
+
+			$scope.item = items;
+
+			console.log($scope.item);
+		});
+	};
+
+
+
+
+	$scope.removeWishlist=function(wishlist_id){
+
+		$http({
+			url : "/action/wishlist/remove",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+				data : 	{wishlist_id:wishlist_id} // Data to be passed to API
+			}).then(function(response){
+
+				alert(response.data);
+			})
+
+
+
+
+	}
+
+
+
+
+
+	Dashboard.init();
+
+}]);
+// -- END : CategoryController //

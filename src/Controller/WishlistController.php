@@ -75,6 +75,25 @@ class WishlistController extends Controller
 
  }
 
+ public function removewishlist(){
+
+  $this->autoRender = false;
+  header('Content-Type: application/json');
+
+
+  $wishlist=$this->request->data('wishlist_id');
+
+
+  $item = TableRegistry::get('Wishlist');
+
+  $result=$item->removeWishlist($wishlist);
+
+  echo json_encode('Success!');
+
+
+  exit();
+}
+
 
 
 

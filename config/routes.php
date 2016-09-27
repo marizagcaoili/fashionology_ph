@@ -88,7 +88,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/cart', ['controller' => 'home','action' => 'cart']);
     
-    $routes->connect('/user/dashboard', ['controller' => 'home','action' => 'dashboard']);
+    $routes->connect('/dashboard', ['controller' => 'home','action' => 'dashboard']);
 
     $routes->connect('/order/history', ['controller' => 'home','action' => 'history']);
 
@@ -114,6 +114,9 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 
     $routes->connect('/wishlist', ['controller' => 'home','action' => 'wishlist']);
+
+    $routes->connect('/action/wishlist/remove', ['controller' => 'wishlist','action' => 'removewishlist']);
+
 
 
     $routes->connect('/checkout/process', ['controller' => 'home','action' => 'orderprocess']);
@@ -182,6 +185,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     /****/
 
 
+    /**account verification**/
+
+    /****/
+
 
     /**data fetching**/
 
@@ -218,7 +225,6 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/place/shippingdetail', ['controller' => 'order','action' => 'addShippingDetail']);
 
-    
 
 
 

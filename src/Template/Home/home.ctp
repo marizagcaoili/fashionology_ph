@@ -232,7 +232,7 @@
                   <section class='group-of-hot'>
                      <ul>
                         <li ng-repeat="n_item in new_items">
-                       	   <a href="/clothing/item?item_id={{n_item.item_id}}">
+                       	   <a style='color:#333;' href="/clothing/item?item_id={{n_item.item_id}}">
                            <section class='member-hot'>
                               <section class='content-member-hot'>
                                  <figure>
@@ -303,7 +303,7 @@
                            </section>
                         </section>
                      </section>
-                     <section class='contact-us' style='display: none;'>
+                     <section class='contact-us' >
                         <section class='contact-headline'>
                            <p>Get in Touch with Us!</p>
                            <p>The Fashionology PH would like to hear a concern from you. Provide the following details below.</p>
@@ -337,15 +337,15 @@
                                  <textarea name="" id='message'></textarea>
                               </section>
                            </section>
-                           <section class='contact-flex'>
-                           </section>
+                      
                            <section class='contact-flex'>
                               <section class='contact-a'>
                                  <button ng-click='inquiry();emailInquiry()' class='inquiry-btn'>SEND INQUIRY</button>
                               </section>
                            </section>
                         </section>
-                        <section class='contact-content'>
+
+                        <section class='contact-content' style='display: none;'>
                            <section class='status-sent'>
                               <p>Congratulations! Your message has been sent! Please check your email address for verification.</p>
                            </section>

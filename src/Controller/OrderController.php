@@ -147,17 +147,64 @@ public function placeDeliver()
 
   $order=TableRegistry::get('Delivery');
 
-  // $item_id = $this->request->data('item_id');
-  // $quantity = $this->request->data('quantity');
-  $account_id = $this->request->data('account_id');
-  $order_id = $this->request->data('order_id');
-  $delivery_status = $this->request->data('delivery_status');
+  $order_id =$this->request->data('order_id');
+
+  $quantity = $this->request->data('quantity');
+  $call = $this->request->data('call_time');
+  $email_address =$this->request->data('email_address');
 
 
-  $order->deliveryPlace($account_id,$order_id,$delivery_status);
+  $order->deliveryPlace($call,$order_id);
 
 
-  exit();
+
+
+
+  $message = '
+
+
+  <body>
+
+    Thank you for ordering to Fashionology PH. We will send to you another email once the
+    order has been confirmed!
+    This is the selected time of your call  <b>'.$call.'</b>
+
+  </body>
+
+  ';
+  $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
+
+  Email::configTransport('gmail', [
+    'host' => 'ssl://smtp.gmail.com',
+    'port' =>  465,
+    'username' => 'fashionologyph@gmail.com',
+    'password' => 'fashiono',
+    'className' => 'Smtp',
+    ]);
+
+
+  $email = new Email('default');
+  $email->template('default')
+  ->emailFormat('html')
+  ->from(['fashionologyph@gmail.com' => 'Fashionology'])
+  ->to($email_address)
+  ->subject('$subject')
+  ->attachments(array(
+    array(
+      'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
+      'mimetype'=>'image/png',
+      'contentId'=>'12345'
+      ),
+    ))
+  ->transport('gmail')
+  ->send($message);
+
+  echo json_encode($call);
+
+  exit();  
+
+
+
 
 
 }
@@ -193,8 +240,21 @@ public function emailNotify()
 
 
   $email_address =$this->request->data('email_address');
-  $message = 'Thank you for ordering to Fashionology PH!';
-  $subject = 'Welcome';
+
+
+
+  $message = '
+
+
+  <body>
+
+    Thank you for ordering to Fashionology PH. We will send to you another email once the
+    order has been confirmed!
+
+  </body>
+
+  ';
+  $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
 
   Email::configTransport('gmail', [
     'host' => 'ssl://smtp.gmail.com',
@@ -206,7 +266,7 @@ public function emailNotify()
 
 
   $email = new Email('default');
-  $email->template('welcome','default')
+  $email->template('default')
   ->emailFormat('html')
   ->from(['fashionologyph@gmail.com' => 'Fashionology'])
   ->to($email_address)
@@ -219,7 +279,7 @@ public function emailNotify()
       ),
     ))
   ->transport('gmail')
-  ->send();
+  ->send($message);
 
   exit();  
 

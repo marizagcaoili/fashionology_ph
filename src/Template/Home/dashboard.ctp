@@ -17,7 +17,7 @@
 
 	
 </head>
-<body ng-controller='testController' ng-app='SampleApp'>
+<body ng-controller='UserDashboardController' ng-app='SampleApp'>
 
 	<header class="masthead" style='height:58px;'> <!--background: #232323;-->  
 		<img src="/front/public/img/logo-white.png" class="logo" style='width:210px;margin-left:36%;'>
