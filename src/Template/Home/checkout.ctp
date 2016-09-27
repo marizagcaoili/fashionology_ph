@@ -368,16 +368,6 @@
 
          $(".collapse").collapse();
 
-         $(document).ready(function()
-            $('.each-branch').click(function(){
-             $('branches_name').show();
-          });
-      	// $('#signin').hide();
-
-      	$('.btn-bill').click(function(){
-
-      	})
-      });
 
       // $('.select-div').click(function(){
       // 	$(this).addClass('shadow');

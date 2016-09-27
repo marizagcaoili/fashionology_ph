@@ -47,7 +47,7 @@ class UsersTable extends Table
   public function getUserDetails($username, $password)
   {
     return $this->find()
-    ->where(['account_username' => $username, 'account_password' => $password])
+    ->where(['account_username' => $username, 'account_password' => $password,'account_activated'=>1])
     ->toArray();
   }
 
@@ -65,12 +65,19 @@ class UsersTable extends Table
   public function getUserId($user)
   {
     return $this->find()
-           ->select(['account_id'])
-           ->where(['account_username' => $user])
-           ->toArray();
-
+    ->select(['account_id'])
+    ->where(['account_username' => $user])
+    ->toArray();
 
   }
 
+  public function updateUser($account_id)
+  {
+
+    return $this->query()->update()
+    ->set(['account_activated' => 1])
+    ->where(['account_id' => $account_id])
+    ->execute();
+  }
 
 }

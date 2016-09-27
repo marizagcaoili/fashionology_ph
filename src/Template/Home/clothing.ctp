@@ -87,6 +87,8 @@
                   </ul>
                </nav>
             </header>
+
+
             <main class="container_14" style="border:none;">
                <script src="/front/public /js/jquery17.js"></script>
                <script src="/front/public/js/scroller.js"></script>
@@ -113,7 +115,7 @@
                                  </select>
                               </div>
                            </div>
-                           <div class='category-it-by' ng-controller='CategoryPrintController' style='display:none;'>
+                           <div class='category-it-by' ng-controller='CategoryPrintController' >
                               <p class='category-top'>TOP CATEGORIES</p>
                               <script type="text/ng-template" id="categoryTree">
                                  <p class='parent'>{{ parent.category_name }}</p>

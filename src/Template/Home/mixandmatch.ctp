@@ -137,44 +137,44 @@
 									<img src='/front/public/img/top.jpg'>
 								</figure>
 							</div></li>
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>PANTS</p>
 								<figure>
 									<img src='/front/public/img/pants.jpg'>
 								</figure>
 							</div></li>
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>DRESSES</p>
 								<figure>
 									<img src='/front/public/img/dresses.jpg'>
 								</figure>
 							</div></li>
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>SKIRTS</p>
 								<figure>
 									<img src='/front/public/img/skirts.jpg'>
 								</figure>
 							</div></li>
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>JEANS</p>
 								<figure>
 									<img src='/front/public/img/jeans.jpg'>
 								</figure>
 							</div></li>
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>SHORTS</p>
 								<figure>
 									<img src='/front/public/img/shorts.jpg'>
 								</figure>
 							</div></li>
 
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>JUMPSUITS</p>
 								<figure>
 									<img src='/front/public/img/suit.jpg'>
 								</figure>
 							</div></li>
-							<li><div class='each-category'>
+							<li ng-click='showCategory()'><div class='each-category'>
 								<p>JACKETS</p>
 								<figure>
 									<img src='/front/public/img/jacket.jpg'>

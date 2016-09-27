@@ -33,76 +33,76 @@ class LoginController extends AppController
      */
     public function initialize()
     {
-        parent::initialize();
+      parent::initialize();
     }
 
     public function index()
     {
-        $this->render('login');
+      $this->render('login');
     }
 
 
     public function getUserDetails()
     {
-        $this->autoRender = false;
-        header('Content-Type: application/json');
-
-        $admin = TableRegistry::get('Accounts');
-
-        $username = $this->request->query('username');
-        
-        $password = $this->request->query('password');
-
-        $result = $admin->getUserDetails($username, $password);
-        
-        $count = sizeof($result);
-
-        $count = $count == 1 ? true : false;
-
-        if ($count == true) {
-           $account_id = $result[0]['account_id'];
-
-           $session_type = 'front'; 
-           $session_token = md5(microtime());
-
-           $sessions = TableRegistry::get('Sessions');
-
-           $result_token = $sessions->storeSessionData($account_id, $session_type, $session_token);
-
-           echo json_encode(array("status" => $count, "f_token" => $session_token, 'f_account_id' => $account_id, 'user_info' => $result[0]));
-       } else {
-            echo json_encode(array("status" => 0));
-       }
-
-       exit();
-  }
-
-   public function getAuthentication()
-   {
-       $this->autoRender = false;
-       header('Content-Type: application/json');
-
-       $f_token = $this->request->data('f_token');
-
-       $f_account_id = $this->request->data('f_account_id');
-
-       $sessionDatas = TableRegistry::get('Sessions');
-
-       $result = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
-
-       echo json_encode($result);
-
-       exit();
-   }
-
-   public function fetchUserData()
-   {
-      //disable ui rendering
       $this->autoRender = false;
-
       header('Content-Type: application/json');
 
-      $f_account_id=$this->request->data('f_account_id');
+      $admin = TableRegistry::get('Accounts');
+
+      $username = $this->request->query('username');
+
+      $password = $this->request->query('password');
+
+      $result = $admin->getUserDetails($username, $password);
+
+      $count = sizeof($result);
+
+      $count = $count == 1 ? true : false;
+
+      if ($count == true) {
+       $account_id = $result[0]['account_id'];
+
+       $session_type = 'front'; 
+       $session_token = md5(microtime());
+
+       $sessions = TableRegistry::get('Sessions');
+
+       $result_token = $sessions->storeSessionData($account_id, $session_type, $session_token);
+
+       echo json_encode(array("status" => $count, "f_token" => $session_token, 'f_account_id' => $account_id, 'user_info' => $result[0]));
+     } else {
+      echo json_encode(array("status" => 0));
+    }
+
+    exit();
+  }
+
+  public function getAuthentication()
+  {
+   $this->autoRender = false;
+   header('Content-Type: application/json');
+
+   $f_token = $this->request->data('f_token');
+
+   $f_account_id = $this->request->data('f_account_id');
+
+   $sessionDatas = TableRegistry::get('Sessions');
+
+   $result = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
+
+   echo json_encode($result);
+
+   exit();
+ }
+
+ public function fetchUserData()
+ {
+      //disable ui rendering
+  $this->autoRender = false;
+
+  header('Content-Type: application/json');
+
+  $f_account_id=$this->request->data('f_account_id');
       $users = TableRegistry::get('Accounts'); // Create Table Object
 
       $result = $users->fetchUserData($f_account_id);
@@ -114,71 +114,76 @@ class LoginController extends AppController
 
     public function destroySession()
     {
-       $this->autoRender = false;
-       header('Content-Type: application/json');
+     $this->autoRender = false;
+     header('Content-Type: application/json');
 
 
-       $session = $this->request->session();
+     $session = $this->request->session();
 
-       $session->destroy('user');
+     $session->destroy('user');
 
-       echo json_encode("Session Destroyed");
-       exit();
+     echo json_encode("Session Destroyed");
+     exit();
    }
 
    public function userEmail()
    {
-       $this->autoRender = false;
-       header('Content-Type: application/json');
+     $this->autoRender = false;
+     header('Content-Type: application/json');
 
-       $email_add=$this->request->data('account_email');
-       $id=$this->request->data('account_id');
+     $email_add=$this->request->data('account_email');
+     $id=$this->request->data('account_id');
 
-       $message = 'fashionology.com.ph/account/confirmation?account_id='.$id;
-       $subject = 'FASHIONOLOGY PH';
+     $message = 'fashionologyph.com/clothing?account_id='.$id;
+     $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
 
-       Email::configTransport('gmail', [
-        'host' => 'ssl://smtp.gmail.com',
-        'port' =>  465,
-        'username' => 'fashionologyph@gmail.com',
-        'password' => 'fashiono',
-        'className' => 'Smtp',
-        ]);
+     Email::configTransport('gmail', [
+      'host' => 'ssl://smtp.gmail.com',
+      'port' =>  465,
+      'username' => 'fashionologyph@gmail.com',
+      'password' => 'fashiono',
+      'className' => 'Smtp',
+      ]);
 
 
-       $email = new Email('');
-       $email->template('')
-       ->emailFormat('html')
-       ->from(['fashionologyph@support.customer.com' => 'Fashionology'])
-       ->to($email_add)
-       ->subject($subject)
-       ->transport('gmail')
-       ->send($message);
+     $email = new Email('default');
+     $email->template('default')
+     ->emailFormat('html')
+     ->from(['fashionologyph@gmail.com' => 'Fashionology'])
+     ->to($email_add)
+     ->subject('$subject')
+     ->attachments(array(
+      array(
+        'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
+        'mimetype'=>'image/png',
+        'contentId'=>'12345'
+        ),
+      ))
+     ->transport('gmail')
+     ->send($message);
 
-       echo json_encode($email);
 
-       exit();
+     exit();  
+
+
    }
 
-   public function accountconfirmation(){
+   public function updateUser(){
 
     $this->autoRender = false;
     header('Content-Type: application/json');
 
     $account_id=$this->request->data('account_id');
 
+    $account=TableRegistry::get('Users');
 
-
-     $account=TableRegistry::get('Accounts');
-
-     $result=$account->accountConfirmed($account_id);
-
+    $result=$account->updateUser($account_id);
 
 
     echo json_encode($result);
 
     exit();
 
-}
+  }
 
 }

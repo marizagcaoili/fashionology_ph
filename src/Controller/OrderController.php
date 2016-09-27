@@ -297,15 +297,41 @@ public function trackOrder(){
  // $order_id = $this->request->data('order_id');
  // $pickup_time = $this->request->data('pickup_time');
 
-$account_id=$this->request->data('f_account_id');
+ $account_id=$this->request->data('f_account_id');
 
 
  $order=TableRegistry::get('Orders');
 
 
-$result= $order-> getTrack($account_id);
+ $result= $order-> getTrack($account_id);
 
-echo json_encode($result);
+ echo json_encode($result);
+
+
+ exit();
+
+}
+
+public function orderCancel(){
+
+  $this->autoRender=false;
+ header('Content-Type: application/json');
+
+
+ // $account_id = $this->request->data('account_id');
+ // $order_id = $this->request->data('order_id');
+ // $pickup_time = $this->request->data('pickup_time');
+
+ $order_id=$this->request->data('order_id');
+ $status='CANCELLED';
+
+
+ $order=TableRegistry::get('Orders');
+
+
+ $result= $order->cancelOrder($order_id, $status);
+
+ echo json_encode($result);
 
 
  exit();

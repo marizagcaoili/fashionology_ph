@@ -35,12 +35,19 @@ class ShippingsTable extends Table
 
     return $this->query()->update()
     ->set(['shipping_fname'=>$fname,'shipping_lname'=>$lname,'shipping_contact'=>$contact,
-           'shipping_landmark'=>$landmark,'shipping_city'=>$city,'shipping_zipcode'=>$postal,
-           'shipping_address'=>$address])
+     'shipping_landmark'=>$landmark,'shipping_city'=>$city,'shipping_zipcode'=>$postal,
+     'shipping_address'=>$address])
     ->where(['shipping_id' => $shipping_id])
     ->execute();
 
 
+  }
+
+  public function updateShipping($fname,$lname,$city,$postal,$landmark,$address,$shipping_id){
+    return $this->query()->update()
+    ->set(['shipping_fname'=>$fname,'shipping_lname'=>$lname,'shipping_city'=>$city,'shipping_zipcode'=>$postal,'shipping_landmark'=>$landmark,'shipping_address'=>$address])
+    ->where(['shipping_id' => $shipping_id])
+    ->execute();
   }
 
 

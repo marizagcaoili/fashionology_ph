@@ -33,296 +33,111 @@
 				<div class='top-cover'>
 
 					<div class='top-cover-wrap'>
-<!-- 
-					<div class='img-cover'>
-						<img src="" alt="">
+
+						<div class='cover-content'>
+							<p class='db-p'>Dashboard </p>
+						</div>
+
+
 					</div>
-				-->
-				<div class='cover-content'>
-					<p class='db-p'>Dashboard </p>
+
 				</div>
 
+				<div class='db-content'>
+					<div class='sub-nav-select'>
+						<ul style='height:100%;'>
+							<a ng-click='account()' class='account active'><li>My Account</li></a>
+
+							<a ng-click='wlist()' class='wishlist'><li>Wishlist</li></a>
+
+							<a ng-click='closet()' class='closet' href='#'><li>Closet</li></a>
+
+
+							<a ng-click='history()' class='history' href='#'><li>Order History</li></a>
+
+
+							<a ng-click='track()' class='track'><li>Track my Order</li></a>
+
+
+							<a ng-click='help()' class='help' href='#'><li>Get Help</li></a>
+
+							<a href='/' style='margin-left:240px;border-bottom: 4px solid;'><li>Back to Store ></li></a>
+
+						</ul>
+					</div>
+
+					<div class='db-sub-content out myaccount'>
+						<div class='info-flex'>
+
+							<div class='info-left'>
+								<ul class='info-ul-left'>
+
+									<a  ng-click='summary()' style='font-family: Moon;color:#fff;' class='active-a' ><li style='background:#333;padding: 10px;'>Summary of Info</li></a>
+									<a ng-click='editaccount()' style='font-family: Moon;color:#333;font-size: 16px;font-weight: bold;' class='active-a'><li  style='padding: 10px;'>Edit Account Information</li></a>
+									<a ng-click='editshipping()' style='font-family: Moon;font-weight:bold;color:#333;font-size: 16px;' class='active-a'><li  style='padding: 10px;'>Edit Shipping Address</li></a>
+
+								</ul>
+							</div>
+
+							<div class='info-right sumOfInfo' >
+
+								
+								<?php include LAYOUT_DIR . 'front-summary.ctp'; ?>
+
+
+							</div>
+
+							<div class='info-right editAccount' style='display: none;'>
+
+								<?php include LAYOUT_DIR . 'front-editaccout.ctp'; ?>
+
+							</div>
+
+
+							<div class='info-right editshipping' style='display: none;'>
+
+							<?php include LAYOUT_DIR . 'front-editshipping.ctp'; ?>
+
+							</div>
+
+
+						</div>
+					</div>
+
+
+					<div class='db-sub-content in mywishlist'>
+
+						<?php include LAYOUT_DIR . 'front-wishlist.ctp'; ?>
+
+
+					</div>
+
+
+					<div class='db-sub-content in mytrack' style='border:none;height:500px;'>
+
+						<?php include LAYOUT_DIR . 'front-track.ctp'; ?>
+
+
+					</div>
+
+
+
+
+				</div>	
 
 			</div>
 
 		</div>
 
-		<div class='db-content'>
-			<div class='sub-nav-select'>
-				<ul>
-					<a class='account'><li>My Account</li></a>
-
-					<a class='wishlist active'><li>Wishlist</li></a>
-
-					<a href='#'><li>Closet</li></a>
-
-
-					<a href='#'><li>Order History</li></a>
-
-					
-					<a class='track'><li>Track my Order</li></a>
-
-
-					<a href='#'><li>Get Help</li></a>
-
-					<a href='/' style='margin-left:240px;border-bottom: 4px solid;'><li>Back to Store ></li></a>
-
-				</ul>
-			</div>
-
-			<div class='db-sub-content out myaccount'>
-				<div class='info-flex'>
-
-					<div class='info-left'>
-						<ul class='info-ul-left'>
-
-							<a href='#' class='active-a'><li>Summary of Info</li></a>
-							<a href='#' class='active-a'><li>Edit Account Information</li></a>
-							<a href='#'><li>Edit Shipping Address</li></a>
-
-						</ul>
-					</div>
-
-					<div class='info-right'>
-						<div class='info-right-wrap'>
-							
-							<div class='title-info-right'>
-								<p style='color:#193441;font-size: 26px;'>Summary of Information</p>
-							</div>
-
-							<div class='info-right-field' style='position: relative;top:28px;'>
-								<div class='info-right-flex-field'>
-									<div class='info-a-flex-field'>
-										<p>First Name</p>
-										<p>{{userInfos.account_fname}}</p>
-										
-									</div>
-									<div class='info-a-flex-field'>
-										<p>Last Name</p>
-										<p>{{userInfos.account_lname}}</p>
-									</div>
-								</div>
-
-								<div class='info-right-flex-field'>
-									<div class='info-a-flex-field'>
-										<p>Birthday</p>
-										<p>{{userInfos.account_birthday}}</p>
-										
-									</div>
-									<div class='info-a-flex-field'>
-										<p>Gender</p>
-										<p>Male</p>
-									</div>
-								</div>
-
-								<div class='info-right-flex-field'>
-									<div class='info-a-flex-field'>
-										<p>Username</p>
-										<p>{{userInfos.account_username}}</p>
-										
-									</div>
-									<div class='info-a-flex-field'>
-										<p>Password</p>
-										<p>{{userInfos.account_password}}</p>
-									</div>
-								</div>
-
-								<div class='info-right-flex-field'>
-									<div class='info-a-flex-field'>
-										<p>Email Address</p>
-										<p>{{userInfos.account_email}}</p>
-										
-									</div>
-									
-								</div>
-							</div>
-
-
-							<div class='shipping-wrap'>
-								<div class='title-info-right' style='margin-bottom: 10px;'>
-									<p style='color:#2c3e50;font-size: 22px;'>Shipping Details</p>
-								</div>
-
-								<div class='title-info-right' style='position:relative;top:10px;border-bottom: 1px dashed #cdcdcd;margin-bottom: 20px;'>
-									<p style='font-size: 18px;color:#778691;'>Primary Address</p>
-								</div>
-
-								<div style='position: relative;top:14px;'>
-
-									<div class='info-right-field' >
-										<div class='info-right-flex-field' >
-											<div class='info-a-flex-field'>
-												<p>First Name</p>
-												<p>{{userInfos.shipping.shipping_fname}}</p>
-
-											</div>
-											<div class='info-a-flex-field'>
-												<p>Last Name</p>
-												<p>{{userInfos.shipping.shipping_lname}}</p>
-											</div>
-										</div>
-
-									</div>
-
-
-									<div class='info-right-field'>
-										<div class='info-right-flex-field'>
-											<div class='info-a-flex-field'>
-												<p>City</p>
-												<p>{{userInfos.shipping.shipping_city}}</p>
-
-											</div>
-											<div class='info-a-flex-field'>
-												<p>Zip Code</p>
-												<p>{{userInfos.shipping.shipping_zipcode}}</p>
-											</div>
-										</div>
-
-									</div>
-
-									<div class='info-right-field'>
-										<div class='info-right-flex-field'>
-											<div class='info-a-flex-field'>
-												<p>Landmark</p>
-												<p>{{userInfos.shipping.shipping_landmark}}</p>
-
-											</div>
-											<div class='info-a-flex-field'>
-												<p>Contact No.</p>
-												<p>09223660550</p>
-											</div>
-										</div>
-
-									</div>
-
-
-									<div class='info-right-field'>
-										<div class='info-right-flex-field'>
-											<div class='info-a-flex-field'>
-												<p>Address</p>
-												<p>{{userInfos.shipping.shipping_address}}</p>
-
-											</div>
-
-										</div>
-
-									</div>
-
-								</div>
-
-
-								<div class='title-info-right' style='position:relative;top:38px;border-bottom: 1px dashed;color:#cdcdcd;margin-bottom: 34px;'>
-									<p style='font-size: 18px;color:#778691;'>Secondary Address</p>
-								</div>
-
-								<div style='position: relative;top:28px;'>
-
-									<div class='info-right-field' >
-										<div class='info-right-flex-field' >
-											<div class='info-a-flex-field'>
-												<p>First Name</p>
-												<p>Mariz Thel</p>
-
-											</div>
-											<div class='info-a-flex-field'>
-												<p>Last Name</p>
-												<p>Agcaoili</p>
-											</div>
-										</div>
-
-									</div>
-
-
-									<div class='info-right-field'>
-										<div class='info-right-flex-field'>
-											<div class='info-a-flex-field'>
-												<p>City</p>
-												<p>Makati</p>
-
-											</div>
-											<div class='info-a-flex-field'>
-												<p>Zip Code</p>
-												<p>12351</p>
-											</div>
-										</div>
-
-									</div>
-
-									<div class='info-right-field'>
-										<div class='info-right-flex-field'>
-											<div class='info-a-flex-field'>
-												<p>Landmark</p>
-												<p>Red Roof</p>
-
-											</div>
-											<div class='info-a-flex-field'>
-												<p>Contact No.</p>
-												<p>09223660550</p>
-											</div>
-										</div>
-
-									</div>
-
-
-									<div class='info-right-field'>
-										<div class='info-right-flex-field'>
-											<div class='info-a-flex-field'>
-												<p>Address</p>
-												<p>2362 C. Marconi St. Brgy. Palanan</p>
-
-											</div>
-
-										</div>
-
-									</div>
-
-								</div>
-
-
-
-
-
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-
-
-			<div class='db-sub-content in mywishlist'>
-
-				<?php include LAYOUT_DIR . 'front-wishlist.ctp'; ?>
-
-
-			</div>
-
-
-			<div class='db-sub-content in mytrack' style='border:none;height:500px;'>
-
-				<?php include LAYOUT_DIR . 'front-track.ctp'; ?>
-
-
-			</div>
-
-
-
-
-		</div>	
-
 	</div>
-
-</div>
-
-</div>
 
 </main>
 
 
 <script>
 	$(document).ready(function(){
-		$('.in	').show();
-		$('.out').hide();
+		$('.in	').hide();
+		$('.out').show();
 		$('.mytrack').hide();
 
 	})
