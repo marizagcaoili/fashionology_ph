@@ -9,6 +9,7 @@
    
  <link rel="stylesheet" href="/back/dist/summernote.css">
   <link rel="stylesheet" href="/back/css/upload_image.css">
+    <link rel="stylesheet" href="/back/css/ng-datepicker.css">
    <link rel="stylesheet" href="/back/css/angular-material.css">
     <link rel="stylesheet" href="/back/plugins/datatables/dataTables.bootstrap.css">
   <link rel="stylesheet" href="/back/bootstrap/css/bootstrap.min.css">
@@ -16,7 +17,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
+    <link rel="stylesheet" href="/back/css/ng-datepicker.css">
   <!-- Theme style -->
  <link rel="stylesheet" href="/back/dist/css/AdminLTE.css">  
  <link rel="stylesheet" type="text/css" href="/back/dist/summernote.css"> 
