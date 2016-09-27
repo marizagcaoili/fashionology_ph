@@ -70,6 +70,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/user/account/confirmed', ['controller' => 'login', 'action' => 'updateUser']);
 
 
+//order cancellation
+
+    $routes->connect('/data/order/status', ['controller' => 'order', 'action' => 'orderCancel']);
+
+
 //account uupdation
 
     $routes->connect('/email/confirmation', ['controller' => 'login', 'action' => 'userEmail']);

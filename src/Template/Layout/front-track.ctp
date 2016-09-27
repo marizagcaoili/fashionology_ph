@@ -75,7 +75,8 @@
 								<div class='wlist-product'>
 									<div class='wrapper-list'>
 										<div class='wrapper-list-sub'>
-											<div style='position:relative;border:1px solid #cdcdcd;width:36%;margin:0 auto;top:10px;height:80px;' class='ban'>
+
+											<div style='position:relative;border:1px solid #cdcdcd;width:36%;margin:0 auto;top:10px;height:80px;' class='ban' ng-click='cancelOrder(order_details[0].order_id)'>
 
 												<i class="fa fa-ban" style='font-size: 60px;position: relative;left:20px;top:6px;'aria-hidden="true"></i>
 

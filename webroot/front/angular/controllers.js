@@ -1746,10 +1746,217 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 
 		}
 
+		$scope.account=function(){
+
+			$('.account').fadeIn(100,function(){
+				$('.account').addClass('active');
+
+			})
+
+			$('.wishlist').removeClass('active');
+			$('.closet').removeClass('active');
+			$('.history').removeClass('active');
+			$('.track').removeClass('active');
+
+
+		}
+
+		$scope.wlist=function(){
+			$('.wishlist').addClass('active').fadeIn();
+
+			$('.account').removeClass('active');
+			$('.closet').removeClass('active');
+			$('.history').removeClass('active');
+			$('.track').removeClass('active');
+
+
+		}
+
+		$scope.closet=function(){
+			$('.closet').addClass('active');
+
+			$('.account').removeClass('active');
+			$('.wishlist').removeClass('active');
+			$('.history').removeClass('active');	
+			$('.track').removeClass('active');
+
+		}
+
+		$scope.history=function(){
+			$('.history').addClass('active');
+
+			$('.closet').removeClass('active');
+			$('.account').removeClass('active');
+			$('.wishlist').removeClass('active');
+			$('.track').removeClass('active');
+
+
+		}
+
+		$scope.track=function(){
+			$('.track').addClass('active');
+
+			$('.history').removeClass('active');
+			$('.closet').removeClass('active');
+			$('.account').removeClass('active');
+			$('.wishlist').removeClass('active');
+
+		}
+
+		$scope.summary=function(){
+			$('.sumOfInfo').show();
+			$('.editAccount').hide();
+			$('.editshipping').hide();
+			
+		}
+
+		$scope.editaccount=function(){
+			$('.sumOfInfo').hide();
+			$('.editAccount').show();
+			$('.editshipping').hide();
+		}
+
+
+		$scope.editshipping=function(){
+			$('.sumOfInfo').hide();
+			$('.editAccount').hide();
+			$('.editshipping').show();
+		}
+
+		$scope.updateAccount=function(account_id){
+			
+			var fname=$('#accountFname').val();
+			var lname=$('#accountLname').val();
+			var birthday=$('#accountBday').val();
+			var username=$('#accountUsername').val();
+			var password=$('#accountPassword').val();
+			var email=$('#accountEmail').val();
+
+
+
+			$http({
+				url : "/user/dashboard/updateAccount",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
+				data : 	{account_id:account_id,fname:fname,lname:lname,birthday:birthday,username:username,
+						password:password,email:email} // Data to be passed to API
+					}).then(function(response){
+						alert('account has been updated!');
+					})
+
+				}
+
+				$scope.updateShipping=function(shipping_id){
+
+					var fname=$('#shipFname').val(),
+					lname=$('#shipLname').val(),
+					city=$('#shipCity').val(),
+					postal=$('#shipZip').val(),
+					landmark=$('#shipLandmark').val(),
+					address=$('#shipAddress').val();
+
+
+					$http({
+						url : "user/dashboard/updateShipping",
+						method: "POST",
+						headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+						transformRequest: function(obj) {
+							var str = [];
+							for(var p in obj)
+								str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+							return str.join("&");
+						},
+				data : 	{shipping_id:shipping_id,fname:fname,lname:lname,city:city,postal:postal,landmark:landmark,address:address} // Data to be passed to API
+			}).then(function(){
+				alert('Shipping Information sucessfully updated!')
+				location.reload();
+			})
+
+		}
+
+		$scope.cancelOrder=function(order_id){
+
+
+		$http({
+			url : "/data/order/status",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+				data : 	{order_id:order_id} // Data to be passed to API
+			}).then(function(response){
+
+		
+		$rootScope.f_account_id = $cookies.get('f_account_id');
+
+
+		$http({
+			url : "/data/trackorder",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+				data : 	{f_account_id : $rootScope.f_account_id} // Data to be passed to API
+			}).then(function(response){
+
+				$scope.order_details = response.data;
+			})
+
+			alert('Your order now has been set to cancelled!');
+
+		
+
+			})
+
+		
+
+
+
+
+		}
+
+		$scope.reset=function(){
+
+
+			var fname=$('#accountFname').val('');
+			var lname=$('#accountLname').val('');
+			var birthday=$('#accountBday').val('');
+			var username=$('#accountUsername').val('');
+			var password=$('#accountPassword').val('');
+			var email=$('#accountEmail').val('');
+
+
+		}
+
+
+
+		$scope.resetShip=function(){
+			var fname=$('#shipFname').val(''),
+			lname=$('#shipLname').val(''),
+			city=$('#shipCity').val(''),
+			postal=$('#shipZip').val(''),
+			landmark=$('#shipLandmark').val(''),
+			address=$('#shipAddress').val('');
+
+
+		}
 
 		$scope.addItem = function(item_id) {
 
-			alert(item_id);
 
 		// Check if Cart Cookie exists
 		if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined ) {
@@ -1766,6 +1973,8 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 			// Save to Cookie
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
+			alert('It was already placed in Cart!');
+
 		} else {
 			// Cookie Template
 			var cart = [item_id];
@@ -1774,6 +1983,8 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 			// Save and covert cookie to string
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
+
+			alert('Item added to your Cart!');
 		}
 
 		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
