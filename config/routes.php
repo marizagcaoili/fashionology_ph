@@ -65,6 +65,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/email', ['controller' => 'home', 'action' => 'email']);
 
     
+    //order emailing
+    $routes->connect('/order/email', ['controller' => 'order', 'action' => 'emailNotify']);
+
+    //end
+
     $routes->connect('/', ['controller' => 'home', 'action' => 'index']);
 
     $routes->connect('/api/images/', ['controller' => 'api','action' => 'apiimage']);
@@ -124,6 +129,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/user/information/', ['controller' => 'login','action' => 'fetchUserData']);
 
+
 //end login
 
     /**wishlist section**/
@@ -141,6 +147,12 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     /**end of customization**/
 
+    /**updating shipping information***/
+
+    $routes->connect('/order/update/bill', ['controller' => 'billing','action' => 'updateBill']);
+
+
+    /**updating end**/
 
     /**delivery**/
     $routes->connect('/order/process/delivery', ['controller' => 'order','action' => 'placeDeliver']);
@@ -206,13 +218,6 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/place/shippingdetail', ['controller' => 'order','action' => 'addShippingDetail']);
 
-
-    // Sample Data
-
-    $routes->connect('/apitest', ['controller' => 'home', 'action' => 'apitest']);
-
-    $routes->connect('/api/sum/', ['controller' => 'api', 'action' => 'register']);
-
     
 
 
@@ -234,115 +239,115 @@ Router::scope('/', function (RouteBuilder $routes) {
      * routes you want in your application.
      */
     $routes->fallbacks('DashedRoute');
-});
+  });
 
 Router::prefix('Admin', function ($routes) {
        // Admin
     //Dashboard
-    $routes->connect('/admin/dashboard', ['controller' => 'dashboard', 'action' => 'index']);
+  $routes->connect('/admin/dashboard', ['controller' => 'dashboard', 'action' => 'index']);
 
-    $routes->connect('/admin/dashboard/archive', ['controller' => 'dashboard', 'action' => 'archive']);
+  $routes->connect('/admin/dashboard/archive', ['controller' => 'dashboard', 'action' => 'archive']);
 
-    $routes->connect('/admin/catalog/angularjs', ['controller' => 'catalog', 'action' => 'angularjs']);
+  $routes->connect('/admin/catalog/angularjs', ['controller' => 'catalog', 'action' => 'angularjs']);
 
     //Catalog
 
         //ITEM
-           $routes->connect('/admin/catalog/item_form', ['controller' => 'catalog', 'action' => 'itemForm']);
+  $routes->connect('/admin/catalog/item_form', ['controller' => 'catalog', 'action' => 'itemForm']);
 
-           $routes->connect('/admin/catalog/edit_item', ['controller' => 'catalog', 'action' => 'editItem']);
+  $routes->connect('/admin/catalog/edit_item', ['controller' => 'catalog', 'action' => 'editItem']);
 
-           $routes->connect('/admin/catalog/add_item', ['controller' => 'catalog', 'action' => 'addItem']);
+  $routes->connect('/admin/catalog/add_item', ['controller' => 'catalog', 'action' => 'addItem']);
 
-           $routes->connect('/admin/catalog/items_by_category', ['controller' => 'catalog', 'action' => 'itemsByCategory']);
+  $routes->connect('/admin/catalog/items_by_category', ['controller' => 'catalog', 'action' => 'itemsByCategory']);
 
-           $routes->connect('/admin/catalog/items_by_brand', ['controller' => 'catalog', 'action' => 'itemsByBrand']);
+  $routes->connect('/admin/catalog/items_by_brand', ['controller' => 'catalog', 'action' => 'itemsByBrand']);
 
-           $routes->connect('/admin/catalog/items', ['controller' => 'catalog', 'action' => 'items']);
+  $routes->connect('/admin/catalog/items', ['controller' => 'catalog', 'action' => 'items']);
 
-           $routes->connect('/admin/catalog/get_items', ['controller' => 'catalog', 'action' => 'getItems']);
+  $routes->connect('/admin/catalog/get_items', ['controller' => 'catalog', 'action' => 'getItems']);
 
-           $routes->connect('/admin/catalog/get_prefix', ['controller' => 'catalog', 'action' => 'getPrefix']);
+  $routes->connect('/admin/catalog/get_prefix', ['controller' => 'catalog', 'action' => 'getPrefix']);
 
-           $routes->connect('/admin/catalog/get_details', ['controller' => 'catalog', 'action' => 'getDetails']);
+  $routes->connect('/admin/catalog/get_details', ['controller' => 'catalog', 'action' => 'getDetails']);
 
-           $routes->connect('/admin/catalog/delete_item', ['controller' => 'catalog', 'action' => 'deleteItem']); 
+  $routes->connect('/admin/catalog/delete_item', ['controller' => 'catalog', 'action' => 'deleteItem']); 
 
-           $routes->connect('/admin/catalog/update_item', ['controller' => 'catalog', 'action' => 'updateItem']); 
+  $routes->connect('/admin/catalog/update_item', ['controller' => 'catalog', 'action' => 'updateItem']); 
 
-           $routes->connect('/admin/catalog/update_item_status', ['controller' => 'catalog', 'action' => 'updateItemStatus']);
+  $routes->connect('/admin/catalog/update_item_status', ['controller' => 'catalog', 'action' => 'updateItemStatus']);
 
-           $routes->connect('/admin/catalog/count_featured', ['controller' => 'catalog', 'action' => 'countFeatured']);
-    
+  $routes->connect('/admin/catalog/count_featured', ['controller' => 'catalog', 'action' => 'countFeatured']);
+
         //---/>ITEM
 
 
         //CATEGORY
 
-          $routes->connect('/admin/catalog/categories', ['controller' => 'catalog', 'action' => 'categories']);
+  $routes->connect('/admin/catalog/categories', ['controller' => 'catalog', 'action' => 'categories']);
 
-          $routes->connect('/admin/catalog/add_category', ['controller' => 'catalog', 'action' => 'addCategory']);   
+  $routes->connect('/admin/catalog/add_category', ['controller' => 'catalog', 'action' => 'addCategory']);   
 
-          $routes->connect('/admin/catalog/get_categories', ['controller' => 'catalog', 'action' => 'getCategories']);
+  $routes->connect('/admin/catalog/get_categories', ['controller' => 'catalog', 'action' => 'getCategories']);
 
-          $routes->connect('/admin/catalog/second_category', ['controller' => 'catalog', 'action' => 'secondCategory']);
+  $routes->connect('/admin/catalog/second_category', ['controller' => 'catalog', 'action' => 'secondCategory']);
 
-          $routes->connect('/admin/catalog/top_category', ['controller' => 'catalog', 'action' => 'topCategory']);    
+  $routes->connect('/admin/catalog/top_category', ['controller' => 'catalog', 'action' => 'topCategory']);    
 
-          $routes->connect('/admin/catalog/get_parents', ['controller' => 'catalog', 'action' => 'getParents']);
+  $routes->connect('/admin/catalog/get_parents', ['controller' => 'catalog', 'action' => 'getParents']);
 
-          $routes->connect ('/admin/catalog/get_categorydetails', ['controller' => 'catalog', 'action' => 'getCategoryDetails']);
+  $routes->connect ('/admin/catalog/get_categorydetails', ['controller' => 'catalog', 'action' => 'getCategoryDetails']);
 
-          $routes->connect ('/admin/catalog/update_category_status', ['controller' => 'catalog', 'action' => 'updateCategoryStatus']);
+  $routes->connect ('/admin/catalog/update_category_status', ['controller' => 'catalog', 'action' => 'updateCategoryStatus']);
 
-          $routes->connect ('/admin/catalog/update_category', ['controller' => 'catalog', 'action' => 'updateCategory']);
+  $routes->connect ('/admin/catalog/update_category', ['controller' => 'catalog', 'action' => 'updateCategory']);
 
-          $routes->connect('/admin/catalog/delete_category', ['controller' => 'catalog', 'action' => 'deleteCategory']);
+  $routes->connect('/admin/catalog/delete_category', ['controller' => 'catalog', 'action' => 'deleteCategory']);
 
 
         //--/>CATEGORY
 
         //BRAND
 
-          $routes->connect('/admin/catalog/brands', ['controller' => 'catalog', 'action' => 'brands']);
+  $routes->connect('/admin/catalog/brands', ['controller' => 'catalog', 'action' => 'brands']);
 
-          $routes->connect('/admin/catalog/get_brands', ['controller' => 'catalog', 'action' => 'getBrands']);
+  $routes->connect('/admin/catalog/get_brands', ['controller' => 'catalog', 'action' => 'getBrands']);
 
-          $routes->connect('/admin/catalog/add_brand', ['controller' => 'catalog', 'action' => 'addBrand']);
+  $routes->connect('/admin/catalog/add_brand', ['controller' => 'catalog', 'action' => 'addBrand']);
 
-          $routes->connect('/admin/catalog/update_brand_status', ['controller' => 'catalog', 'action' => 'updateBrandStatus']);
+  $routes->connect('/admin/catalog/update_brand_status', ['controller' => 'catalog', 'action' => 'updateBrandStatus']);
 
-          $routes->connect('/admin/catalog/update_brand', ['controller' => 'catalog', 'action' => 'updateBrand']);
+  $routes->connect('/admin/catalog/update_brand', ['controller' => 'catalog', 'action' => 'updateBrand']);
 
-          $routes->connect('/admin/catalog/delete_brand', ['controller' => 'catalog', 'action' => 'deleteBrand']);
+  $routes->connect('/admin/catalog/delete_brand', ['controller' => 'catalog', 'action' => 'deleteBrand']);
 
         //--/>BRAND
 
 
         //SIZE
 
-          $routes->connect('/admin/catalog/sizes', ['controller' => 'catalog', 'action' => 'sizes']);
+  $routes->connect('/admin/catalog/sizes', ['controller' => 'catalog', 'action' => 'sizes']);
 
-          $routes->connect('/admin/catalog/add_size', ['controller' => 'catalog', 'action' => 'addSize']);
+  $routes->connect('/admin/catalog/add_size', ['controller' => 'catalog', 'action' => 'addSize']);
 
-          $routes->connect('/admin/catalog/get_sizes', ['controller' => 'catalog', 'action' => 'getSizes']);
+  $routes->connect('/admin/catalog/get_sizes', ['controller' => 'catalog', 'action' => 'getSizes']);
 
-          $routes->connect('/admin/catalog/update_size', ['controller' => 'catalog', 'action' => 'updateSize']);
+  $routes->connect('/admin/catalog/update_size', ['controller' => 'catalog', 'action' => 'updateSize']);
 
-          $routes->connect('/admin/catalog/delete_size', ['controller' => 'catalog', 'action' => 'deleteSize']);
-        
+  $routes->connect('/admin/catalog/delete_size', ['controller' => 'catalog', 'action' => 'deleteSize']);
+
 
         //--/>SIZE
 
 
-       
+
         //IMAGE
 
-           $routes->connect('/admin/catalog/upload_image', ['controller' => 'catalog', 'action' => 'uploadImage']);
+  $routes->connect('/admin/catalog/upload_image', ['controller' => 'catalog', 'action' => 'uploadImage']);
 
-           $routes->connect('/admin/catalog/update_image', ['controller' => 'catalog', 'action' => 'updateImage']);
+  $routes->connect('/admin/catalog/update_image', ['controller' => 'catalog', 'action' => 'updateImage']);
 
-           $routes->connect('/admin/catalog/last_inserted', ['controller' => 'catalog', 'action' => 'lastInserted']);
+  $routes->connect('/admin/catalog/last_inserted', ['controller' => 'catalog', 'action' => 'lastInserted']);
 
 
 
@@ -351,17 +356,17 @@ Router::prefix('Admin', function ($routes) {
 
        //STOCKS
 
-           $routes->connect('/admin/catalog/get_stock_sizes', ['controller' => 'catalog', 'action' => 'getStockSizes']);
+  $routes->connect('/admin/catalog/get_stock_sizes', ['controller' => 'catalog', 'action' => 'getStockSizes']);
 
-           $routes->connect('/admin/catalog/new_stock', ['controller' => 'catalog', 'action' => 'newStock']);
+  $routes->connect('/admin/catalog/new_stock', ['controller' => 'catalog', 'action' => 'newStock']);
 
-           $routes->connect('/admin/catalog/update_stock', ['controller' => 'catalog', 'action' => 'updateStock']);
+  $routes->connect('/admin/catalog/update_stock', ['controller' => 'catalog', 'action' => 'updateStock']);
 
-           $routes->connect('/admin/catalog/get_stock', ['controller' => 'catalog', 'action' => 'getStock']);
+  $routes->connect('/admin/catalog/get_stock', ['controller' => 'catalog', 'action' => 'getStock']);
 
-           $routes->connect('/admin/catalog/get_stock_details', ['controller' => 'catalog', 'action' => 'getStockDetails']);
+  $routes->connect('/admin/catalog/get_stock_details', ['controller' => 'catalog', 'action' => 'getStockDetails']);
 
-          $routes->connect('/admin/catalog/get_item_stock_details', ['controller' => 'catalog', 'action' => 'getItemStockDetails']);
+  $routes->connect('/admin/catalog/get_item_stock_details', ['controller' => 'catalog', 'action' => 'getItemStockDetails']);
        //--/>STOCKS
 
     //--/>Catalog
@@ -369,53 +374,53 @@ Router::prefix('Admin', function ($routes) {
 
       //ORDERS
 
-           $routes->connect('/admin/order', ['controller' => 'order', 'action' => 'index']);
+  $routes->connect('/admin/order', ['controller' => 'order', 'action' => 'index']);
 
-           $routes->connect('/admin/order/view_order', ['controller' => 'order', 'action' => 'viewOrder']);
+  $routes->connect('/admin/order/view_order', ['controller' => 'order', 'action' => 'viewOrder']);
 
-           $routes->connect('/admin/order/get_orders', ['controller' => 'order', 'action' => 'getOrders']);
-          
-           $routes->connect('/admin/order/order_details', ['controller' => 'order', 'action' => 'getOrderDetails']);  
-           $routes->connect('/admin/order/ordered_items', ['controller' => 'order', 'action' => 'orderedItems']);
+  $routes->connect('/admin/order/get_orders', ['controller' => 'order', 'action' => 'getOrders']);
 
-           $routes->connect('/admin/order/update_order_status', ['controller' => 'order', 'action' => 'updateOrderStatus']);       
+  $routes->connect('/admin/order/order_details', ['controller' => 'order', 'action' => 'getOrderDetails']);  
+  $routes->connect('/admin/order/ordered_items', ['controller' => 'order', 'action' => 'orderedItems']);
+
+  $routes->connect('/admin/order/update_order_status', ['controller' => 'order', 'action' => 'updateOrderStatus']);       
         //--/>ORDERS
 
         //LOGIN
 
-           $routes->connect('/admin/login', ['controller' => 'login', 'action' => 'index']);
+  $routes->connect('/admin/login', ['controller' => 'login', 'action' => 'index']);
 
-           $routes->connect('/admin/login/get_admin_details', ['controller' => 'login', 'action' => 'getAdminDetails']);
+  $routes->connect('/admin/login/get_admin_details', ['controller' => 'login', 'action' => 'getAdminDetails']);
 
-           $routes->connect('/admin/login/add_session',  ['controller' => 'login', 'action' => 'addSession']);
+  $routes->connect('/admin/login/add_session',  ['controller' => 'login', 'action' => 'addSession']);
 
-           $routes->connect('/admin/login/destroy_session',  ['controller' => 'login', 'action' => 'destroySession']);
-        
+  $routes->connect('/admin/login/destroy_session',  ['controller' => 'login', 'action' => 'destroySession']);
+
         //--/>LOGIN
 
        //INQUIRY
 
-           $routes->connect('/admin/inquiry', ['controller' => 'inquiry', 'action' => 'index']);
+  $routes->connect('/admin/inquiry', ['controller' => 'inquiry', 'action' => 'index']);
 
-           $routes->connect('/admin/inquiry/get_inquiries', ['controller' => 'inquiry', 'action' => 'getInquiries']);
+  $routes->connect('/admin/inquiry/get_inquiries', ['controller' => 'inquiry', 'action' => 'getInquiries']);
 
-           $routes->connect('/admin/inquiry/get_replied_inquiries', ['controller' => 'inquiry', 'action' => 'getRepliedInquiries']);
+  $routes->connect('/admin/inquiry/get_replied_inquiries', ['controller' => 'inquiry', 'action' => 'getRepliedInquiries']);
 
-           $routes->connect('/admin/inquiry/get_unread_inquiries', ['controller' => 'inquiry', 'action' => 'getUnreadInquiries']);
+  $routes->connect('/admin/inquiry/get_unread_inquiries', ['controller' => 'inquiry', 'action' => 'getUnreadInquiries']);
 
-           $routes->connect('/admin/inquiry/inquiry_reply', ['controller' => 'inquiry', 'action' => 'inquiryReply']);
+  $routes->connect('/admin/inquiry/inquiry_reply', ['controller' => 'inquiry', 'action' => 'inquiryReply']);
 
-           $routes->connect('/admin/inquiry/inquiry_archive', ['controller' => 'inquiry', 'action' => 'inquiryArchive']);
+  $routes->connect('/admin/inquiry/inquiry_archive', ['controller' => 'inquiry', 'action' => 'inquiryArchive']);
 
-           $routes->connect('/admin/inquiry/update_read_status', ['controller' => 'inquiry', 'action' => 'updateReadStatus']);
+  $routes->connect('/admin/inquiry/update_read_status', ['controller' => 'inquiry', 'action' => 'updateReadStatus']);
 
-           $routes->connect('/admin/catalog/test', ['controller' => 'inquiry', 'action' => 'test']);
+  $routes->connect('/admin/catalog/test', ['controller' => 'inquiry', 'action' => 'test']);
 
 
 
        //--/>INQUIRY
 
-    $routes->fallbacks('DashedRoute');
+  $routes->fallbacks('DashedRoute');
 
 });
 

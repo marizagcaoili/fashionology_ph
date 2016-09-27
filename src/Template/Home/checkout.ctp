@@ -26,6 +26,8 @@
                <p><span ><i class="fa fa-map-marker" aria-hidden="true"></i></span> delivery address </p>
             </div>
             <div class='sec-b collapse' style='margin-bottom: 1px;'>
+               
+            </style>
                <div class='billing-info'>
                   <div >
                      <div class='title-addrs'>
@@ -95,7 +97,7 @@
                      <div class='select-grping'>
                         <ul>
                            <li>
-                              <div class='select-div' data-toggle="modal" data-target="#deliverySelect">
+                              <div class='select-div' id='cash' data-toggle="modal" data-target="#deliverySelect">
                                  <div class='cash-on'>
                                     <div class='cash-desc'>
                                        <p>Cash on Delivery</p>
@@ -108,7 +110,7 @@
                               </div>
                            </li>
                            <li>
-                              <div class='select-div' data-toggle="modal" data-target="#branchSelect">
+                              <div class='select-div' id='pickup'data-toggle="modal" data-target="#branchSelect">
                                  <div class='cash-on'>
                                     <div class='cash-desc'>
                                        <p>Pick Up</p>
@@ -119,12 +121,9 @@
                                        <div class='under-desc-flex' style='border:none;'>
                                           <div class='flexible-a' style='border:none;'>
                                              <p><b>TIME OF PICKUP</b></p>
-                                             <p>9:00 AM</p>
+                                             <p style='position: relative;top:10px;'>{{pickUpTime}}</p>
                                           </div>
-                                          <div class='flexible-a'>
-                                             <p><b>DATE OF PICKUP</b></p>
-                                             <p>10.10.16</p>
-                                          </div>
+                                        
                                        </div>
                                     </div>
                                  </div>
@@ -140,7 +139,7 @@
                <div class='checkout-header'>
                   <p><span> <i class="fa fa-shopping-bag" aria-hidden="true"></i></span> review and place order</p>
                </div>
-               <div class='sec-d collapse in ' id='reviewplace'  ng-init='total=0'>
+               <div class='sec-d collapse in' id='reviewplace'  ng-init='total=0'>
                   <div class='flex-set'>
                      <div class='left-flex'>
                         <ul>
@@ -150,9 +149,9 @@
                                  <div class='each-of-detail'>
                                     <p class='itemname'>{{item.item.item_name}}</p>
                                     <p class='check-desc'>{{item.item.item_description}}</p>
-                                    <p class='check-desc' ng-init="$parent.total = $parent.total + (item.item.item_srp * cart_items_quantity[$index])" ><b>Quantity:</b> {{cart_items_quantity[$index]}}</p>
+                                    <p class='check-desc' style='position:relative;top:34px;left:-142px;text-transform: uppercase;font-weight: bold;font-family: Moon;' ng-init="$parent.total = $parent.total + (item.item.item_srp * cart_items_quantity[$index])" ><b>Quantity:</b> {{cart_items_quantity[$index]}}</p>
                                     <div class='close-x'>
-                                       <p><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                       <p ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'><i class="fa fa-trash-o" aria-hidden="true"></i></p>
                                     </div>
                                  </div>
                               </div>
@@ -165,16 +164,16 @@
                               <div class='total-this-flex-menu'>
                                  <div class='total-direction'>
                                     <div class='total-content-direction'>
-                                       <p style='font-weight:bold;'>sub total</p>
-                                       <p style='font-weight:bold;'>shipping fee</p>
-                                       <p style='font-weight:bold;'>VOUCHER</p>
+                                       <p style='font-weight:bold;'>No. of Items Placed</p>
+                                   <!--     <p style='font-weight:bold;'>shipping fee</p> -->
+                                 <!--       <p style='font-weight:bold;'>VOUCHER</p> -->
                                     </div>
                                  </div>
                                  <div class='total-this-direction'>
                                     <div class='total-content-direction' style='padding-left:10px;'>
-                                       <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>PHP {{total}}.00</p>
-                                       <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>NO FEE</p>
-                                       <p style='color:#464646;text-align: left;font-family:Moon;font-size: 18px;font-weight: bold;'>0.00 %</p>
+                                       <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>{{cart_items_count}}</p>
+                              <!--          <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>NO FEE</p> -->
+                                  <!--      <p style='color:#464646;text-align: left;font-family:Moon;font-size: 18px;font-weight: bold;'>0.00 %</p> -->
                                     </div>
                                  </div>
                               </div>
@@ -328,23 +327,18 @@
                   <div class="modal-body" style='height:200px;'>
                      <div class='setdate-wrap'>
                         <div class='setdatewrap-a'>
-                           <p><b>Note</b></p>
-                           <p style='margin-top: 6px;'>Please kindly specify the date of delivery. </p>
+                           <p><b>A friendly reminder from Fashionology PH</b></p>
+                          
                         </div>
-                        <div class='setdatewrap-a' style='margin-top: 10px;'>
-                           <p><b>Date of Delivery</b></p>
-                           <div class='timeof'>
-                              <div class='timeof-flex'>
-                                 <div class='each-timeof'>
-                                    <input type='date' class='timeof-select' style='width: 250px;' id='date'>
-                                 </div>
-                              </div>
-                           </div>
+                        <div class='setdatewrap-a' style='margin-top: -44px;'>
+                           <p>Once your delivery date was already confirmed. You will receive an ongoing call from our Customer Support. For further notice, you might wanted to check your Delivery Status under "Track my Order" module in User Dashboard!. <br>
+                           Thank you and Happy Shopping!</p>
+                           
                         </div>
                      </div>
                   </div>
                   <div class="modal-footer">
-                     <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setDelivery()'>Set Schedule</button>
+                     <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setDelivery()'>Set as Delivery</button>
                      <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
                   </div>
                </div>
@@ -359,7 +353,7 @@
       $(".collapse").collapse();
       
       $(document).ready(function(){
-      	$('.each-branch').click(function(){
+         $('.each-branch').click(function(){
       		$('branches_name').show();
       	});
       	// $('#signin').hide();
@@ -369,8 +363,8 @@
       	})
       });
       
-      $('.select-div').click(function(){
-      	$(this).addClass('shadow');
-      })
+      // $('.select-div').click(function(){
+      // 	$(this).addClass('shadow');
+      // })
    </script>
 </html>

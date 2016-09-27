@@ -108,7 +108,7 @@
 				</div>
 
 				<div class='size-view'>
-					<p>Choose a Size</p>
+					<p>Availabe Size in Stock</p>
 					<ul>
 						<li ng-repeat = "detail in item_stock_details" ng-click= 'getSizeId(detail.quantity,detail.size.size_key)'><a><b>{{detail.size.size_key}}</b> {{detail.quantity}}</a></li>
 
