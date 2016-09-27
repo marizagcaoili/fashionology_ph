@@ -298,7 +298,7 @@
 			</div>
 
 
-			<div class='db-sub-content in mytrack'>
+			<div class='db-sub-content in mytrack' style='border:none;height:500px;'>
 
 				<?php include LAYOUT_DIR . 'front-track.ctp'; ?>
 

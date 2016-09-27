@@ -121,6 +121,18 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/checkout/process', ['controller' => 'home','action' => 'orderprocess']);
 
+
+
+
+    //tracking of orders
+    $routes->connect('/data/trackorder', ['controller' => 'order','action' => 'trackOrder']);
+
+
+    //
+
+
+
+
     //login
 
 

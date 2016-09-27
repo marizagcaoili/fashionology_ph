@@ -288,7 +288,29 @@ public function emailNotify()
 
 }
 
+public function trackOrder(){
+ $this->autoRender=false;
+ header('Content-Type: application/json');
 
+
+ // $account_id = $this->request->data('account_id');
+ // $order_id = $this->request->data('order_id');
+ // $pickup_time = $this->request->data('pickup_time');
+
+$account_id=$this->request->data('f_account_id');
+
+
+ $order=TableRegistry::get('Orders');
+
+
+$result= $order-> getTrack($account_id);
+
+echo json_encode($result);
+
+
+ exit();
+
+}
 
 
 
