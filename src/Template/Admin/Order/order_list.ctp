@@ -70,24 +70,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <table id="example2" class="table">
                 <thead>
                 <tr>
-                  <th width= "15%">Order ID</th>
-                  <th width= "20%">Status</th>
+                  <th width= "15%">Reference Number</th>
+                  <th width= "10%">Status</th>
                   <th width= "20%">Customer Name</th>
-                  <th width= "20%">Total</th>
-                <!--   <th><center>Delivery Date</center></th> -->
-                  <th colspan= "2">Action</th>
+                  <th width= "5%">Total</th>
+                  <th width= "20%"><center>Comments</center></th>
+                  <th width= "20%" colspan= "4">Action</th>
 
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="order in orders">
-                <td>{{order.order_id}}</td>
+                <td>{{order.order_reference_number}}</td>
                 <td>{{order.order_status}}</td>
                 <td>{{order.account.account_fname}} &nbsp {{order.account.account_lname}}</td>
                 <td>{{order.order_subtotal}}.00</td>
+                <td></td>
                <!--  <td> <md-datepicker ng-model="myDate" md-placeholder="Enter date"
                           md-min-date=0 md-max-date="maxDate"></md-datepicker></td>  -->
-                <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmOrder(order.order_id)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name=""><small>CONFIRM</small></button></span></td>
+                <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmModal(order.order_reference_number, order.order_id, order.account.account_email)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name=""><small>CONFIRM</small></button></span></td>
 
                 <td><button data-toggle="tooltip" data-placement="bottom" ng-click= "updateAsDelivered(order.order_id)" title="Mark as Delivered" type="submit" class= "btn btn-success btn-flat" name=""><i class="fa fa-check-square-o"> </i></button></td>
 
@@ -123,16 +124,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="form-group row">
                 <div class="col-xs-1"></div>
                 <label for="brand" class="col-xs-3 col-form-label">Delivery Date</label>
-                 <div class="col-xs-8">
-                     <input type="date" ng-model="myDate"></datepicker>
-              
+                  <div class='col-sm-6'>
+                      <div class="form-group">
+                          <div class='input-group date' id='datetimepicker1'>
+                              <input type='text' class="form-control" />
+                              <span class="input-group-addon">
+                                  <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                          </div>
+                      </div>
+                  </div>
+
+
+            </div>
+            <div class="form-group row">
+                <div class="col-xs-1"></div>
+                <div class="col-xs-3">
+                    <label for="brand" class="col-form-label">Note to User</label><br>
+                    <small><i>(Optional)</i></small>
+                </div>
+                 <div class="col-xs-7">
+                     <textarea style="width:80%;" type="date" id="note" ng-model="delivery_note"></textarea><br>
+                    <small><i>*An email will be sent to {{email_add}} regarding with the confirmation of order. This note will be included to the mail.</i></small> 
                   </div>
 
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" style="border-radius:0px;" data-dismiss="modal" id="modal-close" >Cancel</button>
-          <button type="button" class="btn btn-primary" ng-click="setDate()" style="border-radius:0px;"> Set</button>
+          <button type="button" class="btn btn-secondary" ng-click="cancel()" style="border-radius:0px;" data-dismiss="modal" id="modal-close" >Cancel</button>
+          <button type="button" class="btn btn-primary" ng-click="confirmOrder()" style="border-radius:0px;"> Confirm Order</button>
         </div>
       </div>
 
@@ -160,6 +180,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- page script -->
 
 <?php include LAYOUT_DIR . 'script.ctp'; ?>
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker();
+            });
+        </script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the

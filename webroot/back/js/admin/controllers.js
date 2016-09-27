@@ -1390,19 +1390,38 @@ app.controller('OrderController', function($scope, $http) {
 	    });		
 	};
 
-	$scope.setDate = function(){
-		console.log($scope.deliverydate);
+	$scope.cancel = function(){
+		$scope.note = "";
 	};
 
-	$scope.confirmOrder = function(order_id){
-	   $http.get("/admin/order/order_details",
-		{
-				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				params : { order_id : order_id }
-		}).then(function(response) {
-				$scope.reference_number = response.data[0].order_reference_number;
-		});
-	}
+	$scope.confirmModal = function(ref, order_id, email_address){
+		$scope.reference_number =ref;
+		$scope.order_id = order_id;
+		$scope.email_add = email_address;
+	};
+
+	$scope.confirmOrder = function(){
+		var deliverydate = $('#datepicker').datepicker({ format: 'dd-mm-yy' }).val();
+		console.log (deliverydate);
+		var status = "To Be Delivered";
+		var note = $('#note').val();
+		$http({
+			url : "/admin/order/confirm_order",
+			method: "POST",
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+		    transformRequest: function(obj) {
+		        var str = [];
+		        for(var p in obj)
+		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		        return str.join("&");
+		    },
+			data : 	{order_id : $scope.order_id, deliverydate : delivery_date, status : status, email_add : $scope.email_add, note : note} // Data to be passed to API
+		})
+	    .then(function(response) {
+	    });	
+
+	};
+
 });
 
 // app.controller('TestController', function($scope, $http) {

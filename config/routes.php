@@ -381,9 +381,12 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/order/get_orders', ['controller' => 'order', 'action' => 'getOrders']);
 
   $routes->connect('/admin/order/order_details', ['controller' => 'order', 'action' => 'getOrderDetails']);  
+
   $routes->connect('/admin/order/ordered_items', ['controller' => 'order', 'action' => 'orderedItems']);
 
-  $routes->connect('/admin/order/update_order_status', ['controller' => 'order', 'action' => 'updateOrderStatus']);       
+  $routes->connect('/admin/order/update_order_status', ['controller' => 'order', 'action' => 'updateOrderStatus']);  
+
+  $routes->connect('/admin/order/confirm_order', ['controller' => 'order', 'action' => 'confirmOrder']);    
         //--/>ORDERS
 
         //LOGIN

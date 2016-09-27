@@ -17,6 +17,7 @@ namespace App\Controller\Admin;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Mailer\Email;
 
 /**
  * Dashboard Controller
@@ -92,9 +93,6 @@ class OrderController extends Controller
         echo json_encode($result);
         exit();
     }
-
-
-    
     
     public function orderedItems()
     {
@@ -124,6 +122,46 @@ class OrderController extends Controller
         $result = $orders->updateStatus($order_id, $status);
 
         echo json_encode($result);
+        exit();
+    }
+
+
+    public function confirmOrder()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $delivery = TableRegistry::get('Delivery');
+        $orders = TableRegistry::get('Orders');
+
+        $order_id = $this->request->data['order_id'];
+        $email_address = $this->request->data['email_add'];
+        $note = $this->request->data['note'];
+        $status = $this->request->data['status'];
+        $date = $this->request->data['deliverydate'];
+
+        $orders->updateStatus($order_id, $status);
+        $delivery->updateDeliveryDetails($order_id, $date);
+
+        $message = "Your order is now confirmed. Your item will be delivered on"." ".$date."<br> Note:"."".$note;
+
+        Email::configTransport('gmail', [
+        'host' => 'ssl://smtp.gmail.com',
+        'port' =>  465,
+        'username' => 'fashionologyph@gmail.com',
+        'password' => 'fashiono',
+        'className' => 'Smtp',
+        ]);
+
+
+        $email = new Email('default');
+        $email->template('default')
+              ->from(['fashionologyph@gmail.com' => 'Fashionology'])
+              ->to($email_address)
+              ->subject('Order Confirmed')
+              ->transport('gmail')
+              ->template('default')
+              ->send($message);
         exit();
     }
 

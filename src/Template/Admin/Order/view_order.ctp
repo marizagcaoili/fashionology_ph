@@ -79,7 +79,7 @@
                   </fieldset>
                  <div  ng-repeat= "orderdetail in orderdetails" class="form-group col-xs-6" >
                   <h4> Reference Number     : <p style= "float:right"><b> {{orderdetail.order_reference_number}}</b> </p></h4>
-                  <h4>Delivery Date : <p style= "float:right"> Pending  </p></h4>
+                  <h4>Delivery Date : <p style= "float:right"> {{orderdetail.delivery.delivery_date}} </p></h4>
                   <h5><i>Total Amount  </i>   :  <p style= "float:right"> {{orderdetail.order_subtotal}} </p></h5>
                   <h5><i>Payment Method  </i>: <p style= "float:right"> {{orderdetail.order_payment_method}}  </p></h5><BR>
                   
