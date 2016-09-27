@@ -27,9 +27,9 @@
 	
 	<!-- Compiled and minified CSS -->
 <!-- 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
- -->
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+-->
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
 
 
 
@@ -74,7 +74,7 @@
 					<p class='tags-p'>Tags</p>
 					<div class='tags-contain'>
 
-			
+
 					</div>
 
 
@@ -177,7 +177,10 @@
 							</li>
 
 							<li>
-								<button class='add-to-cart' style='background: transparent;color:#000;border:solid 1px;'> <i class="fa fa-heart-o" aria-hidden="true"></i></button>
+								<button ng-click='addtowish($event,itemId)' class='add-to-cart' style='background: transparent;color:#000;border:none;' style='font-size: 90px;'> 
+									<i class='fa fa-heart-o' style='font-size: 24px;' ng-show="!detail.wished" aria-hidden="true"></i>
+									<i class='fa fa-heart' style='font-size: 24px;'ng-show="detail.wished" aria-hidden="true"></i>
+								</button>
 							</li>
 						</ul>
 
@@ -268,6 +271,7 @@
 <?php include LAYOUT_DIR . 'front-cart.ctp'; ?>
 
 
+<?php include LAYOUT_DIR . 'front-login.ctp'; ?>
 
 
 </body>
@@ -287,7 +291,7 @@
 <script src="/front/assets/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- <script src="/front/assets/js/material.min.js"></script>
 
- -->
+-->
 
 
 <script src="/front/dist/jquery.barrating.min.js"></script>

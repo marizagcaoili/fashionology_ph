@@ -11,14 +11,13 @@ class WishlistTable extends Table
 		$this->table('tbl_wishlist');
 
 		$this->belongsTo('Items');
-
-		$this->hasOne('Images');
+	
 	}
 
 	public function showWishlist($account_id)
 	{
 		return $this->find()
-		->contain(['Items'])
+		->contain(array('Items' => array('Images')))
 		->where(['user_id' => $account_id])
 		->toArray();
 
@@ -34,10 +33,10 @@ class WishlistTable extends Table
 
 	}
 
-	public function removeWishlist($account_id,$item_id)
+	public function removeWishlist($wishlist_id)
 	{
 		return $this->query()->delete()
-		->where(['brand_id' => $brand_id])
+		->where(['wishlist_id' => $wishlist_id])
 		->execute();
 
 

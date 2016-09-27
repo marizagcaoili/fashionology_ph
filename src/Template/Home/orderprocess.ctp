@@ -167,7 +167,6 @@
 </div>
 
 
-
 </main>
 
 <div class='loadingBar' style='border:none;display: none;'>
