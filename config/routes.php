@@ -64,6 +64,24 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/email', ['controller' => 'home', 'action' => 'email']);
 
+
+    //acccount validation
+
+    $routes->connect('/user/account/confirmed', ['controller' => 'login', 'action' => 'updateUser']);
+
+
+//account uupdation
+
+    $routes->connect('/email/confirmation', ['controller' => 'login', 'action' => 'userEmail']);
+
+
+    $routes->connect('/user/dashboard/updateShipping', ['controller' => 'account', 'action' => 'updateShipping']);
+
+
+    $routes->connect('/user/dashboard/updateAccount', ['controller' => 'account', 'action' => 'updateAccount']);
+
+
+    //
     
     //order emailing
     $routes->connect('/order/email', ['controller' => 'order', 'action' => 'emailNotify']);
@@ -83,7 +101,11 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/clothing/fetchDetails', ['controller' => 'api','action' => 'productviewer']);
 
+//verify the user
+    $routes->connect('/clothing/fetchDetails', ['controller' => 'api','action' => 'productviewer']);
 
+
+    //
     $routes->connect('/checkout', ['controller' => 'home','action' => 'checkout']);
 
     $routes->connect('/cart', ['controller' => 'home','action' => 'cart']);
