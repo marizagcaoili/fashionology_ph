@@ -368,8 +368,7 @@
 
          $(".collapse").collapse();
 
-         $(document).ready(function(){
-            $('#deliverySelect').modal('toggle');
+         $(document).ready(function()
             $('.each-branch').click(function(){
              $('branches_name').show();
           });

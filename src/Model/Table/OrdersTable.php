@@ -46,7 +46,14 @@ class OrdersTable extends Table
                       ->set(['order_status' => $status])
                       ->where(['order_id' => $order_id])
                       ->execute();
-      }  
+      }
+
+      public function getTrack($account_id)
+      {
+        return $this->find()
+                    ->where(['account_id'=>$account_id])
+                    ->toArray();
+      }
 
 
 }
