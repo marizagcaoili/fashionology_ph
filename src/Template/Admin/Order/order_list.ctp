@@ -125,18 +125,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="col-xs-1"></div>
                 <label for="brand" class="col-xs-3 col-form-label">Delivery Date</label>
                   <div class='col-sm-6'>
-                      <div class="form-group">
-                          <div class='input-group date' id='datetimepicker1'>
-                              <input type='text' class="form-control" />
-                              <span class="input-group-addon">
-                                  <span class="glyphicon glyphicon-calendar"></span>
-                              </span>
-                          </div>
-                      </div>
+                      <ng-datepicker ng-model="datepicker" >
+                      </ng-datepicker>
+                      <span ng-bind="ctrl.date1" style="display: block; margin-top: 5px;"></span>
+  
                   </div>
-
-
             </div>
+          
             <div class="form-group row">
                 <div class="col-xs-1"></div>
                 <div class="col-xs-3">
@@ -180,11 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- page script -->
 
 <?php include LAYOUT_DIR . 'script.ctp'; ?>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker();
-            });
-        </script>
+
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

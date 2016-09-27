@@ -1,4 +1,4 @@
-var app = angular.module('admin.controllers', ['ngMaterial', 'ngRoute', 'ngCookies' , 'ngFileUpload', 'checklist-model', 'frapontillo.bootstrap-switch', 'datatables']);
+var app = angular.module('admin.controllers', ['jkuri.datepicker', 'ngMaterial', 'ngRoute', 'ngCookies' , 'ngFileUpload', 'checklist-model', 'frapontillo.bootstrap-switch', 'datatables']);
 
 app.config(function($locationProvider) {
         $locationProvider.html5Mode(true);
@@ -1401,8 +1401,7 @@ app.controller('OrderController', function($scope, $http) {
 	};
 
 	$scope.confirmOrder = function(){
-		var deliverydate = $('#datepicker').datepicker({ format: 'dd-mm-yy' }).val();
-		console.log (deliverydate);
+		console.log ($scope.datepicker);
 		var status = "To Be Delivered";
 		var note = $('#note').val();
 		$http({
@@ -1415,7 +1414,7 @@ app.controller('OrderController', function($scope, $http) {
 		        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 		        return str.join("&");
 		    },
-			data : 	{order_id : $scope.order_id, deliverydate : delivery_date, status : status, email_add : $scope.email_add, note : note} // Data to be passed to API
+			data : 	{order_id : $scope.order_id, deliverydate : $scope.datepicker, status : status, email_add : $scope.email_add, note : note} // Data to be passed to API
 		})
 	    .then(function(response) {
 	    });	

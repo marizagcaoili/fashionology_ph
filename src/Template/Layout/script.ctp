@@ -15,6 +15,8 @@
 <script src="/back/js/switch.js"></script>
 
 <script src="/back/js/admin/angular.min.js"></script>
+<script src="/back/js/admin/moment-js.js"></script>
+<script src="/back/js/admin/ng-datepicker.js"></script>
 <script src="/back/js/admin/angular-datatables.min.js"></script>
 <script src="/back/js/admin/angular-cookies.js"></script>
 <script src="/back/js/admin/ng-file-upload-shim.js"></script>

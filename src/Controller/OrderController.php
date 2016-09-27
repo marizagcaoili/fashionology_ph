@@ -145,7 +145,7 @@ public function placeDeliver()
   $this->autoRender=false;
   header('Content-Type: application/json');
 
-  $order=TableRegistry::get('Delivery');
+  $order=TableRegistry::get('Deliveries');
 
   $order_id =$this->request->data('order_id');
 

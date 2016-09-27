@@ -131,7 +131,7 @@ class OrderController extends Controller
         $this->autoRender = false;
         header('Content-Type: application/json');
 
-        $delivery = TableRegistry::get('Delivery');
+        $delivery = TableRegistry::get('Deliveries');
         $orders = TableRegistry::get('Orders');
 
         $order_id = $this->request->data['order_id'];
