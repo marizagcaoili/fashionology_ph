@@ -3,7 +3,7 @@
 <div class='info-right-wrap' class='editaccount'>
 
 	<div class='title-info-right'>
-	<p style='color:#333;font-size: 28px;'> Edit Shipping Details</p>
+	<p style='color:#333;font-size: 28px;'> Edit Delivery Details</p>
 	</div>
 
 	<div class='info-right-field' style='position: relative;top:28px;width:70%;'>

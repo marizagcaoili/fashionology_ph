@@ -54,7 +54,7 @@
 
 									<div class='shipping-wrap'>
 										<div class='title-info-right' style='margin-bottom: 10px;'>
-											<p style='color:#2c3e50;font-size: 22px;'>Shipping Details</p>
+											<p style='color:#2c3e50;font-size: 22px;'>Delivery Details</p>
 										</div>
 
 										<div class='title-info-right' style='position:relative;top:10px;border-bottom: 1px dashed #cdcdcd;margin-bottom: 20px;'>

@@ -99,7 +99,7 @@
 				<div class='detail-view'>
 					<a class='back-to-home' href='/clothing' target='_self'>Back to home</a>
 					<p class="name">{{detail.item.item_name}}</p>
-					<p class="price">{{detail.item.item_srp}}.00</p>
+					<p class="price">PHP {{detail.item.item_srp}}.00</p>
 
 					<article>
 						{{detail.item.item_description}}
@@ -107,10 +107,10 @@
 
 				</div>
 
-				<div class='size-view'>
-					<p>Availabe Size in Stock</p>
+				<div class='size-view' style='display: none;'>
+					<p>Available Sizes</p>
 					<ul>
-						<li ng-repeat = "detail in item_stock_details" ng-click= 'getSizeId(detail.quantity,detail.size.size_key)'><a><b>{{detail.size.size_key}}</b> {{detail.quantity}}</a></li>
+						<li ng-repeat='size in sizes'><a><b>{{size.size_key}}</b></a></li>
 
 					</ul>
 

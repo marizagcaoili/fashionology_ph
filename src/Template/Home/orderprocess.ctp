@@ -46,7 +46,7 @@
 						<img src='/front/public/img/logo-black.png' />
 					</div>
 					<div>
-						<p>Date: 2/10/2016</p>
+						<!-- <p>Date: 2/10/2016</p> -->
 					</div>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 					<div class='address-sec'>
 						<p class='light-text'><b>Invoice #{{reference}}</b></p>
 						<p class='light-text'><b>Payment Method:</b> {{PaymentMethod}}</p>	
-						<p class='light-text' id='delivery'><b>Delivery Status:</b>{{dateDeliver}}</p>
+						<p class='light-text' id='delivery'><b>Delivery Status:</b>PENDING</p>
 
 						<p class='light-text' id='pickup'><b>Pick Up Time:</b>{{timePick}}</p>
 					</div>
@@ -97,8 +97,6 @@
 				<div class='accounts-content' ng-repeat='item in item track by $index'>
 
 					<div class='accounts-content-flex'>
-
-
 						<div class='qty-top'><p class='content-bold'>{{cart_items_quantity[$index]}}</p></div>
 						<div class='accounts-top'><p class='content-bold'>{{item.item.item_name}}</p></div>
 						<div class='serial-top'><p class='content-bold'>{{item.item.item_code}}</p></div>

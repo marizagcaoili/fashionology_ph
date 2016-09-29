@@ -36,7 +36,7 @@
                <div class='bill-flex'>
                   <div class='each-bill-flex'>
                      <div class='menu-bar'>
-                        <p><span class='bill-title'>Billing Information</span><a  data-toggle="modal" data-target="#myModal"><span>Edit <i class="fa fa-pencil" aria-hidden="true"></i></span></a> <a href='#' class='delete'><span><i class="fa fa-trash-o" aria-hidden="true"></i></span></a></p>
+                        <p><span class='bill-title'></span><a  data-toggle="modal" data-target="#myModal"><span>Edit <i class="fa fa-pencil" aria-hidden="true"></i></span></a> <a href='#' class='delete'><span><i class="fa fa-trash-o" aria-hidden="true"></i></span></a></p>
                      </div>
                      <div class='info-shipment'  >
                         <div class='info-fields' >
@@ -109,26 +109,7 @@
                            </div>
                         </div>
                      </li>
-                     <li>
-                        <div class='select-div' id='pickup'data-toggle="modal" data-target="#branchSelect">
-                           <div class='cash-on'>
-                              <div class='cash-desc'>
-                                 <p>Pick Up</p>
-                              </div>
-                              <div class='line'>
-                              </div>
-                              <div class='under-desc pickup-time' style='border:none;'>
-                                 <div class='under-desc-flex' style='border:none;'>
-                                    <div class='flexible-a' style='border:none;'>
-                                       <p><b>TIME OF PICKUP</b></p>
-                                       <p style='position: relative;top:10px;'>{{pickUpTime}}</p>
-                                    </div>
-
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </li>
+                    
                   </ul>
                </div>
                <button class='btn-continue-a btn-o' style='margin-top: -2px;' data-toggle="collapse" data-target="#reviewplace" ng-click='secD()'>Continue</button>
@@ -164,14 +145,14 @@
                         <div class='total-this-flex-menu'>
                            <div class='total-direction'>
                               <div class='total-content-direction'>
-                                 <p style='font-weight:bold;'>No. of Items Placed</p>
+                                 <p style='font-weight:bold;display: none;'>No. of Items Placed</p>
                                  <!--     <p style='font-weight:bold;'>shipping fee</p> -->
                                  <!--       <p style='font-weight:bold;'>VOUCHER</p> -->
                               </div>
                            </div>
                            <div class='total-this-direction'>
                               <div class='total-content-direction' style='padding-left:10px;'>
-                                 <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>{{cart_items_count}}</p>
+                                 <p style='color:#464646;display:none;text-align: left;font-family:Moon;font-weight: bold;'>{{cart_items_count}}</p>
                                  <!--          <p style='color:#464646;text-align: left;font-family:Moon;font-weight: bold;'>NO FEE</p> -->
                                  <!--      <p style='color:#464646;text-align: left;font-family:Moon;font-size: 18px;font-weight: bold;'>0.00 %</p> -->
                               </div>
@@ -181,7 +162,7 @@
                      <div class='total-this-menu' style='height:46px;'>
                         <div class='total-this-flex-menu'>
                            <div class='total-direction'>
-                              <p class='total-grand-direction'>grand total</p>
+                              <p class='total-grand-direction'>Total</p>
                            </div>
                            <div class='total-this-direction'>
                               <p class='total-grandp-direct'>PHP {{total}}.00</p>
@@ -190,7 +171,7 @@
                      </div>
                   </div>
                   <div class='total-menu' style='height:118px;'>
-                     <button type="" class='place-btn' ng-click='nextStep();email()'>PLACE MY ORDER</button>
+                     <button type="" class='place-btn' ng-click='nextStep();'>Proceed to order summary</button>
                      <button type="" class='place-btn' style='margin-right: 10px;'ng-click='backToStore()'>BACK TO STORE  </button>
                   </div>
                         <!-- 
@@ -308,7 +289,7 @@
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setSchedule()'>Set Schedule</button>
+                        <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setSchedule()'>Submit</button>
                         <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
                      </div>
                   </div>
@@ -354,7 +335,7 @@
                         </div>
                      </div>
                      <div class="modal-footer">
-                        <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setDelivery()'>Set as Delivery</button>
+                        <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='setDelivery()'>Submit</button>
                         <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
                      </div>
                   </div>

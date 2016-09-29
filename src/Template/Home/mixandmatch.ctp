@@ -23,7 +23,6 @@
 	<link rel="stylesheet" href="/front/public/css/mixandmatch.css" />
 	<script>
 		$(document).ready(function(){
-			$('.mixnmb-items').hide();
 			$('.loadingFade').fadeIn('slow')
 
 		});
@@ -32,13 +31,13 @@
 	</script>
 	
 </head>
-<body ng-app="ExampleApp" >
+<body ng-app="SampleApp" ng-controller='MixnMatchController' >
 
 
 
 
 
-	<main class='container_14' ng-controller='MainCtrl'>
+	<main class='container_14' >
 
 
 		<div class='mixnmatch-wrap' >
@@ -48,157 +47,112 @@
 				<div class='mixnmatch-a'  id="droppable">
 
 
-					<div class='mixnm-canvass'  ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
+					<div class='mixnm-canvass' >
 
 
-					<div>
-						<button style='top:550px;margin-right:10px;border:1px solid;position: relative;float:right;
-						padding:10px 28px;font-family: Moon;font-weight: bold;background: #333;
-						color:#fff;' ng-click='ourStore()'>BACK TO STORE</button>
+						<div class='top'>
+							<img src='{{top}}' width='100%' height="100%">
+						</div>
 
-						<img src='/front/public/img/logo-black.png' width='240px;' style='position: relative;top:0px;opacity: 0.3;'>
-					</div>
-
-<!-- 
-						<div class='mixnm-canvass-flex' >
-							<div class='top-canvass' style='border:1px solid;' ng-repeat="obj in droppedObjects1" ng-drag="true"ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)">
-								<img width='750px;' src='{{obj.image.file_key}}' />
-
-							</div>
-
-							<div class='top-canvass' style='border:1px solid;' ng-repeat="obj in droppedObjects1" ng-drag="true"ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)">
-								<img width='750px;' src='{{obj.image.file_key}}' />
-
-							</div>
-
+						<div class='bottom'>
+							<img src='{{bottom}}' width='100%' height="100%">
+					
+						</div>
+						<div class='footwear'>
+							<img src='{{footwear}}' width='100%' height="100%">
+					
 						</div>
 
 
-						<div class='mixnm-canvass-flex' style='position:relative;top:-4px;' >
-							<div class='top-canvass' style='border:1px solid;'>
-							</div>
-
-							<div class='top-canvass' style='border:1px solid;'>
-							</div>
+						<div class='accessories'>
+							<img src='{{accessory}}' width='100%' height="100%">
+					
 
 						</div>
 
 
 
+						<div>
+							<button style='top:550px;margin-right:10px;border:1px solid;position: relative;float:right;
+							padding:10px 28px;font-family: Moon;font-weight: bold;background: #333;
+							color:#fff;' ng-click='ourStore()'>BACK TO STORE</button>
 
-					-->
+							<img src='/front/public/img/logo-black.png' width='240px;' style='position: relative;top:0px;opacity: 0.3;'>
 
-					<div ng-repeat="obj in droppedObjects1" ng-drag="true"ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)">
-						<img width='750px;' src='{{obj.image.file_key}}' />
+
+							<div style='height:144px;width:40%;position: relative;top:400px;left:14px;opacity: 0.9;'>
+								<p style='font-family: Moon;font-size: 30px;font-weight: bold;'>LEGEND:</p>
+								<p style='position:relative;left:4px;font-family: Moon;font-size:18px;'><b>T</b> - TOP</p>
+								<p style='position:relative;left:4px;font-family: Moon;font-size:18px;'><b>B</b> - BOTTOM</p>
+								<p style='position:relative;left:4px;font-family: Moon;font-size:18px;'><b>A</b> - Accessories</p>
+								<p style='position:relative;left:4px;font-family: Moon;font-size:18px;'><b>F</b> - FOOTWEAR</p>
+							</div>
+						</div>
+
+
+
 					</div>
-
 
 				</div>
 
-			</div>
 
-
-			<div class='mixnmatch-b'>
+				<div class='mixnmatch-b'>
 
 
 
 
-				<div class='mixnmb-content' >
+					<div class='mixnmb-content' >
 
 
 
-					<div class='mixnmb-body'>
+						<div class='mixnmb-body'>
 
-						<div class='mixnmb-items'>
-							<ul>
-								<li >
-									<div class="drag-object" ng-repeat="obj in draggableObjects" ng-if="obj.allowClone !== false">
+							<div class='mixnmb-items'>
+								<div class='btn-gback'>
+									<select style='margin:0 auto;width:100%;font-family: Moon;font-size: 18px;border-radius: 0px;'>
+										<option>CATEGORIZED BY (Parent)</option>
 
-										<img src='{{obj.image.file_key}}' width='250px' height='250px'/>
+									</select>
+									<select style='margin:0 auto;margin-top:6px;width:100%;font-family: Moon;font-size: 18px;border-radius: 0px;'>
+										<option>CATEGORIZED BY (Child)</option>
 
-										<div ng-drag="true" ng-drag-data="obj"></div>
+									</select>
 
-									</div>
-								</li>
+								</div>
+								<ul style='paddin:0;margin:0;width: 100%;'>
+									<li ng-repeat='item in items' style='margin:0;'>
+										<div class="drag-object">
+
+											<img src='{{item.image.file_key}}' height='310px'/>
+
+											<div class='action_drag'>
+												<ul>
+													<li><button ng-click = "toTop(item.image.file_key)" class='choice-a'>T</button></li>
+													<li><button  ng-click = "toBottom(item.image.file_key)" class='choice-a'>B</button></li>
+													<li><button ng-click = "toAccessory(item.image.file_key)" class='choice-a'>A</button></li>
+													<li><button ng-click = "toFootwear(item.image.file_key)" class='choice-a'>F</button></li>
+												</ul>
+											</div>
+
+										</div>
+									</li>
+
+								</ul>
+
+
+							</div>
+
+							<ul >
 
 							</ul>
 
-							<div class='btn-gback'>
-
-								<button class='back-to' ng-click='categBack()'><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to Category</button>
-
-							</div>
 						</div>
 
-						<ul >
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>TOPS</p>
-								<figure>
-									<img src='/front/public/img/top.jpg'>
-								</figure>
-							</div></li>
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>PANTS</p>
-								<figure>
-									<img src='/front/public/img/pants.jpg'>
-								</figure>
-							</div></li>
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>DRESSES</p>
-								<figure>
-									<img src='/front/public/img/dresses.jpg'>
-								</figure>
-							</div></li>
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>SKIRTS</p>
-								<figure>
-									<img src='/front/public/img/skirts.jpg'>
-								</figure>
-							</div></li>
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>JEANS</p>
-								<figure>
-									<img src='/front/public/img/jeans.jpg'>
-								</figure>
-							</div></li>
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>SHORTS</p>
-								<figure>
-									<img src='/front/public/img/shorts.jpg'>
-								</figure>
-							</div></li>
-
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>JUMPSUITS</p>
-								<figure>
-									<img src='/front/public/img/suit.jpg'>
-								</figure>
-							</div></li>
-							<li ng-click='showCategory()'><div class='each-category'>
-								<p>JACKETS</p>
-								<figure>
-									<img src='/front/public/img/jacket.jpg'>
-								</figure>
-							</div></li>
-
-
-
-						</ul>
-
-					</div>
-
-
-
-
-					<div ng-drag-clone="">
-						{{clonedData.item_name}}
 					</div>
 
 				</div>
 
 			</div>
-
-		</div>
 <!-- 
 			<div class=''>
 				<button class='btn-save'>SAVE</button>

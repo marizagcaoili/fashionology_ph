@@ -130,4 +130,8 @@ class HomeController extends AppController
         $this->render('emailconfirm');
     }
 
+    public function location(){
+        $this->render('location');
+    }
+
 }

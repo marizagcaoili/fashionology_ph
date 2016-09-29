@@ -6,10 +6,11 @@
 
 <script src='/front/public/js/jquery.elevatezoom.js'></script>
 
+
+
 <script src="/front/public/js/angular.min.js" /></script>
 <script src="/back/js/admin/ng-route.min.js"></script>
 <script src="/front/angular/angular-cookies.js" /></script>
-
 
 
 
