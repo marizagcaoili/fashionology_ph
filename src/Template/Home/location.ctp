@@ -169,9 +169,22 @@
 
 				</div>
 
+				<div class='loading-bar loada' style='display:none;border-bottom:1px solid #cdcdcd;width:70%;margin-left:80px;margin-top: 160px;'>
+				
+				<p style='font-family: Moon;font-size: 28px;padding-top:6px;padding-left:8px;font-weight: bold;'>Sending Email... <i class="fa fa-paper-plane-o" aria-hidden="true"></i></p>
+
+				</div>
+
+				<div class='loading-bar loadb' style='border-bottom:1px solid #cdcdcd;width:70%;display:none;margin-left:80px;margin-top: 160px;'>
+				
+				<p style='font-family: Moon;font-size: 28px;padding-top:6px;padding-left:8px;font-weight: bold;'>Thank you for inquiring. We will send a reply to you within 48 hours. <i class="fa fa-mail" aria-hidden="true"></i></p>
+
+				</div>
+
+
 
 			</div>
-			<div class='right-contact'></div>
+			<div class='right-contact' style='border-left:1px solid #cdcdcd	;'></div>
 		</div>
 
 
@@ -190,11 +203,11 @@
 					</div>
 
 					<div class='branch-address'>
-						<p>Phase 2 Block 16 Lot 51 Mary Cris Complex, General Trias, Cavite, Philippines.</p>
+						<p>{{contents.molino_address}}</p>
 					</div>
 
 					<div class='branch-address'>
-						<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 09223660550 &nbsp; | &nbsp;jab.j16@gmail.com</p>
+						<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; {{contents.molino_number}} &nbsp; | &nbsp;{{contents.molino_email}}</p>
 					</div>
 
 					<div class='store-wrap'>
@@ -204,11 +217,11 @@
 					<div style='position: relative;top:30px;'>
 
 						<div class='store-opened'>
-							<p><b>Weekdays:</b> &nbsp; 01:00AM - 05:00PM
+							<p><b>Weekdays:</b> &nbsp; {{contents.molino_weekdays}} 
 								<span style='position: relative;left:100px;'>(Mon,Tues,Wed,Thurs,Fri)</span></p>
 							</div>
 							<div class='store-opened'>
-								<p><b>Weekends:</b> &nbsp; 01:00AM - 05:00PM</p>
+								<p><b>Weekends:</b> &nbsp;{{contents.molino_weekends}} </p>
 							</div>
 
 						</div>
@@ -242,11 +255,11 @@
 						</div>
 
 						<div class='branch-address'>
-							<p>Phase 2 Block 16 Lot 51 Mary Cris Complex, General Trias, Cavite, Philippines.</p>
+							<p>{{contents.bacoor_address}}</p>
 						</div>
 
 						<div class='branch-address'>
-							<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 09223660550 &nbsp; | &nbsp;jab.j16@gmail.com</p>
+							<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; {{contents.bacoor_number}} &nbsp; | &nbsp;{{contents.bacoor_email}}</p>
 						</div>
 
 						<div class='store-wrap'>
@@ -256,11 +269,11 @@
 						<div style='position: relative;top:30px;'>
 
 							<div class='store-opened'>
-								<p><b>Weekdays:</b> &nbsp; 01:00AM - 05:00PM
+								<p><b>Weekdays:</b> &nbsp; {{contents.bacoor_weekdays}}
 									<span style='position: relative;left:100px;'>(Mon,Tues,Wed,Thurs,Fri)</span></p>
 								</div>
 								<div class='store-opened'>
-									<p><b>Weekends:</b> &nbsp; 01:00AM - 05:00PM</p>
+									<p><b>Weekends:</b> &nbsp;{{contents.bacoor_weekends}}</p>
 								</div>
 
 							</div>
@@ -291,11 +304,11 @@
 							</div>
 
 							<div class='branch-address'>
-								<p>Phase 2 Block 16 Lot 51 Mary Cris Complex, General Trias, Cavite, Philippines.</p>
+								<p>{{contents.alabang_address}}</p>
 							</div>
 
 							<div class='branch-address'>
-								<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 09223660550 &nbsp; | &nbsp;jab.j16@gmail.com</p>
+								<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; {{contents.alabang_number}} &nbsp; | &nbsp;{{contents.alabang_email}}</p>
 							</div>
 
 							<div class='store-wrap'>
@@ -305,11 +318,11 @@
 							<div style='position: relative;top:30px;'>
 
 								<div class='store-opened'>
-									<p><b>Weekdays:</b> &nbsp; 01:00AM - 05:00PM
+									<p><b>Weekdays:</b> &nbsp; {{contents.alabang_weekdays}}
 										<span style='position: relative;left:100px;'>(Mon,Tues,Wed,Thurs,Fri)</span></p>
 									</div>
 									<div class='store-opened'>
-										<p><b>Weekends:</b> &nbsp; 01:00AM - 05:00PM</p>
+										<p><b>Weekends:</b> &nbsp; {{contents.alabang_weekends}}</p>
 									</div>
 
 								</div>
@@ -340,11 +353,11 @@
 								</div>
 
 								<div class='branch-address'>
-									<p>Phase 2 Block 16 Lot 51 Mary Cris Complex, General Trias, Cavite, Philippines.</p>
+									<p>{{contents.imus_address}}</p>
 								</div>
 
 								<div class='branch-address'>
-									<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp; 09223660550 &nbsp; | &nbsp;jab.j16@gmail.com</p>
+									<p><i class="fa fa-phone-square" aria-hidden="true"></i>&nbsp;{{contents.imus_number}} &nbsp; | &nbsp;{{contents.imus_email}}</p>
 								</div>
 
 								<div class='store-wrap'>
@@ -354,11 +367,11 @@
 								<div style='position: relative;top:30px;'>
 
 									<div class='store-opened'>
-										<p><b>Weekdays:</b> &nbsp; 01:00AM - 05:00PM
+										<p><b>Weekdays:</b> &nbsp; {{contents.imus_weekdays}}
 											<span style='position: relative;left:100px;'>(Mon,Tues,Wed,Thurs,Fri)</span></p>
 										</div>
 										<div class='store-opened'>
-											<p><b>Weekends:</b> &nbsp; 01:00AM - 05:00PM</p>
+											<p><b>Weekends:</b> &nbsp; {{contents.imus_weekends}}</p>
 										</div>
 
 									</div>

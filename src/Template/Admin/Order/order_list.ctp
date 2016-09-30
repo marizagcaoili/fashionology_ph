@@ -70,12 +70,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <table id="example2" class="table">
                 <thead>
                 <tr>
-                  <th width= "10%">Reference Number</th>
+                  <th width= "10%">Transaction Number</th>
                   <th width= "10%">Status</th>
                   <th width= "10%">Customer Name</th>
                   <th width= "10%">Total Amount</th>
                   <th width= "10%">Call Time</th>
-                  <th width= "20%"><center>Comments</center></th>
+                  <th width= "20%"><center>Order Placed</center></th>
                   <th width= "20%" colspan= "4">Action</th>
 
                 </tr>
@@ -87,7 +87,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{order.account.account_fname}} &nbsp {{order.account.account_lname}}</td>
                 <td>{{order.order_subtotal}}.00</td>
                 <td>{{order.delivery.call_time}}</td>
-                <td></td>
+                <td>{{order.order_placed_date}}</td>
                <!--  <td> <md-datepicker ng-model="myDate" md-placeholder="Enter date"
                           md-min-date=0 md-max-date="maxDate"></md-datepicker></td>  -->
                 <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmModal(order.order_reference_number, order.order_id, order.account.account_email)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name="" ng-disabled="{{order.confirm}}"><small>CONFIRM</small></button></span></td>
@@ -120,7 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title" id="myModalLabel">Confirm Order</h4>
-        <h5  style="text-align:left;"><i ">Reference No. </i><span style="color:red">{{reference_number}}</span></h5>
+        <h5  style="text-align:left;"><i ">Transaction No. </i><span style="color:red">{{reference_number}}</span></h5>
       </div>
       <div class="modal-body">
             <div class="form-group row">
@@ -149,7 +149,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" ng-click="cancel()" style="border-radius:0px;" data-dismiss="modal" id="modal-close" >Cancel</button>
-          <button type="button" class="btn btn-primary" ng-click="confirmOrder()" style="border-radius:0px;"> Confirm Order</button>
+          <button type="button" class="btn btn-primary" ng-click="confirmOrder()" style="border-radius:0px;"> Confirm Order and Generate PDF</button>
         </div>
       </div>
 

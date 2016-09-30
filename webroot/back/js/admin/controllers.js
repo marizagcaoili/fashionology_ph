@@ -907,7 +907,7 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 		var brand = $scope.selectedBrand.brand_id;
 		var srp = $('#srp').val();
 		var item_name = $('#itemName').val();
-		var desc = $('#summernote').val();
+		var desc = $scope.description;
 		var gender = $scope.selectedGender.gender_id;
 
 		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" || $scope.picFile == undefined || $scope.picFile == "" || $scope.image_desc == ""){

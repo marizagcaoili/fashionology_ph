@@ -143,7 +143,7 @@ class OrderController extends Controller
         $orders->updateStatus($order_id, $status);
         $delivery->updateDeliveryDetails($order_id, $date);
 
-        $message = "Your order is now confirmed. Your item will be delivered on"." ".$date."<br> Note:"."".$note;
+        $message = "Your order is now confirmed. Your item will be delivered on"." ".$date."Please be guided. Note:"."".$note;
 
         Email::configTransport('gmail', [
         'host' => 'ssl://smtp.gmail.com',

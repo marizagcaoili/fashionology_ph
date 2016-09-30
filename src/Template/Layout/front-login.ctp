@@ -48,7 +48,7 @@
 
                                     <div class='modal-wrapper-flex'>
                                         <div class='modal-wrapper-a-flex'>
-                                            <p class='keep-me'><!-- <input type='radio'> -->Don't have an account?</p>
+                                            <a href='/register' target="_self"><p class='keep-me'><!-- <input type='radio'> -->Don't have an account?</p></a>
                                         </div>
                                         <div class='modal-wrapper-a-flex'>
                                             <a class='forgot' href='#'>Forgot your password?</a>

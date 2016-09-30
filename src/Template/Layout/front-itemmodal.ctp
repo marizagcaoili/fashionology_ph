@@ -26,16 +26,20 @@
                     </div>
 
                     <div class='item-size'>
-                        <p>Available Size(s)</p>
+                        <p>Stock Status</p>
 
                         <ul>
-                            <li>S</li>
-                            <li>M</li>
+                            <li ng-show='items.item_status==0'>Out of Stock</li>
+
+                            <li ng-show='items.item_status==1'>In Stock</li>
                         </ul>
                     </div>
 
                     <div class='item-action'>
-                        <button class='action-cart'  ng:click="addItem(items.item_id,items.item_quantity)"><i class="fa fa-plus" aria-hidden="true"></i> add to bag</button>
+                        <button ng-show='items.item_status==1' class='action-cart'  ng:click="addItem(items.item_id,items.item_quantity)"><i class="fa fa-plus" aria-hidden="true"></i> add to bag</button>
+
+                        <button ng-show='items.item_status==0' style='background: #cdcdcd;' class='action-cart'><i class="fa fa-ban" aria-hidden="true"></i> add to bag</button>
+
 
                           <button class='action-cart'  ng-click='addtowish($event,items.item_id)' style='background: transparent;color:#111;'><i class="fa fa-heart-o" aria-hidden="true"></i></button>
                     </div>

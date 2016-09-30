@@ -69,6 +69,8 @@ class ItemsTable extends Table
         return $this->query()
         ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'gender','item_created'])
         ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid,'gender'=>$gender, 'item_created' => $date])
+        ->execute();
+    }
 
     public function getItemListByGender($gender)
     {
@@ -168,5 +170,17 @@ class ItemsTable extends Table
        ->toArray();
        
    }
+
+   public function itemsCategorized($category_id){
+
+       return $this->find()
+       ->contain(['Brands', 'Categories', 'Images'])
+       ->where(['Items.category_id' => $category_id])
+       ->toArray();
+
+
+   }
+
+   
 
 }

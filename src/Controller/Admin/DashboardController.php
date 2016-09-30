@@ -176,5 +176,21 @@ class DashboardController extends Controller
 
     }
 
+     public function getContent()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $contents = TableRegistry::get('Contents'); // Create Table Object
+
+        $result = $contents->getContent();
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
+
+
 
 }

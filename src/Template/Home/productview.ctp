@@ -160,8 +160,8 @@
 								style='font-size: 20px;'>Quantity</p>
 							</li>
 
-							<li>
-								<button type='button' class='math' id= 'minus' ng-click='qtyminus(itemId)'>-</button>
+							<li style='display: none;'>
+								<button style='display: none;' type='button' class='math' id= 'minus' ng-click='qtyminus(itemId)'>-</button>
 								<input type='text' style='background: transparent;border:none;width:40px;text-align: center;font-size:20px;font-family: Moon;border-bottom: 1px solid;' id='quantity'  class='qty quantity' name='quantity' value='1' style='width:40px;color:#333;text-align: center;font-size: 18px;' disabled />
 								<button type='button' class='math' id= 'plus' ng-click='qtyplus(itemId)'>+</button>
 							</li>
@@ -188,7 +188,7 @@
 
 				</div>
 
-				<div class='review-view'>
+				<div class='review-view' style='display: none;'>
 					<p class="review-about" style='text-transform: uppercase;font-family: Moon;font-size: 18px;color:#111;'>USER REVIEWS ABOUT THIS </p>
 					<div class="user-view">
 						<img src='/front/public/img/.png' style='border:none;'>

@@ -121,12 +121,12 @@
                            </select>
                         </div>
                      </div>
-                     <div class='category-it-by' ng-controller='CategoryPrintController'  style='display: none;'>
-                        <p class='category-top'>TOP CATEGORIES</p>
+                     <div class='category-it-by' ng-controller='CategoryPrintController' >
+                        <p class='category-top'>CATEGORIES</p>
                         <script type="text/ng-template" id="categoryTree">
                            <p class='parent'>{{ parent.category_name }}</p>
                            <ul  ng-if="parent.categories">
-                             <span><li ng-repeat="parent in parent.categories" ng-include="'categoryTree'" class='child'>   
+                             <span><li ng-click="changeCategory(parent.category_id)" ng-repeat="parent in parent.categories" ng-include="'categoryTree'" class='child'>   
                              </li></span>
                           </ul>
                        </script>
@@ -161,16 +161,16 @@
                <option value="name">Item Name</option>
                <option value="print">Price</option>
             </select>
-            <div class="item-page">
-               <ul class="pagination pagination-info">
+            <div class="item-page" style='left:190px;'>
+               <ul class="pagination pagination-info" style=>
                   <li><a href="javascript:void(0);" 
                      ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"
                      ><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp; prev</a></li>
-                     <li class="active"><a href="javascript:void(0);" href=''>1</a></li>
+                    <!--  <li class="active"><a href="javascript:void(0);" href=''>1</a></li>
                      <li><a href="javascript:void(0);">2</a></li>
                      <li ><a href="javascript:void(0);">3</a></li>
                      <li><a href="javascript:void(0);">4</a></li>
-                     <li><a href="javascript:void(0);">5</a></li>
+                     <li><a href="javascript:void(0);">5</a></li> -->
                      <li><a ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1" href="javascript:void(0);">next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                   </ul>
                </div>

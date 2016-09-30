@@ -169,8 +169,7 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     //tracking of orders
     $routes->connect('/data/trackorder', ['controller' => 'order','action' => 'trackOrder']);
-
-
+    
     //
 
 
@@ -189,6 +188,12 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 
 //end login
+
+     //fetch category
+    $routes->connect('/item/categorized', ['controller' => 'api','action' => 'fetchItemCategory']);
+
+
+     //   
 
     /**wishlist section**/
 

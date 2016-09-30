@@ -12,7 +12,7 @@ class ContentsTable extends Table
     $this->table('tbl_content_manager');
   }
 
-  public function getContent
+  public function getContent()
   {
       return $this->find()
             ->toArray();

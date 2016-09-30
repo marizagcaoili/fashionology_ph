@@ -184,4 +184,31 @@ class ApiController extends AppController
 
       }
 
+
+
+      public function fetchItemCategory(){
+
+        $this->autoRender = false ;
+        header('Content-Type: application/json');
+
+
+        $category_id=$this->request->data('category_id');
+
+
+        $items = TableRegistry::get('Items'); 
+        
+        // Create Table Object
+
+        $result=$items->itemsCategorized($category_id);
+
+
+        echo json_encode($result);
+
+        // echo json_encode($result);
+
+    exit();
+
+
+      }
+
     }

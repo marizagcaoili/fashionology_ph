@@ -92,13 +92,14 @@
                    </fieldset>
 
                     <fieldset class="form-group">
-                    <h4><b>Billing Details</b></h4>
+                    <h4><b>Delivery Address</b></h4>
                  
 
                   <h5> Receiver   : <p style= "float:right"><b> {{orderdetail.shipping.shipping_fname}} {{orderdetail.shipping.shipping_lname}} </b> </p></h5>
                   <h5> City    :  <p style= "float:right"> {{orderdetail.shipping.shipping_city}}  </p></h5>
                   <h5> Landmark : <p style= "float:right">  {{orderdetail.shipping.shipping_landmark}}  </p></h5>
                   <h5> Zip Code : <p style= "float:right">  {{orderdetail.shipping.shipping_zipcode}}   </p></h5><BR>
+                                    <h5> Address    :  <p style= "float:right"> {{orderdetail.shipping.shipping_address}}  </p></h5>
                    </fieldset>
 
 

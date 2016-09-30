@@ -165,7 +165,6 @@ app.controller('CartController',function($scope, $http, $cookies, $cookieStore, 
 
 
 		if($scope.cart_items<0){
-			alert('Hi');
 		}
 
 	}
@@ -200,7 +199,7 @@ app.controller('CartController',function($scope, $http, $cookies, $cookieStore, 
 
 	$scope.removeCart = function(item_id, cart_items_quantity, item_price) {
 
-		alert('Item Deleted!');
+		alert('Item now deleted from your cart!');
 		var cartQuantity = JSON.parse($cookies.get('cart_items_quantity')),
 		cartItems = JSON.parse($cookies.get('cart_items'));
 
@@ -299,7 +298,6 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 
 		if($scope.cart_items<0){
-			alert('Hi');
 		}
 
 	}
@@ -576,6 +574,28 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 		});	
 	};
 
+	$scope.changeCategory=function(category_id){
+
+
+
+		 		$http({
+		 			url:'/item/categorized',
+		 			method:'POST',
+		 			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+		 			transformRequest: function(obj) {
+		 				var str = [];
+		 				for(var p in obj)
+		 					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		 				return str.join("&");
+		 			},
+		 			data:{category_id:category_id}
+		 		}).then(function(response){
+		 			$scope.items=response.data;
+		 		})
+
+
+	}
+
 	$scope.viewItem=function(item_id){
 
 
@@ -778,7 +798,6 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 			// Save to Cookie
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
-			alert('It was already placed in Cart!');
 
 		} else {
 			// Cookie Template
@@ -788,7 +807,6 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 			// Save and covert cookie to string
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
-			alert('It was now in your Cart!');
 		}
 
 		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
@@ -1302,7 +1320,6 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 			// Save to Cookie
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
-			alert('It was already already placed in Cart!');
 		} else {
 			// Cookie Template
 			var cart = [item_id];
@@ -1312,7 +1329,6 @@ app.controller('ItemDetailsController',['$location','$scope','$http','$timeout',
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
 
-			alert('It was now added to your cart!');
 		}
 
 		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
@@ -2008,7 +2024,6 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 			// Save to Cookie
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
-			alert('It was already placed in Cart!');
 
 		} else {
 			// Cookie Template
@@ -2019,7 +2034,6 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 			$cookies.put('cart_items', JSON.stringify(cart));
 			$cookies.put('cart_items_quantity', JSON.stringify(cart_qty));
 
-			alert('Item added to your Cart!');
 		}
 
 		$rootScope.cart_items = JSON.parse($cookies.get('cart_items'));
@@ -2111,20 +2125,37 @@ app.controller('InquiryController', function($scope, $http, $cookies, $cookieSto
 	var InquiryController={};
 
 	InquiryController.init=function(){
-		Inquiry.content();
+
+		InquiryController.getContent();
+
+	}
+
+	InquiryController.getContent= function(){
+		$http.get("/admin/dashboard/get_content")
+		.then(function(response) {
+			$scope.contents = response.data[0];
+			console.log($scope.contents);
+		});
 
 	}
 
 	InquiryController.init();
 
 
-	Inquiry.content =function(){
-		
-	};
-
 	$scope.emailInquiry = function() {
 		var email = $('#email').val();
-		alert('Your message has been sent!');
+
+			$('.contact-form').fadeOut('slow');
+
+
+$('.loada').fadeIn('slow');
+
+setTimeout(function(){
+$('.loada').fadeOut('slow');
+$('.loadb').fadeIn('slow');
+
+},3000)
+
 
 		$http({
 			url : "/email/inquiry",
@@ -2143,6 +2174,9 @@ app.controller('InquiryController', function($scope, $http, $cookies, $cookieSto
 	$scope.sendEmail = function() {
 		var email = $('#email').val();
 
+
+	
+
 		$http({
 			url : "/order/email/send",
 			method: "POST",
@@ -2158,14 +2192,13 @@ app.controller('InquiryController', function($scope, $http, $cookies, $cookieSto
 	}
 
 	$scope.inquiry = function() {
-		$('.contact-content').fadeIn();
-		$('.contact-forms').fadeOut();
+	
 
 		var name = $('#name').val(),
-		contact  = $('#contact').val(),
-		email    = $('#email').val(),
-		subject  = $('#subject').val(),
-		message  = $('#message').val();
+			contact= $('#contact').val(),
+			email  = $('#email').val(),
+			subject	= $('#subject').val(),
+			message = $('#message').val();
 
 		$http({
 			url : "/index/inquiry",
