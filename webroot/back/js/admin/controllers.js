@@ -1430,6 +1430,35 @@ app.controller('OrderController', function($scope, $http, $timeout) {
 		    });
 	};
 
+
+		Order.orderDetails = function(order_id){
+		$http.get("/admin/order/order_details",
+		{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { order_id : order_id }
+		}).then(function(response) {
+		    $timeout(function () {
+		       		$scope.orderdetails = response.data[0];
+		       		$scope.total = response.data[0].order_subtotal;
+		       		$scope.vat = $scope.total * 0.12;
+		       		$scope.subtotal = $scope.total - $scope.vat;
+		       		console.log($scope.orderdetails);
+
+			     }); 	
+		    });
+
+		$http.get("/admin/order/ordered_items",
+		{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { order_id : order_id }
+		}).then(function(response){
+			$scope.ordereditems = response.data;
+			$scope.itemCount = $scope.ordereditems.length;
+			console.log($scope.ordereditems);
+		});
+	}
+
+
 	Order.datePicker = function(){
 		  $scope.myDate = new Date();
 		  $scope.minDate = 0;
@@ -1525,7 +1554,11 @@ app.controller('OrderController', function($scope, $http, $timeout) {
 		$scope.reference_number =ref;
 		$scope.order_id = order_id;
 		$scope.email_add = email_address;
+		Order.orderDetails(order_id);
 	};
+
+
+
 
 	$scope.confirmOrder = function(){
 		console.log ($scope.datepicker);
@@ -1544,11 +1577,22 @@ app.controller('OrderController', function($scope, $http, $timeout) {
 			data : 	{order_id : $scope.order_id, deliverydate : $scope.datepicker, status : status, email_add : $scope.email_add, note : note} // Data to be passed to API
 		})
 	    .then(function(response) {
+	    	$timeout(function () {
 	    	window.alert('Order has been confirmed!');
 	    	$('#modal-close').click();
-	    	
-	    });	
+	    	window.location.href = "/admin/order";
+	    });
+	   });	
 
+	};
+
+	$scope.generatePDF = function(){
+	    	
+		var printContents = document.getElementById('content').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
 	};
 
 });

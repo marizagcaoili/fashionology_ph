@@ -486,6 +486,9 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/order/restore_order', ['controller' => 'order', 'action' => 'restoreOrder']);
 
   $routes->connect('/admin/ordery/delete_order', ['controller' => 'order', 'action' => 'deleteOrder']);
+
+
+
         //--/>ORDERS
 
         //LOGIN

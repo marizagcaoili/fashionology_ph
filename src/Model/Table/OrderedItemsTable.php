@@ -13,8 +13,6 @@ class OrderedItemsTable extends Table
         $this->table('tbl_ordered_item');
 
         $this->belongsTo('Items');
-
-        $this->belongsTo('Sizes');
   }
 
   // public function orderplace($fname,$lname,$contact,$landmark,$city,$postal,$address,$grandtotal,$account_id)
@@ -31,10 +29,11 @@ class OrderedItemsTable extends Table
                 ->execute();
   }
 
+
    public function orderedItems($order_id)
   {
     return $this->find()
-          ->contain(array('Items' => array('Images'), 'Sizes'))
+          ->contain(array('Items' => array('Images')))
               ->where(['order_id' => $order_id])
               ->toArray();
   }

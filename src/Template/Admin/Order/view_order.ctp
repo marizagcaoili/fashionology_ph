@@ -58,7 +58,7 @@
                       <thead>
                       <th>Item Code</th>
                       <th>Item Name</th>
-                      <th>Size</th>
+   
                       <th>SRP</th>
                       <th>Quantity</th>
                       <th>Thumbnail</th>
@@ -68,7 +68,6 @@
                       <tr ng-repeat = "ordereditem in ordereditems">
                         <td>{{ordereditem.item.item_code}}</td>
                         <td>{{ordereditem.item.item_name}}</td>
-                        <td>{{ordereditem.size.size_key}}</td>
                          <td>{{ordereditem.item.item_srp}}</td>
                         <td>{{ordereditem.quantity}}</td>
                         <td><img src={{ordereditem.item.image.file_key}} width="50px" height="50px"></td>

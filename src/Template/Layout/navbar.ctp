@@ -18,19 +18,16 @@
 
         </li>
 
-        
+<!--         
         <li class="treeview">
           <a target="_self" href="#"><i class="fa fa-cogs"></i> <span>Content Manager</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a target="_self" href="#">About Us<!-- <i class="fa fa-info" style="position:absolute; left:200px;"></i> --></a> </li>
-            <li><a target="_self" href="#">Contact Details<!-- <i class="fa fa-phone" style="position:absolute; left:200px;"></i> --></a></li>
-          </ul>
-        </li>
 
+        </li>
+ -->
         <li class="treeview">
           <a target="_self" href="#"><i class="fa fa-users"></i> <span>Account Manager</span>
             <span class="pull-right-container">

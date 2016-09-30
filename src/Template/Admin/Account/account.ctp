@@ -83,9 +83,9 @@
                   <th>Address</th>
                   <th>Contact Number</th>
                   <th>Account Created</th>
-                  <th>Last Login</th>
+<!--                   <th>Last Login</th>
 
-                  <th width= 10% colspan="3">Accessibility</th>
+                  <th width= 10% colspan="3">Accessibility</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -96,7 +96,7 @@
                     <td>{{account.shipping.shipping_address}}{{account.shipping.shipping_city}}</td>
                     <td>{{account.account_contact}}</td>
                     <td>{{account.account_created}}</td>
-                    <td>{{account.last_login}}</td>      
+  <!-- 
                     <td><input
                           bs-switch
                           ng-model="account.account_activated"
@@ -116,7 +116,7 @@
                           switch-wrapper="{{ wrapper }}"
                           ng-true-value="1"
                           ng-false-value="0"
-                          switch-change="toggle(item.item_id, item.featured_flag)"></td>
+                          switch-change="toggle(item.item_id, item.featured_flag)"></td> -->
 
                   </tr>
                 </tbody>
