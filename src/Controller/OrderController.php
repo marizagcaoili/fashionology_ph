@@ -135,6 +135,7 @@ public function addOrderedItem()
 
  $order->addOrderedItem($item_id, $quantity, $order_id);
 
+ echo json_encode($item_id);
 
  exit();
 }
@@ -145,17 +146,20 @@ public function placeDeliver()
   $this->autoRender=false;
   header('Content-Type: application/json');
 
-  $order=TableRegistry::get('Deliveries');
+  $order=TableRegistry::get('Delivery');
 
   $order_id =$this->request->data('order_id');
 
-  $quantity = $this->request->data('quantity');
-  $call = $this->request->data('call_time');
-  $email_address =$this->request->data('email_address');
+  $item_id =$this->request->data('item_id');
+  $reference=$this->request->data('reference');
+  $call = $this->request->data('delivery_time');
+  $email_address=$this->request->data('email_address');
+  $item_info=$this->request->data('item');
+
+  $userinfo=$this->request->data('userinfo');
 
 
   $order->deliveryPlace($call,$order_id);
-
 
 
 
@@ -165,10 +169,18 @@ public function placeDeliver()
 
   <body>
 
-    Thank you for ordering to Fashionology PH. We will send to you another email once the
-    order has been confirmed!
+    Thank you for ordering to Fashionology PH. <br>
+
+    If you want to see your order status. Just navigate to user dashboard.
     This is the selected time of your call  <b>'.$call.'</b>
 
+
+    <h1>SUMMARY OF YOUR ORDERS</h1>
+    <table>
+      <tr>
+        <td>'.$item_id.'</td>
+      </tr>
+    </table>
   </body>
 
   ';
@@ -188,7 +200,7 @@ public function placeDeliver()
   ->emailFormat('html')
   ->from(['fashionologyph@gmail.com' => 'Fashionology'])
   ->to($email_address)
-  ->subject('$subject')
+  ->subject('ORDER SUMMARY')
   ->attachments(array(
     array(
       'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
@@ -199,7 +211,7 @@ public function placeDeliver()
   ->transport('gmail')
   ->send($message);
 
-  echo json_encode($call);
+  echo json_encode($item_id);
 
   exit();  
 
@@ -232,61 +244,77 @@ public function placePickup()
 
 
 
-public function emailNotify()
-{
+// public function emailNotify()
+// {
 
-  $this->autoRender=false;
-  header('Content-Type: application/json');
+//   //  $this->autoRender=false;
+//   // header('Content-Type: application/json');
 
+//   // $order=TableRegistry::get('Delivery');
 
-  $email_address =$this->request->data('email_address');
+//   // $order_id =$this->request->data('order_id');
 
-
-
-  $message = '
-
-
-  <body>
-
-    Thank you for ordering to Fashionology PH. We will send to you another email once the
-    order has been confirmed!
-
-  </body>
-
-  ';
-  $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
-
-  Email::configTransport('gmail', [
-    'host' => 'ssl://smtp.gmail.com',
-    'port' =>  465,
-    'username' => 'fashionologyph@gmail.com',
-    'password' => 'fashiono',
-    'className' => 'Smtp',
-    ]);
+//   // $quantity = $this->request->data('quantity');
+//   // $call = $this->request->data('call_time');
+//   // $email_address =$this->request->data('email_address');
 
 
-  $email = new Email('default');
-  $email->template('default')
-  ->emailFormat('html')
-  ->from(['fashionologyph@gmail.com' => 'Fashionology'])
-  ->to($email_address)
-  ->subject($subject)
-  ->attachments(array(
-    array(
-      'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
-      'mimetype'=>'image/png',
-      'contentId'=>'12345'
-      ),
-    ))
-  ->transport('gmail')
-  ->send($message);
-
-  exit();  
+//   // $order->deliveryPlace($call,$order_id);
 
 
 
 
-}
+//   // $message = '
+
+
+//   // <body>
+
+//   //   Thank you for ordering to Fashionology PH. We will send to you another email once the
+//   //   order has been confirmed!
+//   //   This is the selected time of your call  <b>'.$call.'</b>
+
+//   // </body>
+
+//   // ';
+//   // $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
+
+//   // Email::configTransport('gmail', [
+//   //   'host' => 'ssl://smtp.gmail.com',
+//   //   'port' =>  465,
+//   //   'username' => 'fashionologyph@gmail.com',
+//   //   'password' => 'fashiono',
+//   //   'className' => 'Smtp',
+//   //   ]);
+
+
+//   // $email = new Email('default');
+//   // $email->template('default')
+//   // ->emailFormat('html')
+//   // ->from(['fashionologyph@gmail.com' => 'Fashionology'])
+//   // ->to($email_address)
+//   // ->subject('$subject')
+//   // ->attachments(array(
+//   //   array(
+//   //     'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
+//   //     'mimetype'=>'image/png',
+//   //     'contentId'=>'12345'
+//   //     ),
+//   //   ))
+//   // ->transport('gmail')
+//   // ->send($message);
+
+//   // echo json_encode($call);
+
+//   // exit();  
+
+
+
+
+
+
+
+
+// }
 
 public function trackOrder(){
  $this->autoRender=false;
@@ -315,26 +343,26 @@ public function trackOrder(){
 public function orderCancel(){
 
   $this->autoRender=false;
- header('Content-Type: application/json');
+  header('Content-Type: application/json');
 
 
  // $account_id = $this->request->data('account_id');
  // $order_id = $this->request->data('order_id');
  // $pickup_time = $this->request->data('pickup_time');
 
- $order_id=$this->request->data('order_id');
- $status='CANCELLED';
+  $order_id=$this->request->data('order_id');
+  $status='CANCELLED';
 
 
- $order=TableRegistry::get('Orders');
+  $order=TableRegistry::get('Orders');
 
 
- $result= $order->cancelOrder($order_id, $status);
+  $result= $order->cancelOrder($order_id, $status);
 
- echo json_encode($result);
+  echo json_encode($result);
 
 
- exit();
+  exit();
 
 }
 

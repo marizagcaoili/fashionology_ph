@@ -61,15 +61,15 @@
                                                    </div>
                                                 </div>
                                                 </p>
-                                                <p>Size <span class='det-align'>Sample Size</span></p>
+                                                <p style='display: none;'><span class='det-align'></span></p>
                                                 <p> <span class='det-align' style='left:34px;'></span></p
                                              </div>
                                           </div>
                                        </div>
                                        <div style='width:420px;' class='delivery'>
-                                          <p>Delivery can be varied on the places selected.</p>
+                                          <p>{{item.item.item_description}}</p>
                                           <div class='del-rem'>
-                                             <p  ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'><i class="fa fa-minus" aria-hidden="true"></i></p>
+                                          <p  ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'><i class='fa fa-trash-o'></i></p>
                                           </div>
                                        </div>
                                     </div>

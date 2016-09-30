@@ -16,20 +16,26 @@
 	color:#111;
 	text-align: center;
 	display: inline-block;
-	cursor: move;
+
 	background:#fff;
 	position: relative;
 	overflow: hidden;
 	font-family:Moon;
 	margin-right:4px;
+	transition:all 0.4s;
+
+	&:hover{
+		.action_drag
+		{
+			display: block;
+		}
+	}
 	img{
 		width:100px;
 		height: 100px;
 	}
 
-	&:hover{
-		border:1px solid #cdcdcd;
-	}
+	
 }
 
 .drag-object [ng-drag]{
@@ -345,3 +351,82 @@
 				color:#fff;
 			}
 		}
+
+		.action_drag{
+			position: absolute;
+			border:1px solid;
+			width:100px;
+			left:8px;
+			top:0;
+			height:100px;
+			display:none;
+			background:#fff;
+			transition:all 0.4s;
+
+
+			ul{
+				position: relative;
+				padding-top:14px;
+				height: 100%;
+				width:98%;
+				li{
+					border:1px solid #fff;	
+				}
+			}
+		}
+		.choice-a{
+			border:1px solid;
+			font-family:Moon;
+			background:transparent;
+			font-weight:bold;
+			transition:all 0.4s;
+
+			&:hover{
+				background:#111;
+				color:#fff;
+			}
+		}
+
+		.top{
+			position: absolute;
+			top:46px;
+			width:180px;
+			height:148px;
+			left:310px;
+			background:url(/front/public/img/top.png);
+			background-size:cover;
+		}
+
+		.bottom{
+			position: absolute;
+			top:240px;
+			width:180px;
+			height:180px;
+			left:310px;
+			background:url(/front/public/img/bottom.png);
+			background-size:cover;
+
+		}
+
+		.footwear{
+			position: absolute;
+			top:428px;
+			width:180px;
+			height:144px;
+			left:310px;
+			background:url(/front/public/img/foot.png);
+			background-size:cover;
+
+		}
+
+		.accessories{
+			position: absolute;
+			top:220px;
+			width:180px;
+			height:180px;
+			left:530px;
+			background:url(/front/public/img/acc.png);
+			background-size:cover;
+
+		}
+	

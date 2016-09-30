@@ -94,7 +94,7 @@ class ApiController extends AppController
 
         //Default value wished to false
         foreach ($result as $key => $item) {
-            $result[$key]['wished'] = false;
+          $result[$key]['wished'] = false;
         }
 
         // Authenticated user
@@ -102,57 +102,31 @@ class ApiController extends AppController
         $f_account_id = $this->request->query('f_account_id');
 
         if (isset($f_token) && isset($f_account_id)) {
-            $sessionDatas = TableRegistry::get('Sessions');
-            $session = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
+          $sessionDatas = TableRegistry::get('Sessions');
+          $session = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
 
-            if (sizeof($session)) {
-                $item = TableRegistry::get('Wishlist');
-                $wishlist = $item->showWishlist($f_account_id);
+          if (sizeof($session)) {
+            $item = TableRegistry::get('Wishlist');
+            $wishlist = $item->showWishlist($f_account_id);
 
-                $wishlist_arr = array();
-                foreach ($wishlist as $value) {
-                    $wishlist_arr[] = $value['item_id'];
-                }
-
-                foreach ($result as $key => $item) {
-                    if (in_array($item['item_id'], $wishlist_arr)) {
-                        $result[$key]['wished'] = true;
-                    } else {
-                        $result[$key]['wished'] = false;
-                    }
-                }
+            $wishlist_arr = array();
+            foreach ($wishlist as $value) {
+              $wishlist_arr[] = $value['item_id'];
             }
+
+            foreach ($result as $key => $item) {
+              if (in_array($item['item_id'], $wishlist_arr)) {
+                $result[$key]['wished'] = true;
+              } else {
+                $result[$key]['wished'] = false;
+              }
+            }
+          }
         }
 
         echo json_encode($result);
         exit();
 
-      }
-      
-      public function removeToCart()
-      {
-        $this->autoRender = false ;
-
-        $cart = $this->Cookie->read('cart_items');
-
-        // Item_id to be removed from the Cart
-        $item_id = $this->request->data('item_id');
-
-        // Check if Cart Array is existing
-        if ($cart) {
-            // Iterate from the Cart Array
-          foreach ($cart as $key => $item) {
-            if ($item_id == $item['item_id']) {
-                    // Remove Item from Cart
-              unset($cart[$key]);
-            }
-          }
-        }
-
-        // Update Cart Array
-        $this->Cookie->write('cart_items', $cart);
-
-        exit();
       }
 
 
@@ -190,6 +164,23 @@ class ApiController extends AppController
         echo json_encode($result);
         
         exit();
+
+      }
+
+      public function modalfront(){
+
+        $this->autoRender = false ;
+        header('Content-Type: application/json');
+
+
+        $item_id=$this->request->data('item_id');
+
+
+        $items = TableRegistry::get('Items'); // Create Table Object
+
+        $result=$items->getItemModal($item_id);
+
+        echo json_encode($result);
 
       }
 

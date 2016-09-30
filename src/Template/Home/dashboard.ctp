@@ -50,8 +50,7 @@
 
 							<a ng-click='wlist()' class='wishlist'><li>Wishlist</li></a>
 
-							<a ng-click='closet()' class='closet' href='#'><li>Closet</li></a>
-
+					
 
 							<a ng-click='history()' class='history' href='#'><li>Order History</li></a>
 
@@ -59,9 +58,7 @@
 							<a ng-click='track()' class='track'><li>Track my Order</li></a>
 
 
-							<a ng-click='help()' class='help' href='#'><li>Get Help</li></a>
-
-							<a href='/' style='margin-left:240px;border-bottom: 4px solid;'><li>Back to Store ></li></a>
+							<a href='/' style='margin-left:440px;border-bottom: 4px solid;'><li>Back to Store ></li></a>
 
 						</ul>
 					</div>
@@ -74,7 +71,7 @@
 
 									<a  ng-click='summary()' style='font-family: Moon;color:#fff;' class='active-a' ><li style='background:#333;padding: 10px;'>Summary of Info</li></a>
 									<a ng-click='editaccount()' style='font-family: Moon;color:#333;font-size: 16px;font-weight: bold;' class='active-a'><li  style='padding: 10px;'>Edit Account Information</li></a>
-									<a ng-click='editshipping()' style='font-family: Moon;font-weight:bold;color:#333;font-size: 16px;' class='active-a'><li  style='padding: 10px;'>Edit Shipping Address</li></a>
+									<a ng-click='editshipping()' style='font-family: Moon;font-weight:bold;color:#333;font-size: 16px;' class='active-a'><li  style='padding: 10px;'>Edit Delivery Address</li></a>
 
 								</ul>
 							</div>

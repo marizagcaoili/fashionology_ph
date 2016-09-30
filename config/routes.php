@@ -69,6 +69,14 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/user/account/confirmed', ['controller' => 'login', 'action' => 'updateUser']);
 
+    //terms and conditions
+    $routes->connect('/terms/conditions', ['controller' => 'home', 'action' => 'termsandconditions']);
+
+    //view modal when clicked
+
+
+    $routes->connect('/view/item', ['controller' => 'api', 'action' => 'modalfront']);
+
 
 //order cancellation
 
@@ -80,18 +88,26 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/email/confirmation', ['controller' => 'login', 'action' => 'userEmail']);
 
 
+    //order emailing
+    $routes->connect('/location', ['controller' => 'home', 'action' => 'location']);
+
+
+
     $routes->connect('/user/dashboard/updateShipping', ['controller' => 'account', 'action' => 'updateShipping']);
 
 
     $routes->connect('/user/dashboard/updateAccount', ['controller' => 'account', 'action' => 'updateAccount']);
 
 
-    //
+
     
     //order emailing
-    $routes->connect('/order/email', ['controller' => 'order', 'action' => 'emailNotify']);
+    // $routes->connect('/order/email', ['controller' => 'order', 'action' => 'emailNotify']);
 
     //end
+
+    
+    
 
     $routes->connect('/', ['controller' => 'home', 'action' => 'index']);
 
@@ -196,12 +212,12 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     /**updating end**/
 
-    /**delivery**/
-    $routes->connect('/order/process/delivery', ['controller' => 'order','action' => 'placeDeliver']);
-    /*end***/
+    // /**delivery**/
+    // $routes->connect('/order/process/delivery', ['controller' => 'order','action' => 'placeDeliver']);
+    // /*end***/
 
     /**pickup**/
-    $routes->connect('/order/process/pickup', ['controller' => 'order','action' => 'placePickup']);
+    $routes->connect('/order/process/delivery', ['controller' => 'order','action' => 'placeDeliver']);
     
     /*end***/
 

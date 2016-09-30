@@ -1,0 +1,130 @@
+.contact-section {
+  height: 620px;
+  display: flex;
+  display: inline-flex;
+  width: 100%; }
+
+.send-inquiry {
+  border: 1px solid;
+  font-family: Moon;
+  font-size: 20px;
+  padding: 4px 24px;
+  font-weight: bold;
+  background: transparent;
+  transition: all 0.4s; }
+  .send-inquiry:hover {
+    background: #111;
+    color: #fff; }
+
+.left-contact {
+  flex: 1 8 70%; }
+
+.right-contact {
+  flex: 1 6 40%;
+  background-size: cover; }
+
+.contact-form {
+  position: relative;
+  left: 68px;
+  width: 86%;
+  top: 80px;
+  padding: 4px;
+  height: 520px; }
+
+.contact-header {
+  height: auto; }
+  .contact-header p:nth-child(1) {
+    font-family: Moon;
+    font-size: 40px;
+    padding-top: 8px;
+    margin: 0;
+    text-transform: uppercase;
+    display: none; }
+  .contact-header p:nth-child(2) {
+    padding-top: 14px;
+    font-family: Moon;
+    font-size: 14px;
+    width: 90%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold; }
+
+.contact-content-form {
+  position: relative;
+  top: 4px;
+  height: 336px; }
+
+.locator-section {
+  border: 1px solid #cdcdcd;
+  height: 670px;
+  display: flex;
+  display: inline-flex;
+  width: 100%; }
+
+.header-locator {
+  position: relative;
+  top: 54px;
+  border-bottom: 1px solid #cdcdcd;
+  padding: 8px;
+  width: 80%;
+  margin: 0 auto;
+  height: 108px; }
+  .header-locator p {
+    font-size: 32px;
+    font-family: Moon; }
+
+.locator-left {
+  flex: 1 8 50%;
+  border-right: 1px solid #cdcdcd; }
+
+.locator-right {
+  flex: 1 8 68%; }
+
+.branch-wrap {
+  width: 74%;
+  margin: 0 auto;
+  position: relative;
+  top: 120px;
+  height: auto; }
+
+.branch-name {
+  position: relative;
+  height: 55px;
+  font-weight: bold; }
+  .branch-name p {
+    padding-top: 6px;
+    font-size: 30px;
+    font-family: Moon;
+    text-transform: uppercase;
+    letter-spacing: 4px; }
+
+.branch-address {
+  position: relative;
+  margin-top: 20px; }
+  .branch-address p {
+    width: 90%;
+    font-family: Moon;
+    font-size: 16px; }
+
+.store-wrap {
+  position: relative;
+  top: 40px;
+  margin: 0 auto; }
+  .store-wrap p:nth-child(1) {
+    font-size: 24px;
+    font-family: Moon;
+    font-weight: bold; }
+
+.store-opened {
+  position: relative;
+  top: 40px;
+  margin-top: 10px; }
+  .store-opened p {
+    font-family: Moon;
+    font-size: 16px; }
+
+.hours-opened {
+  position: relative;
+  top: 20px; }
+
+/*# sourceMappingURL=contact-us.css.map */

@@ -55,7 +55,6 @@ class UsersTable extends Table
 
   public function getUserData($user)
   {
-
     return $this->find()
     ->where(['account_username' => $user])
     ->toArray();
