@@ -256,6 +256,8 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 		$scope.f_account_id=$cookies.get('f_account_id');
 
+		$('.primary').hide();
+
 	}
 
 	CheckoutManager.getFields = function(){
@@ -349,6 +351,10 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 	}
 
 	$scope.useAnother = function (){
+		$('.secondary').hide();
+
+		$('.primary').show();
+
 		var lname = $('#lname1').val();
 		var fname = $('#fname1').val();
 		var contact = $('#contact1').val();
@@ -390,6 +396,11 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 	}
 
 	$scope.setPrimary = function(){
+
+		$('.secondary').show();
+
+		$('.primary').hide();
+
 
 		var primary=$scope.shipping_id= $scope.tempid;
 
@@ -571,6 +582,18 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 	}
 
+	if($scope.cart_items==null){
+		
+		$('.no-cart').show();
+		$('.loaded-items').hide();
+
+	}else{
+		$('.no-cart').hide();
+	}
+	$scope.returnToShop=function(){
+		location.href='/clothing'
+	}
+
 
 	$scope.next=function(){
 		
@@ -583,8 +606,11 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 		if($scope.f_account_id!=null && $scope.total<500){
 			alert('The item should not be less than PHP 500.00 !')
-		}else{
 
+
+		}
+
+		if($scope.f_account_id!=null && $scope.total>500){
 
 			$('.sec-a').collapse('hide');
 			$('.sec-b').collapse('show');
@@ -671,8 +697,7 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 
 
 		if(account>0){
-
-			$('.lognowin li').trigger('click');
+			alert('You are now ready to use you account!. You can start loggin in! ');
 
 		}
 
@@ -1018,6 +1043,8 @@ app.controller('accountController',function($scope, $http, $rootScope){
 	user.init=function(){};
 
 	user.add=function(username,email,password,birthday,gender,fname,lname,address,city,state,postal){
+
+
 		$http({
 			url:'/api/register',
 			method:'POST',
@@ -1085,9 +1112,21 @@ app.controller('accountController',function($scope, $http, $rootScope){
 		city=$('#city').val(),
 		state=$('#state').val(),
 		postal=$('#postal').val()
+
+
+		if(password!=$('#password2').val()){
+			alert('The pasword your type did not match!')
+		}
+
+		else if(username=='' && email=='' ){
+			alert('All fields are required!')
+		}else{
+ user.add(username,email,password,birthday,gender,
+		 	fname,lname,address,city,state,postal);
+
+		}
 		
-		user.add(username,email,password,birthday,gender,
-			fname,lname,address,city,state,postal);
+		//
 	};
 });
 // -- END : accountController -- //

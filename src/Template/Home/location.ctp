@@ -34,22 +34,22 @@
 
 		function initMap() {
 			bacoor = new google.maps.Map(document.getElementById('bacoor'), {
-				center: {lat: -34.397, lng: 150.644},
+				center: {lat: 14.4369242, lng: 120.9635337},
 				zoom: 8
 			});
 
 			molino = new google.maps.Map(document.getElementById('molino'), {
-				center: {lat: -34.397, lng: 150.644},
+				center: {lat: 14.3976093, lng: 120.9649388},
 				zoom: 8
 			});
 
 			imus = new google.maps.Map(document.getElementById('imus'), {
-				center: {lat: -34.397, lng: 150.644},
+				center: {lat: 14.4004079, lng: 120.9014714},
 				zoom: 8
 			});
 
 			alabang = new google.maps.Map(document.getElementById('alabang'), {
-				center: {lat: -34.397, lng: 150.644},
+				center: {lat: 14.423842, lng: 121.0278303},
 				zoom: 8
 			});
 

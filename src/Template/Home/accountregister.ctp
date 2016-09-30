@@ -59,7 +59,7 @@
 <main class='container_14'>
 
 
-	<div class='register-wrap' ng-app="ngMessagesExample">
+	<div class='register-wrap' >
 
 
 
@@ -76,13 +76,13 @@
 			<form name='regForm' class='form-forms'>
 				<div class='content-div-by'>
 					<div>
-						<label class='frm-lbl'>USERNAME <br><input ng-model="user.name"  name='username' ng-minlength="5" ng-maxlength="20" required type='text' class='form-control' id='username'></label>
+						<label class='frm-lbl'>USERNAME <br><input  name='username' ng-minlength="5" ng-maxlength="20" required type='text' class='form-control' id='username'></label>
 
 						<p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">You name is required.</p>	
 					</div>
 
 					<div>
-						<label class='frm-lbl'>EMAIL ADDRESS <br><input  ng-model="user.email" type='text' id='email' required class='form-control'></label>
+						<label class='frm-lbl'>EMAIL ADDRESS <br><input  type='text' id='email' required class='form-control'></label>
 					</div>
 
 				</div>
@@ -93,11 +93,11 @@
 
 				<div class='content-div-by'>
 					<div>
-						<label class='frm-lbl'>PASSWORD <br><input  ng-model="user.password" type='password' required id='password' class='form-control'></label>
+						<label class='frm-lbl'>PASSWORD <br><input type='password' required id='password' class='form-control'></label>
 					</div>
 
 					<div>
-						<label class='frm-lbl'>CONFIRM PASSWORD <br><input   ng-model="user.password" type='password' required class='form-control'></label>
+						<label class='frm-lbl'>CONFIRM PASSWORD <br><input type='password'  id='password2'required class='form-control'></label>
 					</div>
 
 
@@ -110,11 +110,11 @@
 
 				<div class='content-div-by'>
 					<div>
-						<label class='frm-lbl'>BIRTHDAY <br><input  ng-model="user.birthday" type='date' required id='birthday' class='form-control'></label>
+						<label class='frm-lbl'>BIRTHDAY <br><input  type='date' required id='birthday' class='form-control'></label>
 					</div>
 
 					<div>
-						<label class='frm-lbl'>CONTACT <br><input  ng-model="user.contact" type='text' id='contact' required class='form-control'></label>
+						<label class='frm-lbl'>CONTACT <br><input  type='text' id='contact' required class='form-control'></label>
 					</div>
 
 
@@ -144,11 +144,11 @@
 
 					<div class='content-div-by'>
 						<div>
-							<label class='frm-lbl'>FIRST NAME <br><input type='text'  ng-model="user.fname" required id='fname' class='form-control'></label>
+							<label class='frm-lbl'>FIRST NAME <br><input type='text' id='fname' class='form-control'></label>
 						</div>
 
 						<div>
-							<label class='frm-lbl'>LAST NAME <br><input type='text'  ng-model="user.lname" required id='lname' class='form-control'></label>
+							<label class='frm-lbl'>LAST NAME <br><input type='text'  required id='lname' class='form-control'></label>
 						</div>
 
 					</div>
@@ -165,11 +165,15 @@
 
 					<div class='content-div-by'>
 						<div>
-							<label class='frm-lbl'>ADDRESS <br><input type='text'  ng-model="user.address" required id='address'  class='form-control'></label>
+							<label class='frm-lbl'>ADDRESS <br><input type='text'  required id='address'  class='form-control'></label>
 						</div>
 
 						<div>
-							<label class='frm-lbl'>CITY <br><input type='text'  ng-model="user.city" required id='city'  class='form-control'></label>
+							<a style='font-family: Coves;text-transform: uppercase;font-size: 20px;color:#111;font-weight: bold;'>City</a>
+							<select style='position:relative;top:10px;font-family:Moon;border:1px solid;width:400px;height:54px;border-radius: 0px;' required id='city' >
+							<option style='font-family: Moon;'>Cavite</option>
+							<option style='font-family: Moon;'>Alabang</option>
+							</select>
 						</div>
 
 					</div>
@@ -184,11 +188,11 @@
 
 					<div class='content-div-by'>
 						<div>
-							<label class='frm-lbl'>STATE/PROVINCE <br><input type='text'  ng-model="user.state" required id='state' class='form-control'></label>
+							<label class='frm-lbl'>STATE/PROVINCE <br><input type='text' required id='state' class='form-control'></label>
 						</div>
 
 						<div>
-							<label class='frm-lbl'>ZIP/POSTAL CODE <br><input type='text'  ng-model="user.postal" required id='postal'  class='form-control'></label>
+							<label class='frm-lbl'>ZIP/POSTAL CODE <br><input type='text' required id='postal'  class='form-control'></label>
 						</div>
 
 
@@ -245,7 +249,7 @@
 
 
 <section class='confirmation-link' style='position: relative;top: -30px;
-width: 66%;margin-left:120px;height:230px;'>
+width: 66%;margin-left:120px;height:230px;display: none;'>
 
 <p style='font-size: 30px;font-family:Moon;padding-left: 30px;padding-top: 30px;font-weight: bold;'>Account Verification!</p>
 
