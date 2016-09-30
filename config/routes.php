@@ -325,6 +325,7 @@ Router::prefix('Admin', function ($routes) {
 
   $routes->connect('/admin/dashboard/archive_orders', ['controller' => 'dashboard', 'action' => 'archiveOrders']);   
 
+  $routes->connect('/admin/dashboard/get_content', ['controller' => 'dashboard', 'action' => 'getContent']);   
     //Catalog
 
         //ITEM
