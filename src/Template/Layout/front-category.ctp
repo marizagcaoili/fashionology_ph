@@ -1,5 +1,5 @@
 
-<div class='category' ng-app="SampleApp" ng-controller="CategoryBrandController" >
+<div class='category' ng-app="SampleApp" ng-controller="CategoryBrandController"  style='display:none;'>
 
 	<div class='category-flex'>
 
@@ -15,7 +15,7 @@
 
 				<div class='category-list'>
 					<ul>
-						<li ng-repeat= "parent in parents"><a href='/clothing?mode=category&category_id={{parent.category_id}}'>{{parent.category_name}}</a>
+						<li ng-repeat= "parent in parents"><a href='/clothing?mode=category&category_id={{parent.category_id}}' target='_self'>{{parent.category_name}}</a>
 						</li>
 					</ul>
 

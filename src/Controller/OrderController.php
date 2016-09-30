@@ -115,8 +115,8 @@ public function addressAdd()
 
   $result = $address->addressInsert($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal);
 
- $id = $result->lastInsertId('Shippings');
- echo json_encode($id);
+  $id = $result->lastInsertId('Shippings');
+  echo json_encode($id);
 
   exit();
 
@@ -170,11 +170,13 @@ public function placeDeliver()
 
   <body>
 
-    Thank you for ordering to Fashionology PH. <br>
 
-    If you want to see your order status. Just navigate to user dashboard.
+
+    Thank you for ordering to Fashionology Boutique Molino Branch!.
+
+    This is an automatically generated message to confirm receipt of your order via the Internet. You do not need to reply to this e-mail, but you may wish to save it for your records.
+
     This is the selected time of your call  <b>'.$call.'</b>
-
 
   </body>
 
@@ -195,7 +197,7 @@ public function placeDeliver()
   ->emailFormat('html')
   ->from(['fashionologyph@gmail.com' => 'Fashionology'])
   ->to($email_address)
-  ->subject('ORDER SUMMARY')
+  ->subject('')
   ->attachments(array(
     array(
       'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
@@ -386,8 +388,8 @@ public function addressAnother()
 
   $result = $address->addressAnother($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal, $landmark, $contact);
 
- $id = $result->lastInsertId('Shippings');
- echo json_encode($id);
+  $id = $result->lastInsertId('Shippings');
+  echo json_encode($id);
 
   exit();
 

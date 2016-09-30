@@ -165,7 +165,7 @@
 
 </main>
 
-<div style='width:38%;float:right;margin-right: 140px;margin-top:-340px;'>
+<div style='width:38%;float:right;margin-right: 140px;margin-top:-220px;'>
 
 	<button type="" class='place-order' ng-click='print()'>Print a Copy <i class="fa fa-file-text" aria-hidden="true"></i></button>	
 

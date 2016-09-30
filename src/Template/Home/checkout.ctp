@@ -42,10 +42,10 @@
       <div class='sec-a collapse '>
 
 
-         <div class='no-cart'>
+         <div class='no-cart' style='border:none;'>
             <p>Currently no items to load in your cart.</p>
 
-            <button class='return-to'>Return to Shop <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+            <button class='return-to' ng-click='returnToShop()'>Return to Shop <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
          </div>
 
          <div class='loaded-items'>
@@ -202,8 +202,8 @@
 
 
                   <div class='add-new'>
-                     <a style='font-family: Moon;position: relative;top:20px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">Use another Address</a>
-                     <a style='font-family: Moon;position: relative;top:20px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" ng-click="setPrimary()">Set to Primary Address</a>
+                     <a  class='secondary' style='font-family: Moon;position: relative;top:20px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">Use another Address</a>
+                     <a class='primary' style='font-family: Moon;position: relative;top:20px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" ng-click="setPrimary()">Switch to Primary Address</a>
                   </div>
 
 
