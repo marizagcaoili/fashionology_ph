@@ -55,9 +55,9 @@
 				<div class='address-flex-wrap'>
 					<div class='address-sec'>
 						<p class='light-text'>From</p>
-						<p class='light-text'><b>Fashionology Boutique</b></p>
-						<p class='light-text'>2362 C. Marconi St., Brgy. Palanan</p>
-						<p class='light-text'>Makati, Philippines 4017</p>
+						<p class='light-text'><b>Fashionology Boutique Molino</b></p>
+						<p class='light-text'>Espeleta,, 9072 Molino Rd, </p>
+						<p class='light-text'>Espeleta, Bacoor, Cavite</p>
 						<p class='light-text'>Phone: (804) 123-5432</p>
 						<p class='light-text'>Email: jab.j16@gmail.com</p>
 					</div>

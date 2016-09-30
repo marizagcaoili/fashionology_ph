@@ -80,15 +80,19 @@
             <ul>
                <?php include LAYOUT_DIR . 'user_actions_black.ctp'; ?>
                <a href="/checkout" style='color:#333;' target='_self'>
-                  <li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li>
-               </a>
+                  <li style='width
+                  :1px;padding:0;'><i class="fa fa-shopping-cart"  aria-hidden="true"></i
+
+                  </a>
                <a  class="count-cart" style="position:absolute;
                font-size:8px;
+                margin-left:-14px;
                padding: 4px 8px;
                border-radius:50%;
                background: #e74c3c;" ng-if='cart_items_count>0'>
-               <li>{{cart_items_count}}</li>
+               {{cart_items_count}}</li>
             </a>
+               
          </ul>
       </nav>
    </header>

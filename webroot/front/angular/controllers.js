@@ -695,8 +695,7 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 
 
 		if(account>0){
-
-			$('.lognowin li').trigger('click');
+			alert('You are now ready to use you account!. You can start loggin in! ');
 
 		}
 
@@ -1022,6 +1021,8 @@ app.controller('accountController',function($scope, $http, $rootScope){
 	user.init=function(){};
 
 	user.add=function(username,email,password,birthday,gender,fname,lname,address,city,state,postal){
+
+
 		$http({
 			url:'/api/register',
 			method:'POST',
@@ -1089,9 +1090,21 @@ app.controller('accountController',function($scope, $http, $rootScope){
 		city=$('#city').val(),
 		state=$('#state').val(),
 		postal=$('#postal').val()
+
+
+		if(password!=$('#password2').val()){
+			alert('The pasword your type did not match!')
+		}
+
+		else if(username=='' && email=='' ){
+			alert('All fields are required!')
+		}else{
+ user.add(username,email,password,birthday,gender,
+		 	fname,lname,address,city,state,postal);
+
+		}
 		
-		user.add(username,email,password,birthday,gender,
-			fname,lname,address,city,state,postal);
+		//
 	};
 });
 // -- END : accountController -- //

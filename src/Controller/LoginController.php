@@ -137,6 +137,14 @@ class LoginController extends AppController
      $message = 'fashionologyph.com/clothing?account_id='.$id;
      $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
 
+     $msg='
+
+     <body>
+      <p>Please click the link below to verify your account!</p>
+      <a href='.$message.'>'.$message.'</a>
+     </body>
+      ';
+
      Email::configTransport('gmail', [
       'host' => 'ssl://smtp.gmail.com',
       'port' =>  465,
@@ -151,7 +159,7 @@ class LoginController extends AppController
      ->emailFormat('html')
      ->from(['fashionologyph@gmail.com' => 'Fashionology'])
      ->to($email_add)
-     ->subject('$subject')
+     ->subject('Account Verification!')
      ->attachments(array(
       array(
         'file'=>ROOT.'/webroot/front/public/img/logo-white.png',
@@ -160,7 +168,7 @@ class LoginController extends AppController
         ),
       ))
      ->transport('gmail')
-     ->send($message);
+     ->send($msg);
 
 
      exit();  
