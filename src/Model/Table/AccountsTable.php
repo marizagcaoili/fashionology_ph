@@ -81,5 +81,20 @@ class AccountsTable extends Table
 
  }
 
+ public function getActivated()
+ {
+   return $this->find()
+               ->contain(['Shippings'])
+               ->where(['account_activated' => 1])
+               ->toArray();
+ }
+
+ public function getAccounts()
+ {
+   return $this->find()
+               ->contain(['Shippings'])
+               ->toArray();
+ }
+
 
 }

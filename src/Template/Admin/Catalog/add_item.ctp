@@ -160,7 +160,7 @@
                                      <textarea name="description" id="summernote"></textarea>
                                     </div>
                                 </div>
-
+<!-- 
 
                                 <div class="form-group row">
                                   
@@ -169,7 +169,7 @@
                                        <input style= "display:inline-block; margin-right: 2%;" type="checkbox" checklist-model="selected.sizes" checklist-value="size.size_id"><strong>{{size.size_key}}</strong> 
                                     </div>
                                 </div>
-
+ -->
 
                              
                         </fieldset>

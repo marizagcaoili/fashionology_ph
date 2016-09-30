@@ -157,12 +157,11 @@ class CatalogController extends Controller
         $item_name = $this->request->data('item_name');
         $desc = $this->request->data('desc');
         $categoryid = $this->request->data('categoryid');
-        $sizes = $this->request->data('sizes');
         $gender = $this->request->data('gender');
 
         $date = date('Y-m-d H:i:s');
 
-        $result = $item->insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date);
+        $result = $item->insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $gender, $date);
 
         $id = $result->lastInsertId('Items');
         echo json_encode($id);      
@@ -185,13 +184,12 @@ class CatalogController extends Controller
         $item_name = $this->request->data('item_name');
         $desc = $this->request->data('desc');
         $categoryid = $this->request->data('categoryid');
-        $sizes = $this->request->data('sizes');
         $gender = $this->request->data('gender');
 
         $date = date('Y-m-d H:i:s');
 
 
-         $item->updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender);
+         $item->updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid, $gender);
 
         echo json_encode('updated!');      
         exit();
@@ -209,6 +207,24 @@ class CatalogController extends Controller
         $status = $this->request->data('status');
 
         $result = $item->updateItemStatus($item_id, $status);
+
+        echo json_encode($result);
+        exit();
+    }
+
+
+    public function updateItemStatus1()
+    {
+        //disable ui rendering
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $item = TableRegistry::get('Items');
+
+        $item_id   = $this->request->data('item_id');
+        $status = $this->request->data('status');
+
+        $result = $item->updateItemStatus1($item_id, $status);
 
         echo json_encode($result);
         exit();

@@ -80,7 +80,7 @@
             <nav class="nav-b" ng-controller='testController'>
                <ul>
                   <?php include LAYOUT_DIR . 'user_actions_black.ctp'; ?>
-                  <a href="/cart" style='color:#333;' target='_self'>
+                  <a href="/checkout" style='color:#333;' target='_self'>
                      <li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li>
                   </a>
                   <a  class="count-cart" style="position:absolute;

@@ -167,6 +167,55 @@ class InquiryController extends Controller
         exit();   
     }
 
+    public function getArchives()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $inquiries = TableRegistry::get('Inquiries'); // Create Table Object
+
+        $result = $inquiries->getArchives();
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
+
+
+    public function restoreInquiry()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $inquiries = TableRegistry::get('Inquiries'); // Create Table Object
+
+        $inquiry_id = $this->request->query('inquiry_id');
+
+        $result = $inquiries->restoreInquiry($inquiry_id);
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
+
+    public function deleteInquiry()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $inquiries = TableRegistry::get('Inquiries'); // Create Table Object
+
+        $inquiry_id = $this->request->query('inquiry_id');
+
+        $result = $inquiries->deleteInquiry($inquiry_id);
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
 
 
 }

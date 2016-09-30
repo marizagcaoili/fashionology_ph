@@ -160,15 +160,6 @@
                                 </div>
 
 
-                                <div class="form-group row">
-                                  
-                                  <label class="col-xs-2 col-form-label">Sizes</label>   
-                                    <div ng-repeat ="size in sizes" class="col-xs-2">
-                                       <input style= "display:inline-block; margin-right: 2%;" type="checkbox" checklist-model="selected.sizes" checklist-value="size.size_id"><strong>{{size.size_key}}</strong> 
-                                    </div>
-                                </div>
-
-
                              
                         </fieldset>
 

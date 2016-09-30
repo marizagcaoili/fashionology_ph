@@ -16,7 +16,7 @@
 </style>
 </head>
 
-<body ng-app="admin" ng-controller="ItemListController" class="hold-transition skin-black-light sidebar-mini">
+<body ng-app="admin" ng-controller="AccountController" class="hold-transition skin-black-light sidebar-mini">
 <div class="wrapper">
 <?php include LAYOUT_DIR . 'header.ctp'; ?>
   <!-- Left side column. contains the logo and sidebar -->
@@ -66,11 +66,7 @@
 
               </div>
               <div class="col-xs-4">
-                <form name="actionButtons" method="post" action= "product.php" enctype="multipart/form-data">
-                  <div class="btn-group" id="alignright">  
-                   <a href="/admin/catalog/item_form"> <button type="button" class="btn btn-flat"><i class="fa fa-plus"></i></button></a>
-                  </div>
-                </form>
+
               </div>
               </div>
             </div>
@@ -81,24 +77,29 @@
               <table id="example2" class="table">
                 <thead>
                 <tr>
-                  <th>Item Code</th>
-                  <th>Item Name</th>
-                  <th>Brand</th>
-                  <th width="20%">Featured</th>
-                  <th width="20%">Availability</th>
-                  <th>SRP</th>
-                  <th>Thumbnail</th>
-                  <th width= 10% colspan="3">Actions</th>
+                  <th width="10%">Account ID</th>
+                  <th>Full Name</th>
+                  <th>Gender</th>
+                  <th>Address</th>
+                  <th>Contact Number</th>
+                  <th>Account Created</th>
+                  <th>Last Login</th>
+
+                  <th width= 10% colspan="3">Accessibility</th>
                 </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="item in items">
-                    <td>{{item.item_code}}</td>
-                    <td>{{item.item_name}}</td>
-                    <td>{{item.brand.brand_name}}</td>  
+                  <tr ng-repeat="account in accounts">
+                    <td>{{account.account_id}}</td>
+                    <td>{{account.account_fname}}{{account.account_lname}}</td>
+                    <td>{{account.account_gender}}</td>  
+                    <td>{{account.shipping.shipping_address}}{{account.shipping.shipping_city}}</td>
+                    <td>{{account.account_contact}}</td>
+                    <td>{{account.account_created}}</td>
+                    <td>{{account.last_login}}</td>      
                     <td><input
                           bs-switch
-                          ng-model="item.featured_flag"
+                          ng-model="account.account_activated"
                           type="checkbox"
                           switch-active="{{ isActive }}"
                           switch-on-text="{{ onText }}"
@@ -116,32 +117,6 @@
                           ng-true-value="1"
                           ng-false-value="0"
                           switch-change="toggle(item.item_id, item.featured_flag)"></td>
-
-                      <td><input
-                          bs-switch
-                          ng-model="item.item_status"
-                          type="checkbox"
-                          switch-active="{{ isActive }}"
-                          switch-on-text="{{ onText1 }}"
-                          switch-off-text="{{ offText1 }}"
-                          switch-on-color="{{ onColor }}"
-                          switch-off-color="{{ offColor }}"
-                          switch-animate="{{ animate }}"
-                          switch-size="{{ size }}"
-                          switch-label="{{ label }}"
-                          switch-icon="{{ icon }}"
-                          switch-radio-off="{{ radioOff }}"
-                          switch-label-width="{{ labelWidth }}"
-                          switch-handle-width="{{ handleWidth }}"
-                          switch-wrapper="{{ wrapper }}"
-                          ng-true-value="1"
-                          ng-false-value="0"
-                          switch-change="toggle1(item.item_id, item.item_status)"></td>
-                    <td>{{item.item_srp}}.00</td>
-                    <td><center><img style= "width:50px;" src="{{item.image.file_key}}"></center></td>
-<!--                    <td> <span data-toggle= "modal" data-target="#addStock"><button data-toggle="tooltip" data-placement="bottom" title="Add Stocks" type="submit" ng-click="getSizes(item.item_id, item.sizes)" class= "btn bg-success btn-flat" name=""><i class="fa fa-plus-circle"> </i></button></a></span></td> -->
-                    <td><a href="/admin/catalog/edit_item?item_id={{item.item_id}}"><button type="submit" class= "btn bg-primary btn-flat" name=""><i class="fa fa-pencil"> </i></button></a></td>
-                     <td><button type="submit" ng-click="deleteItem(item.item_id)" class= "btn bg-red btn-flat" name=""><i class="fa fa-trash"> </i></button></td>
 
                   </tr>
                 </tbody>

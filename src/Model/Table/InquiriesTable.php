@@ -64,6 +64,28 @@ class InquiriesTable extends Table
                     ->where(['inquiry_id' => $inquiry_id])
                     ->execute();
     }
+
+    public function getArchives()
+    {
+        return $this->find()
+                    ->andWhere(['archive_flag' => 1])
+                    ->toArray();
+    }
+
+    public function restoreInquiry($inquiry_id)
+    {
+        return $this->query()->update()
+                    ->set(['archive_flag' => 0])
+                    ->where(['inquiry_id' => $inquiry_id])
+                    ->execute();
+    }
+
+    public function deleteInquiry($inquiry_id)
+    {
+        return $this->query()->delete()
+                    ->where(['inquiry_id' => $inquiry_id])
+                    ->execute();
+    }  
 }
 
 ?>

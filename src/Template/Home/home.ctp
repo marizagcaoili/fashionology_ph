@@ -120,7 +120,7 @@
       <nav class="nav-b" >
          <ul>
             <?php include LAYOUT_DIR . 'user_actions_white.ctp'; ?>
-            <a class='cart'href="/cart" style='color:#fff;'>
+            <a class='cart'href="/checkout" style='color:#fff;'>
                <li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li>
             </a>
             <a class="count-cart" style="position:absolute;

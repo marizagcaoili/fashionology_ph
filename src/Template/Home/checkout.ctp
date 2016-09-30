@@ -22,24 +22,110 @@
       <div class='checkout-wrap'>
 
 
-       
-        <div class='checkout-header' style='border-top:solid 1px #cdcdcd;'>
-         <p style='color:#111;font-family: Moon;text-transform: uppercase;'><span ><i class="fa fa-shopping-bag" aria-hidden="true"></i></span> MY BAG </p>
-      
 
-         <div style='border:1px solid;float:right;width:120px;margin-top:-36px;'>
+       <div class='checkout-header' style='border-top:solid 1px #cdcdcd;'>
+         <p style='color:#111;font-family: Moon;text-transform: uppercase;'><span ><i class="fa fa-shopping-bag" aria-hidden="true"></i></span> MY BAG </p>
+
+
+         <div style='float:right;width:70%;height:40px;margin-top:-44px;margin-right:90px;'>
+            <div style='width:70%;height:100%;font-size: 20px;font-family: Coves;text-transform: lowercase;'>
+               <i class="fa fa-user" aria-hidden="true"></i> Logged in as: <b>not logged in</b>
+               &nbsp; &nbsp;<a href='/' style=''>back to store <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+            </div>
+
          </div>
 
       </div>
 
 
-      <div class='sec-a collapse'>
+      <div class='sec-a collapse '>
+
+
+         <div class='no-cart'>
+            <p>Currently no items to load in your cart.</p>
+
+            <button class='return-to'>Return to Shop <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+         </div>
+
+         <div class='loaded-items'>
+            <div class='loaded-flex'>
+               <div class='loaded-a'>
+
+                  <ul>
+                     <li ng-repeat='item in items'>
+                        <div class='item-wrap'>
+                           <div class='item-wrap-flex'>
+
+                              <div class='item-ab'>
+                                 <img src='{{item.file_key}}' width='100%' height='100%'>
+                              </div>
+
+                              <div class='item-ac'>
+                                    <div class='item-details'>
+                                    <p>{{item.item.item_name}} <b style='float:right;'> x 1 = PHP 1200.00</b></p>
+                                       <p style='height: 60px;'>{{item.item.item_description}}</p>
+
+                                          <div class='mod-view'  style='position:relative;left: -140px;top:12px;'>
+                                             <div class='mod-view-det'>
+                                            
+                                                <div class='quanti-grp'>
+                                                   <div class='quanti-grp-flex'>
+                                                      <div class='quanti-grp-a'>
+                                                         <button class='qtyminus qty'  ng-click='subtract_quantity(item.item_id, cart_items_quantity[$index],item.item.item_srp)'>
+                                                         -
+                                                         </button>
+                                                      </div>
+                                                      <div class='quanti-grp-a'>
+                                                         <input type='text' class='qty-txt quantity' value='{{cart_items_quantity[$index]}}' disabled>   
+                                                      </div>
+                                                      <div class='quanti-grp-a'>
+                                                         <button class=' qty qtyright qtyplus' ng-click='add_quantity(item.item_id, cart_items_quantity[$index],item.item.item_srp)'>
+                                                         +
+                                                         </button>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                </p>
+                                                <p style='display: none;'><span class='det-align'></span></p>
+                                                <p> <span class='det-align' style='left:34px;'></span></p
+                                             </div>
+
+                                             <button style='position: relative;top:-34px;left:238px;font-family: Moon;border:1px solid;background: transparent;padding: 3px;'>Remove</button>
+                                          </div>
+                                       </div>
+                                    </div>
+                              </div>
+                           </div>
+                        </div>
+                     </li>
+
+                  </ul>
+
+               </div>
+
+               <div class='loaded-b'>
+                  <div class='load-cash'>
+                     <p style='text-align: right;font-family: Moon;padding-right: 8px;font-size: 12px;top:60px;position: relative;'>Note: Delivery fee is offered for free since the ordering transanction in line with delivery is for cavite only.</p>
+
+                     <p style='float:right;padding-right: 8px;position: relative;top:170px;font-size:20px;font-family: Moon;'>VAT = 12%</p>
+                  </div>
+                  <div class='load-total'>
+                     <p>TOTAL: PHP 120.00</p>
+
+                     <button ng-click='next()' style='float:right;margin-right: 10px;font-family: Moon;font-size:20px;padding: 4px 24px;margin-top: 16px;font-weight: bold;border:1px solid;background: transparent;'>Next <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
       </div>
 
 
 
       <div class='checkout-header' style='border-top:solid 1px #cdcdcd;'>
-         <p><span ><i class="fa fa-map-marker" aria-hidden="true"></i></span> delivery address </p>
+         <p style='font-family: Moon;color:#111;'><span ><i class="fa fa-map-marker" aria-hidden="true"></i></span style='margin-left:220px;position: relative;'> delivery address </p>
       </div>
       <div class='sec-b collapse in' style='margin-bottom: 1px;'>
 
@@ -58,31 +144,31 @@
                      <div class='info-fields' >
                         <div class='field-a'>
                            <p>First Name</p>
-                           <p style='text-transform: capitalize;'>{{userInfos.shipping.shipping_fname}} </p>
+                           <p style='text-transform: capitalize;'>Joe Arlo </p>
                         </div>
                         <div class='field-a'>
                            <p>Last Name</p>
-                           <p style='text-transform: capitalize;'>{{userInfos.shipping.shipping_lname}} </p>
+                           <p style='text-transform: capitalize;'>Baltazar </p>
                         </div>
                      </div>
                      <div class='info-fields'>
                         <div class='field-a'>
                            <p>Contact No.</p>
-                           <p>{{userInfos.shipping.shipping_contact}} </p>
+                           <p>09223660550 </p>
                         </div>
                         <div class='field-a'>
                            <p>Landmark</p>
-                           <p>{{userInfos.shipping.shipping_landmark}} </p>
+                           <p>Red Gate</p>
                         </div>
                      </div>
                      <div class='info-fields'>
                         <div class='field-a'>
                            <p>City</p>
-                           <p style='text-transform: capitalize;'>{{userInfos.shipping.shipping_city}} </p>
+                           <p style='text-transform: capitalize;'>Makati</p>
                         </div>
                         <div class='field-a'>
                            <p>Postal Code</p>
-                           <p>{{userInfos.shipping.shipping_zipcode}} </p>
+                           <p>1235</p>
                         </div>
                      </div>
                      <div class='info-fields' >
@@ -92,6 +178,16 @@
                         </div>
                      </div>
                   </div>
+
+
+
+                  <div class='add-new'>
+                     <a style='font-family: Moon;position: relative;top:40px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">+ Add a new Address</a>
+                  </div>
+
+
+
+
                </div>
             </div>
             <button class='proceed btn-bill' ng-click='delivery()' >Proceed <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
@@ -100,10 +196,12 @@
          </div>
       </div>
       <!--end class-->
+
+
    </div>
    <div style='border-top:solid 1px #dcdcdc;' >
       <div class='checkout-header'>
-         <p><span><i class="fa fa-key" aria-hidden="true"></i></span> mode of payment</p>
+         <p style='color:#111;font-family: Moon;'><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span></span> mode of payment</p>
       </div>
       <div class='sec-c collapse in' id='method'>
          <div class='select-grp'>
@@ -128,15 +226,13 @@
 
                </ul>
             </div>
-            <button class='btn-continue-a btn-o' style='margin-top: -2px;' data-toggle="collapse" data-target="#reviewplace" ng-click='secD()'>Continue</button>
+            <button class='btn-continue-a btn-o' style='margin-top: -2px;' data-toggle="collapse" data-target="#reviewplace" ng-click='nextStep()'>Proceed to Summary of Orders <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
          </div>
       </div>
    </div>
    <div style='border-top:solid 1px #dcdcdc;'>
-      <div class='checkout-header'>
-         <p><span> <i class="fa fa-shopping-bag" aria-hidden="true"></i></span> review and place order</p>
-      </div>
-      <div class='sec-d collapse in' id='reviewplace'  ng-init='total=0'>
+      
+      <div class='sec-d collapse in' style='display: none;' id='reviewplace'  ng-init='total=0'>
          <div class='flex-set'>
             <div class='left-flex'>
                <ul>
@@ -187,7 +283,7 @@
                   </div>
                </div>
                <div class='total-menu' style='height:118px;'>
-                  <button type="" class='place-btn' ng-click='nextStep();'>Proceed to order summary</button>
+                  <button type="" class='place-btn' ng-click='checkout()'>Proceed to order summary</button>
                   <button type="" class='place-btn' style='margin-right: 10px;'ng-click='backToStore()'>BACK TO STORE  </button>
                </div>
                         <!-- 
@@ -203,63 +299,10 @@
                   </div>
                </div>
             </div>
-            <!-- Start Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-               <div class="modal-dialog">
-                  <div class="modal-content" ng-controller='LoginController'>
-                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        </button>
-                        <h4 class="modal-title" style='color:#898989;'>Edit Information</h4>
-                     </div>
-                     <div class="modal-body" >
-                        <div class='edit-info' >
-                           <div class='info-fields' >
-                              <div class='field-a'>
-                                 <p>First Name</p>
-                                 <p><input type='text' id='fname' style='height:40px;width:250px;text-transform: capitalize;' value='{{userInfos.shipping.shipping_fname}} '></p>
-                              </div>
-                              <div class='field-a'>
-                                 <p>Last Name</p>
-                                 <p><input type='text' id='lname' style='height:40px;width:250px;text-transform: capitalize;' value='{{userInfos.shipping.shipping_lname}} '></p>
-                              </div>
-                           </div>
-                           <div class='info-fields' >
-                              <div class='field-a'>
-                                 <p>Contact No.</p>
-                                 <p><input type='text' id='contact' style='height:40px;width:250px;' value='{{userInfos.shipping.shipping_contact}} '></p>
-                              </div>
-                              <div class='field-a'>
-                                 <p>Landmark</p>
-                                 <p><input type='text' id='landmark' style='height:40px;width:250px;text-transform: capitalize;' value='{{userInfos.shipping.shipping_landmark}} '></p>
-                              </div>
-                           </div>
-                           <div class='info-fields' >
-                              <div class='field-a'>
-                                 <p>City</p>
-                                 <p><input type='text' id='city' style='height:40px;width:250px;text-transform: capitalize;' value='{{userInfos.shipping.shipping_city}} '></p>
-                              </div>
-                              <div class='field-a'>
-                                 <p>Postal Code</p>
-                                 <p><input type='text' id='postal' style='height:40px;width:250px;' value='{{userInfos.shipping.shipping_zipcode}} '></p>
-                              </div>
-                           </div>
-                           <div class='info-fields' >
-                              <div class='field-a'>
-                                 <p>Address</p>
-                                 <p><input type='text' id='address' style='height:40px;width:95.4%;text-transform: uppercase;' value='{{userInfos.shipping.shipping_address}} '></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-simple" data-dismiss="modal" ng-click='updateData(userInfos.shipping.shipping_id)'>Save</button>
-                        <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!--  End Modal -->
+            <?php include LAYOUT_DIR . 'front-editinfo.ctp'; ?>
+
+            <?php include LAYOUT_DIR . 'front-address.ctp'; ?>
+
             <!-- Sart Modal -->
             <div class="modal fade" id="branchSelect" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                <div class="modal-dialog">
@@ -335,7 +378,7 @@
 
                                  <div style='position: relative;top:30px;height:40px;'>
 
-                                  <div class='timeof-flex' >
+                                   <div class='timeof-flex' >
 
                                     <select id='timetoCall' style='width:490px;font-family: Moon;padding: 4px;text-align:center;font-weight:bold;font-size:20px;'>
                                        <option id='timetoCall'>01:00 PM - 03:00 PM</option>
