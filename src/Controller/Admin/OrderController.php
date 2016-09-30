@@ -177,5 +177,74 @@ class OrderController extends Controller
         exit();
     }
 
+    public function archiveOrder()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $order_id = $this->request->query('order_id');
+        
+        $orders = TableRegistry::get('Orders'); // Create Table Object
+
+        $result = $orders->archiveOrder($order_id);
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($order_id);
+        exit();    
+    }
+
+
+    public function getArchives()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+
+        $orders = TableRegistry::get('Orders'); // Create Table Object
+
+        $result = $orders->getArchives();
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();    
+    }
+
+    public function deleteOrder()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $orders = TableRegistry::get('Orders'); // Create Table Object
+
+        $order_id = $this->request->query('order_id');
+
+        $result = $orders->deleteOrder($order_id);
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
+
+    public function restoreOrder()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $orders = TableRegistry::get('Orders'); // Create Table Object
+
+        $order_id = $this->request->query('order_id');
+
+        $result = $orders->restoreOrder($order_id);
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
+
+
 }
 

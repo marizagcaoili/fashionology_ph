@@ -84,7 +84,8 @@
                   <th>Item Code</th>
                   <th>Item Name</th>
                   <th>Brand</th>
-                  <th width="23%">Featured</th>
+                  <th width="20%">Featured</th>
+                  <th width="20%">Availability</th>
                   <th>SRP</th>
                   <th>Thumbnail</th>
                   <th width= 10% colspan="3">Actions</th>
@@ -115,6 +116,27 @@
                           ng-true-value="1"
                           ng-false-value="0"
                           switch-change="toggle(item.item_id, item.featured_flag)"></td>
+
+                      <td><input
+                          bs-switch
+                          ng-model="item.item_status"
+                          type="checkbox"
+                          switch-active="{{ isActive }}"
+                          switch-on-text="{{ onText1 }}"
+                          switch-off-text="{{ offText1 }}"
+                          switch-on-color="{{ onColor }}"
+                          switch-off-color="{{ offColor }}"
+                          switch-animate="{{ animate }}"
+                          switch-size="{{ size }}"
+                          switch-label="{{ label }}"
+                          switch-icon="{{ icon }}"
+                          switch-radio-off="{{ radioOff }}"
+                          switch-label-width="{{ labelWidth }}"
+                          switch-handle-width="{{ handleWidth }}"
+                          switch-wrapper="{{ wrapper }}"
+                          ng-true-value="1"
+                          ng-false-value="0"
+                          switch-change="toggle1(item.item_id, item.item_status)"></td>
                     <td>{{item.item_srp}}.00</td>
                     <td><center><img style= "width:50px;" src="{{item.image.file_key}}"></center></td>
 <!--                    <td> <span data-toggle= "modal" data-target="#addStock"><button data-toggle="tooltip" data-placement="bottom" title="Add Stocks" type="submit" ng-click="getSizes(item.item_id, item.sizes)" class= "btn bg-success btn-flat" name=""><i class="fa fa-plus-circle"> </i></button></a></span></td> -->

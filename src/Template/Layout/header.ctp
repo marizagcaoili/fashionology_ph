@@ -21,7 +21,6 @@
               <span class="hidden-xs">Admin</span>
             </a>
             <ul class="dropdown-menu" style="width: 10px;">
-                  <center><button style = "border-radius:0px;" ng-click= "logout()" class="btn btn-default btn-flat col-xs-12">Archives &nbsp &nbsp <i class= "fa fa-trash"></i></button></center>
                   <center><button style = "border-radius:0px;" ng-click= "logout()" class="btn btn-default btn-flat col-xs-12">Log out &nbsp &nbsp <i class= "fa fa-sign-out"></i></button></center>
 
 

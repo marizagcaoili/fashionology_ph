@@ -53,9 +53,106 @@ class DashboardController extends Controller
              
     }
 
-    public function archive()
+    public function archiveItems()
     {
-          $this->render('archive');  
+         $session = $this->request->session();
+         $user= $session->read('user.username');
+
+         if($user == null){
+ 
+            return $this->redirect(
+            array('controller' => 'login', 'action' => 'index'));
+        }
+        else{
+                  
+            $this->render('archive_items');  
+        }         
+             
+    }
+
+    public function archiveCategories()
+    {
+         $session = $this->request->session();
+         $user= $session->read('user.username');
+
+         if($user == null){
+ 
+            return $this->redirect(
+            array('controller' => 'login', 'action' => 'index'));
+        }
+        else{
+                  
+            $this->render('archive_categories');  
+        }         
+             
+    }
+
+    public function archiveSizes()
+    {
+         $session = $this->request->session();
+         $user= $session->read('user.username');
+
+         if($user == null){
+ 
+            return $this->redirect(
+            array('controller' => 'login', 'action' => 'index'));
+        }
+        else{
+                  
+            $this->render('archive_sizes');  
+        }         
+             
+    }
+
+    public function archiveBrands()
+    {
+         $session = $this->request->session();
+         $user= $session->read('user.username');
+
+         if($user == null){
+ 
+            return $this->redirect(
+            array('controller' => 'login', 'action' => 'index'));
+        }
+        else{
+                  
+            $this->render('archive_brands');  
+        }         
+             
+    }
+
+    public function archiveOrders()
+    {
+         $session = $this->request->session();
+         $user= $session->read('user.username');
+
+         if($user == null){
+ 
+            return $this->redirect(
+            array('controller' => 'login', 'action' => 'index'));
+        }
+        else{
+                  
+            $this->render('archive_orders');  
+        }         
+             
+    }
+
+    public function archiveInquiries()
+    {
+         $session = $this->request->session();
+         $user= $session->read('user.username');
+
+         if($user == null){
+ 
+            return $this->redirect(
+            array('controller' => 'login', 'action' => 'index'));
+        }
+        else{
+                  
+            $this->render('archive_inquiries');  
+        }         
+             
     }
 
     public function count()
@@ -78,4 +175,6 @@ class DashboardController extends Controller
         exit(); 
 
     }
+
+
 }

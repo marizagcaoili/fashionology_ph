@@ -421,7 +421,7 @@ app.controller('AddItemController', ['$scope', 'Upload', '$timeout', '$http', fu
 	};
 
 
-	AddItem.addItem = function (item_code, brand, srp, item_name, desc, categoryid, sizes, gender){
+	AddItem.addItem = function (item_code, brand, srp, item_name, desc, categoryid, gender){
 			$http({
 				url : "/admin/catalog/add_item",
 				method: "POST",
@@ -432,7 +432,7 @@ app.controller('AddItemController', ['$scope', 'Upload', '$timeout', '$http', fu
 			        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 			        return str.join("&");
 			    },
-				data : 	{item_code: item_code, brand : brand, srp : srp, item_name : item_name, desc : desc, categoryid : categoryid, sizes: sizes, gender:gender} // Data to be passed to API
+				data : 	{item_code: item_code, brand : brand, srp : srp, item_name : item_name, desc : desc, categoryid : categoryid, gender:gender} // Data to be passed to API
 			})
 		    .then(function(response) {
 		    	$timeout(function () {
@@ -457,14 +457,13 @@ app.controller('AddItemController', ['$scope', 'Upload', '$timeout', '$http', fu
 		var srp = $('#srp').val();
 		var item_name = $('#itemName').val();
 		var desc = $('#summernote').val();
-		var sizes = $scope.selected.sizes;
 		var gender = $scope.selectedGender.gender_id;
 
-		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" || sizes == "" || $('#picFile').val() == undefined || $('#picFile').val() == "" || $('#image_desc').val() == ""){
+		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" ||  $('#picFile').val() == undefined || $('#picFile').val() == "" || $('#image_desc').val() == ""){
 			alert("You must fill all the required fields!");
 		}
 		else{
-		AddItem.addItem(item_code, brand, srp, item_name, desc, category_id, sizes, gender);
+		AddItem.addItem(item_code, brand, srp, item_name, desc, category_id, gender);
 		}
 	};
 
@@ -548,6 +547,12 @@ app.controller('ItemListController', function($scope, $http, $timeout) {
     $scope.inverse = false;
     $scope.canChange = false;
 
+
+	$scope.onText1 = 'In Stock';
+    $scope.offText1 = 'Out of Stock';
+    
+
+
 	 $scope.deleteItem = function(item_id) {
 				if (confirm("Are you sure you want to delete this?"))
 				{
@@ -576,6 +581,25 @@ app.controller('ItemListController', function($scope, $http, $timeout) {
 		if($scope.canChange) {
       		$http({
 				url : "/admin/catalog/update_item_status",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			    transformRequest: function(obj) {
+			        var str = [];
+			        for(var p in obj)
+			        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			    },
+				data : 	{item_id : item_id, status : status} // Data to be passed to API
+			})
+		    .then(function(response) {
+		    });
+		}
+	};
+
+	$scope.toggle1 = function(item_id, status) {
+		if($scope.canChange) {
+      		$http({
+				url : "/admin/catalog/update_item_status1",
 				method: "POST",
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 			    transformRequest: function(obj) {
@@ -754,7 +778,6 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 				$scope.temp = response.data[0].image.file_key;
 				$scope.picFile = response.data[0].image.file_key;
 				$scope.image_desc = response.data[0].image.img_description;
-				var sizes = response.data[0].sizes;
 
 				console.log($scope.details);
 
@@ -782,10 +805,7 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 
 
 				EditItem.category($scope.parent_id);
-				var size =  (sizes).split(",").map(function(t){return parseInt(t)});
-				console.log(size);
 
-				$scope.selected = {sizes: size};
 
 			  	$scope.item_code = $scope.code_item.replace($scope.brand_prefix,"");
 				$('#summernote').summernote('code', $scope.details.item_description);
@@ -830,7 +850,7 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 	};
 
 
-	EditItem.updateItem = function (item_code, brand, srp, item_name, desc, categoryid, sizes, gender){
+	EditItem.updateItem = function (item_code, brand, srp, item_name, desc, categoryid, gender){
 			$http({
 				url : "/admin/catalog/update_item",
 				method: "POST",
@@ -841,7 +861,7 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 			        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 			        return str.join("&");
 			    },
-				data : 	{item_id : $scope.item_id, item_code: item_code, brand : brand, srp : srp, item_name : item_name, desc : desc, categoryid : categoryid, sizes: sizes, gender:gender} // Data to be passed to API
+				data : 	{item_id : $scope.item_id, item_code: item_code, brand : brand, srp : srp, item_name : item_name, desc : desc, categoryid : categoryid, gender:gender} // Data to be passed to API
 			})
 		    .then(function(response) {
 		    	$timeout(function () {
@@ -888,14 +908,13 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 		var srp = $('#srp').val();
 		var item_name = $('#itemName').val();
 		var desc = $('#summernote').val();
-		var sizes = $scope.selected.sizes;
 		var gender = $scope.selectedGender.gender_id;
 
-		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" || sizes == "" || $scope.picFile == undefined || $scope.picFile == "" || $scope.image_desc == ""){
+		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" || $scope.picFile == undefined || $scope.picFile == "" || $scope.image_desc == ""){
 			alert("You must fill all the required fields!");
 		}
 		else{
-		EditItem.updateItem(item_code, brand, srp, item_name, desc, category_id, sizes, gender);
+		EditItem.updateItem(item_code, brand, srp, item_name, desc, category_id, gender);
 		}
 	};
 
@@ -1134,8 +1153,16 @@ app.controller('SizeController', function($scope, $http) {
 			$scope.location = "unread";
 			Inquiry.count();
 			Inquiry.updateRead();
+			Inquiry.getArchives();
 		};
 
+		Inquiry.getArchives = function(){
+			$http.get("/admin/inquiry/get_archives")
+		    .then(function(response) {
+		    	$scope.archives = response.data;
+		    });
+
+		};
 		Inquiry.count = function (){
 			$http.get("/admin/inquiry/get_unread_inquiries")
 		    .then(function(response) {
@@ -1263,6 +1290,24 @@ app.controller('SizeController', function($scope, $http) {
 			});
 		};
 
+		$scope.restore = function(inquiry_id){
+		if (confirm("Are you sure you want to restore this?")){
+		$http({
+		     method:"GET",        		
+		     url: '/admin/inquiry/restore_inquiry',
+		     params: {inquiry_id : inquiry_id}
+	    }).then(function(response){
+	    	$timeout(function () {
+	    	window.alert("Inquiry Restored!");
+	    	Inquiry.getArchives();
+	    });
+	    });
+		}else
+		{
+
+		}
+		};
+
 		$scope.archiveInquiry = function (inquiry_id){
 		if (confirm("Are you sure you want to delete this?")){
 		$http({
@@ -1274,6 +1319,25 @@ app.controller('SizeController', function($scope, $http) {
 	    	window.alert("Successfully Deleted!");
 	    	Inquiry.recount();
 	    	Inquiry.refresh();
+	    });
+	    });
+		}else
+		{
+
+		}
+		};
+
+
+		$scope.deleteInquiry = function (inquiry_id){
+		if (confirm("Are you sure you want to delete this?")){
+		$http({
+		     method:"GET",        		
+		     url: '/admin/inquiry/delete_inquiry',
+		     params: {inquiry_id : inquiry_id}
+	    }).then(function(response){
+	    	$timeout(function () {
+	    	window.alert("Successfully Deleted!");
+	    	Inquiry.getArchives();
 	    });
 	    });
 		}else
@@ -1327,19 +1391,42 @@ app.controller('ViewOrderController', ["$location", "$scope", "$http", "$timeout
 
 }]);
 
-app.controller('OrderController', function($scope, $http) {
+app.controller('OrderController', function($scope, $http, $timeout) {
 	var Order = {};
 	Order.init = function() {
 		Order.orderList();
 		Order.datePicker();
-		$http.get("/admin/order/update_seen")
+		Order.getArchives();
+		$http.get("/admin/order/update_seen");
+
 	};
 
+	Order.getArchives = function(){
+		$http.get("/admin/order/get_archives")
+	    .then(function(response) {
+	    	$scope.archives = response.data;
+	    	console.log($scope.archives);
+	    });
+
+	};
 	Order.orderList = function (){
 		$http.get("/admin/order/get_orders")
 		    .then(function(response) {
 		        $scope.orders = response.data;
-		        console.log(response.data);
+		       			 angular.forEach($scope.orders, function(value, key) {
+						  if("Delivered" == value.order_status) {
+						    $scope.orders[key].confirm= "true";
+						  	$scope.orders[key].markdelivered = "true";
+						  }
+						  else if("To Be Delivered" == value.order_status)
+						  {
+						  	$scope.orders[key].confirm= "true";
+						  	$scope.orders[key].markdelivered = "false";
+						  	$scope.orders[key].cancel = "true";
+						  }
+
+						});
+		        console.log($scope.orders);
 		    });
 	};
 
@@ -1353,6 +1440,61 @@ app.controller('OrderController', function($scope, $http) {
 		      $scope.myDate.getDate());
 	};
 	Order.init();
+
+	$scope.archive = function (order_id){
+		if (confirm("Are you sure you want to delete this?")){
+		$http({
+		     method:"GET",        		
+		     url: '/admin/order/archive_order',
+		     params: {order_id : order_id}
+	    }).then(function(response){
+	    	$timeout(function () {
+	    	window.alert("Successfully Deleted!");
+	    	Order.orderList();
+	    });
+	    });
+		}else
+		{
+
+		}
+	};
+
+	$scope.deleteOrder = function (order_id){
+	if (confirm("Are you sure you want to delete this?")){
+	$http({
+	     method:"GET",        		
+	     url: '/admin/order/delete_order',
+	     params: {order_id : order_id}
+    }).then(function(response){
+    	$timeout(function () {
+    	window.alert("Successfully Deleted!");
+    	Order.getArchives();
+    });
+    });
+	}else
+	{
+
+	}
+	};
+
+	$scope.restore = function(order_id){
+	if (confirm("Are you sure you want to restore this?")){
+	$http({
+	     method:"GET",        		
+	     url: '/admin/order/restore_order',
+	     params: {order_id : order_id}
+    }).then(function(response){
+    	$timeout(function () {
+    	window.alert("Order Restored!");
+    	Order.getArchives();
+    });
+    });
+	}else
+	{
+
+	}
+	};
+
 
 	$scope.updateAsDelivered = function(order_id) {
 	    var status = 'Delivered';
@@ -1429,7 +1571,7 @@ app.controller('TestController', function($scope, $http) {
 
 	Test.init();
 	// scope Vars to view
-	$scope.var = "";
+
 	// scope function to view
 	$scope.toTop = function(image){
 		$scope.top = image;
@@ -1488,10 +1630,14 @@ app.controller('DashboardController', function($scope, $http,  $cookies, $cookie
 });
 
 
-app.controller('AccountController', function($scope, $http) {
+app.controller('AccountController', function($scope, $http, $timeout) {
 	var Account = {};
 	Account.init = function() {
 		Account.getAccounts();
+
+		$timeout(function () {
+	       $scope.canChange = true;
+	    }, 1000);
 	};
 
 	Account.getAccounts = function(){
@@ -1505,6 +1651,17 @@ app.controller('AccountController', function($scope, $http) {
 	};
 
 	Account.init();
+	
+	$scope.onText = 'Activated';
+    $scope.offText = 'Deactivated';
+    $scope.isActive = true;
+    $scope.size = 'mini';
+    $scope.animate = true;
+    $scope.radioOff = true;
+    $scope.handleWidth = "auto";
+    $scope.labelWidth = "auto";
+    $scope.inverse = false;
+    $scope.canChange = false;
 	// scope Vars to view
 });
 

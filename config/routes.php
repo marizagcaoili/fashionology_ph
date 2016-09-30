@@ -297,6 +297,18 @@ Router::prefix('Admin', function ($routes) {
 
   $routes->connect('/admin/dashboard/count', ['controller' => 'dashboard', 'action' => 'count']);
 
+  $routes->connect('/admin/dashboard/archive_items', ['controller' => 'dashboard', 'action' => 'archiveItems']);
+
+  $routes->connect('/admin/dashboard/archive_categories', ['controller' => 'dashboard', 'action' => 'archiveCategories']);
+
+  $routes->connect('/admin/dashboard/archive_brands', ['controller' => 'dashboard', 'action' => 'archiveBrands']);
+
+  $routes->connect('/admin/dashboard/archive_sizes', ['controller' => 'dashboard', 'action' => 'archiveSizes']);  
+
+  $routes->connect('/admin/dashboard/archive_inquiries', ['controller' => 'dashboard', 'action' => 'archiveInquiries']);  
+
+  $routes->connect('/admin/dashboard/archive_orders', ['controller' => 'dashboard', 'action' => 'archiveOrders']);   
+
     //Catalog
 
         //ITEM
@@ -323,6 +335,8 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/catalog/update_item', ['controller' => 'catalog', 'action' => 'updateItem']); 
 
   $routes->connect('/admin/catalog/update_item_status', ['controller' => 'catalog', 'action' => 'updateItemStatus']);
+
+  $routes->connect('/admin/catalog/update_item_status1', ['controller' => 'catalog', 'action' => 'updateItemStatus1']);
 
   $routes->connect('/admin/catalog/count_featured', ['controller' => 'catalog', 'action' => 'countFeatured']);
 
@@ -436,6 +450,14 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/order/confirm_order', ['controller' => 'order', 'action' => 'confirmOrder']);    
 
   $routes->connect('/admin/order/update_seen', ['controller' => 'order', 'action' => 'updateSeen']); 
+
+  $routes->connect('/admin/order/archive_order', ['controller' => 'order', 'action' => 'archiveOrder']); 
+
+  $routes->connect('/admin/order/get_archives', ['controller' => 'order', 'action' => 'getArchives']); 
+
+  $routes->connect('/admin/order/restore_order', ['controller' => 'order', 'action' => 'restoreOrder']);
+
+  $routes->connect('/admin/ordery/delete_order', ['controller' => 'order', 'action' => 'deleteOrder']);
         //--/>ORDERS
 
         //LOGIN
@@ -467,6 +489,13 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/inquiry/update_read_status', ['controller' => 'inquiry', 'action' => 'updateReadStatus']);
 
   $routes->connect('/admin/catalog/test', ['controller' => 'inquiry', 'action' => 'test']);
+
+  $routes->connect('/admin/inquiry/get_archives', ['controller' => 'inquiry', 'action' => 'getArchives']);
+
+  $routes->connect('/admin/inquiry/restore_inquiry', ['controller' => 'inquiry', 'action' => 'restoreInquiry']);
+
+  $routes->connect('/admin/inquiry/delete_inquiry', ['controller' => 'inquiry', 'action' => 'deleteInquiry']);
+
 
        //--/>INQUIRY
 

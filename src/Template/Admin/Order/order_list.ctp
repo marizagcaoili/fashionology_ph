@@ -70,10 +70,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <table id="example2" class="table">
                 <thead>
                 <tr>
-                  <th width= "15%">Reference Number</th>
+                  <th width= "10%">Reference Number</th>
                   <th width= "10%">Status</th>
-                  <th width= "20%">Customer Name</th>
-                  <th width= "5%">Total</th>
+                  <th width= "10%">Customer Name</th>
+                  <th width= "10%">Total Amount</th>
+                  <th width= "10%">Call Time</th>
                   <th width= "20%"><center>Comments</center></th>
                   <th width= "20%" colspan= "4">Action</th>
 
@@ -85,16 +86,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{order.order_status}}</td>
                 <td>{{order.account.account_fname}} &nbsp {{order.account.account_lname}}</td>
                 <td>{{order.order_subtotal}}.00</td>
+                <td>{{order.delivery.call_time}}</td>
                 <td></td>
                <!--  <td> <md-datepicker ng-model="myDate" md-placeholder="Enter date"
                           md-min-date=0 md-max-date="maxDate"></md-datepicker></td>  -->
-                <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmModal(order.order_reference_number, order.order_id, order.account.account_email)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name=""><small>CONFIRM</small></button></span></td>
+                <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmModal(order.order_reference_number, order.order_id, order.account.account_email)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name="" ng-disabled="{{order.confirm}}"><small>CONFIRM</small></button></span></td>
 
-                <td><button data-toggle="tooltip" data-placement="bottom" ng-click= "updateAsDelivered(order.order_id)" title="Mark as Delivered" type="submit" class= "btn btn-success btn-flat" name=""><i class="fa fa-check-square-o"> </i></button></td>
+                <td><button data-toggle="tooltip" data-placement="bottom" ng-click= "updateAsDelivered(order.order_id)" title="Mark as Delivered" type="submit" class= "btn btn-success btn-flat" name="" ng-disabled="{{order.markdelivered}}"><i class="fa fa-check-square-o"> </i></button></td>
 
                 <td><a href="/admin/order/view_order?order_id={{order.order_id}}"><button data-toggle="tooltip" data-placement="bottom" title="View Order" type="submit" class= "btn bg-primary btn-flat" name=""><i class="fa fa-eye"> </i></button></a></td> 
 
-                <td><button data-toggle="tooltip" data-placement="bottom" title="Delete Order" type="submit" class= "btn bg-red btn-flat" name="" ng-click= "archive()"><i class="fa fa-trash"> </i></button></td>
+                <td><button data-toggle="tooltip" data-placement="bottom" title="Delete Order" type="submit" class= "btn bg-red btn-flat" name="" ng-click= "archive(order.order_id)" ng-disabled="{{order.cancel}}"><i class="fa fa-trash"> </i></button></td>
                 </tr>
                 </tbody>
 

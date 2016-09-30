@@ -124,10 +124,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.col -->
       </div>
       <!-- /.row -->
-
-      <!-- Page Content -->
-
+    <section class="content-header">
     </section>
+              <!-- Page Content -->
+    </section>
+
+
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

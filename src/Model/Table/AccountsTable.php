@@ -89,5 +89,12 @@ class AccountsTable extends Table
                ->toArray();
  }
 
+ public function getAccounts()
+ {
+   return $this->find()
+               ->contain(['Shippings'])
+               ->toArray();
+ }
+
 
 }

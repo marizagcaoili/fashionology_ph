@@ -28,7 +28,8 @@ class OrdersTable extends Table
   public function getOrders()
   {
     return $this->find()
-    ->contain(['Accounts', 'Shippings'])
+    ->contain(['Accounts', 'Shippings', 'Deliveries'])
+    ->where(['archive_flag'=>0])
     ->toArray();
   }
 
@@ -80,5 +81,36 @@ class OrdersTable extends Table
                     ->where(['seen_flag' => 0])
                     ->execute();
       }
+
+    public function archiveOrder($order_id)
+    {
+        return $this->query()->update()
+                    ->set(['archive_flag' => 1])
+                    ->where(['order_id' => $order_id])
+                    ->execute();
+    }
+
+    public function getArchives()
+    {
+      return $this->find()
+      ->contain(['Accounts', 'Shippings', 'Deliveries'])
+      ->where(['archive_flag'=>1])
+      ->toArray();
+    }
+
+    public function restoreOrder($order_id)
+    {
+        return $this->query()->update()
+                    ->set(['archive_flag' => 0])
+                    ->where(['order_id' => $order_id])
+                    ->execute();
+    }
+
+    public function deleteOrder($order_id)
+    {
+        return $this->query()->delete()
+                    ->where(['order_id' => $order_id])
+                    ->execute();
+    }  
 
 }

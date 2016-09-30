@@ -64,11 +64,11 @@ class ItemsTable extends Table
                     ->toArray();
     }
 
-    public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender, $date)
+    public function insertItem($item_code, $brand, $srp, $item_name, $desc, $categoryid, $gender, $date)
     {
         return $this->query()
                     ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'sizes', 'gender','item_created'])
-                    ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender, 'item_created' => $date])
+                    ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'gender'=>$gender, 'item_created' => $date])
                     ->execute();
     }
 
@@ -136,11 +136,11 @@ class ItemsTable extends Table
                     ->toArray();
     }
 
-    public function updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid, $sizes, $gender)
+    public function updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid,  $gender)
     {
         return $this->query()
                     ->update()
-                    ->set(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender])
+                    ->set(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid,  'gender'=>$gender])
                     ->where(['item_id' => $item_id])
                     ->execute();
     }
@@ -151,6 +151,15 @@ class ItemsTable extends Table
                     ->contain(['Brands', 'Images'])
                     ->where(['featured_flag' => 1])
                     ->toArray();
+    }
+
+    public function updateItemStatus1($item_id, $status)
+    {
+        return $this->query()
+                    ->update()
+                    ->set(['item_status' => $status])
+                    ->where(['item_id' => $item_id])
+                    ->execute();
     }
 
 }
