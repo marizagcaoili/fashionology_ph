@@ -170,6 +170,9 @@ app.controller('CartController',function($scope, $http, $cookies, $cookieStore, 
 
 	}
 
+
+
+
 	// Function scopes
 	$scope.add_quantity = function(item_id, item_quantity, item_price) {
 		if (item_quantity <= 99) {
@@ -249,6 +252,7 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 	CheckoutManager.Init = function() {
 		CheckoutManager.LoadOrderedItems();
 		CheckoutManager.PickupTime();
+		CheckoutManager.LoadOrderedItems();
 	}
 
 	CheckoutManager.LoadOrderedItems = function () {
@@ -273,6 +277,31 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 		if($scope.pickUpTime==null){
 			$scope.pickUpTime='Please select a time of pick up first';
 		}
+	}
+
+
+
+	CheckoutManager.LoadOrderedItems = function () {
+		$http.get("/api/viewToCart")
+		.then(function(response) {
+			var items = [];
+			angular.forEach($rootScope.cart_items, function(item){
+				angular.forEach(response.data, function(data){
+					if(item == data.item_id) {
+						items.push(data);
+					}
+				});
+			});
+
+			$scope.items = items;
+
+		});
+
+
+		if($scope.cart_items<0){
+			alert('Hi');
+		}
+
 	}
 
 	$rootScope.cart_items_count = $rootScope.cart_items.length;	
@@ -385,6 +414,13 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 
 
+	}
+
+
+	$scope.next=function(){
+		$('.sec-a').collapse('hide');
+		$('.sec-b').collapse('show');
+			
 	}
 
 	$scope.setDelivery = function() {
@@ -541,138 +577,138 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 	};
 
 	$scope.viewItem=function(item_id){
-	
-
-      $http({
-      	url:'/view/item',
-      	method:'POST',
-      	headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      	transformRequest: function(obj) {
-      		var str = [];
-      		for(var p in obj)
-      			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-      		return str.join("&");
-      	},
-      	data:{item_id:item_id}
-      }).then(function(response){
-
-      	$scope.itemModal=response.data;
 
 
+		$http({
+			url:'/view/item',
+			method:'POST',
+			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data:{item_id:item_id}
+		}).then(function(response){
 
-      })
-
-
-  }
-
-  ClothingController.getItemsByBrand = function(brand_id){
+			$scope.itemModal=response.data;
 
 
 
+		})
 
-  	var params = $rootScope.addAuthCookies({ mode: 'brand', brand_id : brand_id });
 
-  	$http.get("/admin/catalog/get_items",
-  	{
-  		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  		params : params
-  	}).then(function(response) {
-  		$timeout(function () {
-  			$scope.currentPage = 0;
-  			$scope.items=response.data;
-  			$scope.pageSize = 12;
-  			$scope.pagedItems = [];
+	}
 
-  			$scope.numberOfPages=function(){
-  				return Math.ceil($scope.items.length/$scope.pageSize);                
-  			}
-
-  			$scope.pages=$scope.items.length;
-  		});
-  	});	 
-  };
-
-  ClothingController.getChildCategories = function(category_id){
-  	$scope.childs = [];
-  	$http.get("/admin/catalog/second_category",
-  	{
-  		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  		params : { parent_id : category_id }
-  	}).then(function(response) {
-  		$timeout(function () {
-  			$scope.categories = response.data;
-  			for (var i = $scope.categories.length - 1; i >= 0; i--) {
-
-  				$scope.childs[i]=$scope.categories[i].category_id;
-  			}
-
-  			var json = JSON.stringify($scope.childs);
-
-  			var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
-
-  			$http.get("/admin/catalog/get_items",
-  			{
-  				params : params
-  			})
-  			.then(function(response) {
-  				console.log(response.data);
-  				$scope.currentPage = 0;
-  				$scope.items=response.data;
-  				$scope.pageSize = 12;
-  				$scope.pagedItems = [];
-
-  				$scope.numberOfPages=function(){
-  					return Math.ceil($scope.items.length/$scope.pageSize);                
-  				}
-
-  				$scope.pages=$scope.items.length;
-  			});
-  		});
-  	});
-  }
-
-  ClothingController.items = function(){
-  	var params = $rootScope.addAuthCookies({});
-  	$scope.f_account_id=$cookies.get('f_account_id');
-
-  	if($scope.f_account_id>1){
-  		$('#userDetails').show();
-  		$('.logmein').hide();
-  		$('.myaccount').hide();
-  	}
-
-  	if($scope.f_account_id<1){
-  		$('#userDetails').hide();
-  		$('.logmein').show();
-  	}
-
-  	$http.get("/admin/catalog/get_items",
-  	{
-  		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  		params : params
-  	})
-  	.then(function(response) {
-  		$scope.currentPage = 0;
-  		$scope.items=response.data;
-  		$scope.pageSize = 12;
-  		$scope.pagedItems = [];
-
-  		$scope.numberOfPages=function(){
-  			return Math.ceil($scope.items.length/$scope.pageSize);
-  		}
-
-  		$scope.pages=$scope.items.length;
-  	});
-  }
+	ClothingController.getItemsByBrand = function(brand_id){
 
 
 
 
-  $scope.addtowish = function($event,item_id) {
-  	var user_id = $scope.userId = $cookies.get('f_account_id');
+		var params = $rootScope.addAuthCookies({ mode: 'brand', brand_id : brand_id });
 
-  	if (user_id>1) {
-  		if ($($event.target).attr('class') == 'fa fa-heart-o') {
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : params
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.currentPage = 0;
+				$scope.items=response.data;
+				$scope.pageSize = 12;
+				$scope.pagedItems = [];
+
+				$scope.numberOfPages=function(){
+					return Math.ceil($scope.items.length/$scope.pageSize);                
+				}
+
+				$scope.pages=$scope.items.length;
+			});
+		});	 
+	};
+
+	ClothingController.getChildCategories = function(category_id){
+		$scope.childs = [];
+		$http.get("/admin/catalog/second_category",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { parent_id : category_id }
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.categories = response.data;
+				for (var i = $scope.categories.length - 1; i >= 0; i--) {
+
+					$scope.childs[i]=$scope.categories[i].category_id;
+				}
+
+				var json = JSON.stringify($scope.childs);
+
+				var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
+
+				$http.get("/admin/catalog/get_items",
+				{
+					params : params
+				})
+				.then(function(response) {
+					console.log(response.data);
+					$scope.currentPage = 0;
+					$scope.items=response.data;
+					$scope.pageSize = 12;
+					$scope.pagedItems = [];
+
+					$scope.numberOfPages=function(){
+						return Math.ceil($scope.items.length/$scope.pageSize);                
+					}
+
+					$scope.pages=$scope.items.length;
+				});
+			});
+		});
+	}
+
+	ClothingController.items = function(){
+		var params = $rootScope.addAuthCookies({});
+		$scope.f_account_id=$cookies.get('f_account_id');
+
+		if($scope.f_account_id>1){
+			$('#userDetails').show();
+			$('.logmein').hide();
+			$('.myaccount').hide();
+		}
+
+		if($scope.f_account_id<1){
+			$('#userDetails').hide();
+			$('.logmein').show();
+		}
+
+		$http.get("/admin/catalog/get_items",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : params
+		})
+		.then(function(response) {
+			$scope.currentPage = 0;
+			$scope.items=response.data;
+			$scope.pageSize = 12;
+			$scope.pagedItems = [];
+
+			$scope.numberOfPages=function(){
+				return Math.ceil($scope.items.length/$scope.pageSize);
+			}
+
+			$scope.pages=$scope.items.length;
+		});
+	}
+
+
+
+
+	$scope.addtowish = function($event,item_id) {
+		var user_id = $scope.userId = $cookies.get('f_account_id');
+
+		if (user_id>1) {
+			if ($($event.target).attr('class') == 'fa fa-heart-o') {
 		 		// API CALL to save wish list
 		 		$($event.target).attr('class', 'fa fa-heart');	
 
@@ -1073,7 +1109,7 @@ app.controller('testController', function($scope, $http, $cookies, $cookieStore,
 	//controllers for ngclick
 
 	$scope.checkout = function(){
-		location.href = "/checkout";
+		location.href = "/order/process";
 	}
 
 	$scope.viewcart = function(){

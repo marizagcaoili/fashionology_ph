@@ -69,8 +69,6 @@ class ItemsTable extends Table
         return $this->query()
         ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'gender','item_created'])
         ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid,'gender'=>$gender, 'item_created' => $date])
-        ->execute();
-    }
 
     public function getItemListByGender($gender)
     {
@@ -136,9 +134,10 @@ class ItemsTable extends Table
         ->toArray();
     }
 
-    public function updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid,  $gender)
+    public function updateItem($item_id, $item_code, $brand, $srp, $item_name, $desc, $categoryid, $gender)
     {
         return $this->query()
+
                     ->update()
                     ->set(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid,  'gender'=>$gender])
                     ->where(['item_id' => $item_id])
@@ -160,7 +159,7 @@ class ItemsTable extends Table
                     ->set(['item_status' => $status])
                     ->where(['item_id' => $item_id])
                     ->execute();
-    }
+}
     public function getItemModal($item_id)
     {
        return $this->find()

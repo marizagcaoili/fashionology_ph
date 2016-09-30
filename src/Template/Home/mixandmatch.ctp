@@ -90,6 +90,7 @@
 						</div>
 
 
+
 					</div>
 
 				</div>
@@ -110,15 +111,14 @@
 								<div class='btn-gback'>
 									<select style='margin:0 auto;width:100%;font-family: Moon;font-size: 18px;border-radius: 0px;'>
 										<option>CATEGORIZED BY (Parent)</option>
-
-
-						<div class='mixnmb-items'>
-							<ul>
-								<li >
-
 									</select>
 									<select style='margin:0 auto;margin-top:6px;width:100%;font-family: Moon;font-size: 18px;border-radius: 0px;'>
 										<option>CATEGORIZED BY (Child)</option>
+						<div class='mixnmb-items'>
+							<ul>
+								<li >
+									<div class="drag-object" ng-repeat="obj in draggableObjects">
+
 
 									</select>
 
