@@ -186,7 +186,7 @@
 				<div class='branch-wrap'>
 
 					<div class='branch-name'>
-						<p>Molino Branch</p>
+						<p>Molino Branch <i class="fa fa-map-marker" aria-hidden="true"></i></p>
 					</div>
 
 					<div class='branch-address'>
@@ -238,7 +238,7 @@
 					<div class='branch-wrap'>
 
 						<div class='branch-name'>
-							<p>Bacoor Branch</p>
+							<p>Bacoor Branch <i class="fa fa-map-marker" aria-hidden="true"></i></p>
 						</div>
 
 						<div class='branch-address'>
@@ -287,7 +287,7 @@
 						<div class='branch-wrap'>
 
 							<div class='branch-name'>
-								<p>Alabang Branch</p>
+								<p>Alabang Branch <i class="fa fa-map-marker" aria-hidden="true"></i></p>
 							</div>
 
 							<div class='branch-address'>
@@ -336,7 +336,7 @@
 							<div class='branch-wrap'>
 
 								<div class='branch-name'>
-									<p>Imus Branch</p>
+									<p>Imus Branch <i class="fa fa-map-marker" aria-hidden="true"></i></p>
 								</div>
 
 								<div class='branch-address'>
@@ -381,7 +381,7 @@
 
 
 
-					
+
 					<?php include LAYOUT_DIR . 'front-login.ctp'; ?>
 
 				</body>

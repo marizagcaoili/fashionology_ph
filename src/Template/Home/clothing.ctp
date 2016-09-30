@@ -63,16 +63,16 @@
             <img src="/front/public/img/logo-black.png" class="logo" style='width:210px;'>
             <nav class="nav-a">
                <ul>
-                  <a target="_self" style="color:#a8a8a8;" href="/">
+                  <a target="_self"href="/">
                      <li>home </li>
                   </a>
-                  <a target="_self" class='revealcategory' href='/clothing'>
+                  <a target="_self"  style="color:#a8a8a8;"  class='revealcategory' href='/clothing'>
                      <li>clothing <i class="fa fa-angle-down category-show" aria-hidden="true"></i></li>
                   </a>
                   <a target="_self" href="/load/canvas">
                      <li>mix n match</li>
                   </a>
-                  <a target="_self" href="#">
+                  <a target="_self" href="/location">
                      <li>contact</li>
                   </a>
                </ul>
@@ -179,7 +179,7 @@
                <ul class="product-ul-list">
                   <li class='this-list' ng-repeat="item in items | startFrom:currentPage*pageSize | limitTo:pageSize"
                   >
-                  <a target="_self" href='/clothing/item?item_id={{item.item_id}}'>
+                  <a ng-click='viewItem(item.item_id)' class='' data-toggle="modal" data-target="#itemModal">
                      <div class="product-div"
                      ng-class='class' >
                      <figure class="prod-figure" id="zoom_05"><img src="{{item.image.file_key}}"></figure>
@@ -225,16 +225,6 @@
 </body>
 <script src='/front/public/js/scripts-modal.js'></script>
 
-<script>
-
-jQuery.noConflict();
-   $(document).ready(function(){
-
-      $('#itemModal').modal('toggle');
-
-
-   })
-   </script>
 
 <!--   Core JS Files   -->
 <script src="/front/assets/js/jquery.min.js" type="text/javascript"></script>

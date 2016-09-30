@@ -69,6 +69,14 @@ Router::scope('/', function (RouteBuilder $routes) {
 
     $routes->connect('/user/account/confirmed', ['controller' => 'login', 'action' => 'updateUser']);
 
+    //terms and conditions
+    $routes->connect('/terms/conditions', ['controller' => 'home', 'action' => 'termsandconditions']);
+
+    //view modal when clicked
+
+
+    $routes->connect('/view/item', ['controller' => 'api', 'action' => 'modalfront']);
+
 
 //order cancellation
 
@@ -91,7 +99,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/user/dashboard/updateAccount', ['controller' => 'account', 'action' => 'updateAccount']);
 
 
-  
+
     
     //order emailing
     // $routes->connect('/order/email', ['controller' => 'order', 'action' => 'emailNotify']);

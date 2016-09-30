@@ -67,20 +67,20 @@ class HomeController extends AppController
     }
 
     public function checkout(){
-        // Authenticated user
-        $f_token = $this->request->query('f_token');
-        $f_account_id = $this->request->query('f_account_id');
+        // // Authenticated user
+        // $f_token = $this->request->query('f_token');
+        // $f_account_id = $this->request->query('f_account_id');
 
-        if (isset($f_token) && isset($f_account_id)) {
-            $sessionDatas = TableRegistry::get('Sessions');
-            $session = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
+        // if (isset($f_token) && isset($f_account_id)) {
+        //     $sessionDatas = TableRegistry::get('Sessions');
+        //     $session = $sessionDatas->retrieveSessionData($f_account_id,'front',$f_token);
 
-            if (!sizeof($session)) {
-                $this->redirect("/");
-            }
-        } else {
-            $this->redirect("/");
-        }
+        //     if (!sizeof($session)) {
+        //         $this->redirect("/");
+        //     }
+        // } else {
+        //     $this->redirect("/");
+        // }
 
 
         $this->render('checkout');
@@ -132,6 +132,10 @@ class HomeController extends AppController
 
     public function location(){
         $this->render('location');
+    }
+
+    public function termsandconditions(){
+        $this->render('tandc');
     }
 
 }

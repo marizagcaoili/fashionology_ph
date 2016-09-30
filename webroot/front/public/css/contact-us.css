@@ -64,9 +64,11 @@
 .header-locator {
   position: relative;
   top: 54px;
+  border-bottom: 1px solid #cdcdcd;
+  padding: 8px;
   width: 80%;
   margin: 0 auto;
-  height: 80px; }
+  height: 108px; }
   .header-locator p {
     font-size: 32px;
     font-family: Moon; }
