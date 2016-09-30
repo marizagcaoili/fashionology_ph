@@ -803,6 +803,20 @@ class CatalogController extends Controller
         exit();
     }
 
+    public function getContent()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $content = TableRegistry::get('Contents');
+        //$add = $brand->query();
+
+        $result = $content->getContent();
+       
+        echo json_encode($result);      
+        exit();
+    }
+
     //pages/>
 
     //display

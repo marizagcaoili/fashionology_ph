@@ -2075,13 +2075,16 @@ app.controller('InquiryController', function($scope, $http, $cookies, $cookieSto
 	var InquiryController={};
 
 	InquiryController.init=function(){
+		Inquiry.content();
 
 	}
 
 	InquiryController.init();
 
 
-
+	Inquiry.content =function(){
+		
+	};
 
 	$scope.emailInquiry = function() {
 		var email = $('#email').val();

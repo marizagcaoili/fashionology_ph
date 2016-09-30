@@ -68,7 +68,7 @@ class ItemsTable extends Table
     {
         return $this->query()
         ->insert(['item_code', 'brand_id', 'item_srp', 'item_name', 'item_description', 'category_id', 'gender','item_created'])
-        ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid, 'sizes'=>$sizes, 'gender'=>$gender, 'item_created' => $date])
+        ->values(['item_code'=>$item_code, 'brand_id'=>$brand,'item_srp'=>$srp, 'item_name'=>$item_name, 'item_description'=>$desc, 'category_id'=>$categoryid,'gender'=>$gender, 'item_created' => $date])
         ->execute();
     }
 

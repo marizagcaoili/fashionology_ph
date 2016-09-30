@@ -456,7 +456,7 @@ app.controller('AddItemController', ['$scope', 'Upload', '$timeout', '$http', fu
 		var brand = $('#brand').val();
 		var srp = $('#srp').val();
 		var item_name = $('#itemName').val();
-		var desc = $('#summernote').val();
+		var desc = $scope.description;
 		var gender = $scope.selectedGender.gender_id;
 
 		if (item_code == "" || category_id == "" || brand== "?" || srp == "" || item_name == "" || desc =="" ||  $('#picFile').val() == undefined || $('#picFile').val() == "" || $('#image_desc').val() == ""){
@@ -808,7 +808,7 @@ app.controller('EditItemController', ["$timeout", "Upload", "$location", "$scope
 
 
 			  	$scope.item_code = $scope.code_item.replace($scope.brand_prefix,"");
-				$('#summernote').summernote('code', $scope.details.item_description);
+				$scope.description = response.data[0].item_description;
 			});
 		});
 	};

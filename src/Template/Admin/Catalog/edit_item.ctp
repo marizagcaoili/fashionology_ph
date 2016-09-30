@@ -155,7 +155,7 @@
                                   
                                   <label for="item-name" class="col-xs-2 col-form-label">Item Description</label>   
                                     <div class="col-xs-10">
-                                     <textarea name="description" id="summernote"></textarea>
+                                         <textarea ng-model="description" class="form-control" rows="5"></textarea>
                                     </div>
                                 </div>
 
