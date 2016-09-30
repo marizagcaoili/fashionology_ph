@@ -113,9 +113,10 @@ public function addressAdd()
 
   $address=TableRegistry::get('Shippings');
 
-  $address->addressInsert($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal);
+  $result = $address->addressInsert($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal);
 
-  // echo json_encode($account_id);
+ $id = $result->lastInsertId('Shippings');
+ echo json_encode($id);
 
   exit();
 
@@ -175,12 +176,6 @@ public function placeDeliver()
     This is the selected time of your call  <b>'.$call.'</b>
 
 
-    <h1>SUMMARY OF YOUR ORDERS</h1>
-    <table>
-      <tr>
-        <td>'.$item_id.'</td>
-      </tr>
-    </table>
   </body>
 
   ';
@@ -366,6 +361,37 @@ public function orderCancel(){
 
 }
 
+public function addressAnother()  
+{
+    // $address = $this->request->data('account_address');
+  // $city = $this->request->data('account_city');
+  // $state = $this->request->data('account_state');
+  // $postal = $this->request->data('account_postal');
+
+  $this->autoRender=false;
+  header('Content-Type: application/json');
+
+  $account_id=$this->request->data('account_id');
+  $account_fname=$this->request->data('account_fname');
+  $account_lname=$this->request->data('account_lname');
+  $account_address=$this->request->data('account_address');
+  $account_city=$this->request->data('account_city');
+  $account_postal=$this->request->data('account_zipcode');
+  $landmark = $this->request->data('landmark');
+  $contact = $this->request->data('contact');
+
+
+
+  $address=TableRegistry::get('Shippings');
+
+  $result = $address->addressAnother($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal, $landmark, $contact);
+
+ $id = $result->lastInsertId('Shippings');
+ echo json_encode($id);
+
+  exit();
+
+}
 
 
 }

@@ -27,6 +27,7 @@
    <?php include LAYOUT_DIR . 'front-category.ctp'; ?>
    <script>
  
+ jQuery.noConflict();
       $(document).ready(function($){
        
        $('.category').hide();
@@ -57,6 +58,9 @@
 
 
    </script>
+
+
+
    <div class='prod-index-page'>
       <div>
          <header class="masthead">

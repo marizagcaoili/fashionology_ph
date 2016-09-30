@@ -69,7 +69,7 @@
                                        <div style='width:420px;' class='delivery'>
                                           <p>{{item.item.item_description}}</p>
                                           <div class='del-rem'>
-                                          <p  ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'><i class='fa fa-trash-o'></i></p>
+                                          <p  ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'><i class=' fa fa-trash-o'></i></p>
                                           </div>
                                        </div>
                                     </div>
@@ -96,6 +96,7 @@
                               <p class='total-p' style='font-weight:bold;font-size: 18px;'>Grand Total <span>PHP {{total}}.00</span></p> -->
                         </div>
                      </div>
+                     
                      <div class='set-button'>
                         <a class='btn-secure' ng-show="{{(f_account_id != null || f_account_id > 0) && cart_items_count > 0}}" href="/checkout?f_token={{authCookies.f_token}}&f_account_id={{authCookies.f_account_id}}">SECURE CHECKOUT</a>
 

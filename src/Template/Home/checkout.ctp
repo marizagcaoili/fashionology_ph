@@ -28,8 +28,9 @@
 
 
          <div style='float:right;width:70%;height:40px;margin-top:-44px;margin-right:90px;'>
-            <div style='width:70%;height:100%;font-size: 20px;font-family: Coves;text-transform: lowercase;'>
-               <i class="fa fa-user" aria-hidden="true"></i> Logged in as: <b>not logged in</b>
+            <div style='width:70%;height:100%;font-size: 20px;font-family: Coves;text-transform: lowercase;' >
+               <i class="fa fa-user" aria-hidden="true"></i> Logged in as: <b  ng-show="{{f_account_id == null}}">not logged in</b>
+               <b  ng-show="{{f_account_id != null}}">{{userInfos.account_username}}</b>
                &nbsp; &nbsp;<a href='/' style=''>back to store <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
             </div>
 
@@ -51,9 +52,9 @@
             <div class='loaded-flex'>
                <div class='loaded-a'>
 
-                  <ul>
-                     <li ng-repeat='item in items'>
-                        <div class='item-wrap'>
+                  <ul ng-init='total=0'>
+                     <li ng-repeat='item in items track by $index'>
+                        <div class='item-wrap' style='border-color:#cdcdcd;'>
                            <div class='item-wrap-flex'>
 
                               <div class='item-ab'>
@@ -62,8 +63,9 @@
 
                               <div class='item-ac'>
                                     <div class='item-details'>
-                                    <p>{{item.item.item_name}} <b style='float:right;'> x 1 = PHP 1200.00</b></p>
-                                       <p style='height: 60px;'>{{item.item.item_description}}</p>
+                                    <p>{{item.item.item_name}} <b style='float:right;'> x {{cart_items_quantity[$index]}} = {{item.item.item_srp * cart_items_quantity[$index]}}.00</b></p>
+                                    <p style='font-size: 18px;margin:0;'>PHP {{item.item.item_srp}}.00</p>
+                                       <p style='height: 66px;'>{{item.item.item_description}}</p>
 
                                           <div class='mod-view'  style='position:relative;left: -140px;top:12px;'>
                                              <div class='mod-view-det'>
@@ -90,7 +92,7 @@
                                                 <p> <span class='det-align' style='left:34px;'></span></p
                                              </div>
 
-                                             <button style='position: relative;top:-34px;left:238px;font-family: Moon;border:1px solid;background: transparent;padding: 3px;'>Remove</button>
+                                             <button style='position: relative;top:-34px;left:238px;font-family: Moon;border:1px solid;background: transparent;padding: 3px;' ng-click='removeCart(item.item_id,cart_items_quantity[$index], item.item.item_srp)'>Remove</button>
                                           </div>
                                        </div>
                                     </div>
@@ -107,12 +109,21 @@
                   <div class='load-cash'>
                      <p style='text-align: right;font-family: Moon;padding-right: 8px;font-size: 12px;top:60px;position: relative;'>Note: Delivery fee is offered for free since the ordering transanction in line with delivery is for cavite only.</p>
 
-                     <p style='float:right;padding-right: 8px;position: relative;top:170px;font-size:20px;font-family: Moon;'>VAT = 12%</p>
+
+                     <p style='position:relative;padding-right:10px;top:170px;text-align:right;font-size:20px;font-family: Moon;'>SUBTOTAL = {{total-total *0.12}}</p>
+
+                     <p style='text-align:right;padding-right:10px;position: relative;top:170px;font-size:20px;font-family: Moon;'>VAT = {{total*0.12}}</p>
                   </div>
                   <div class='load-total'>
-                     <p>TOTAL: PHP 120.00</p>
+                     <p >GRAND TOTAL: PHP {{total}}</p>
 
-                     <button ng-click='next()' style='float:right;margin-right: 10px;font-family: Moon;font-size:20px;padding: 4px 24px;margin-top: 16px;font-weight: bold;border:1px solid;background: transparent;'>Next <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+
+ 
+                     <button ng-click='next()'   style='float:right;margin-right: 10px;font-family: Moon;font-size:20px;padding: 4px 24px;margin-top: 16px;font-weight: bold;border:1px solid;background: transparent;'>Checkout <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+
+
+
+                       
                   </div>
                </div>
             </div>
@@ -132,9 +143,10 @@
       </style>
       <div class='billing-info'>
          <div >
-            <div class='title-addrs'>
-               <!-- <p>Billing Information</p>-->
-            </div>
+           <!--  <div class='title-addrs'>
+                <p>Billing Information</p>
+            </div> -->
+
             <div class='bill-flex'>
                <div class='each-bill-flex'>
                   <div class='menu-bar'>
@@ -144,31 +156,39 @@
                      <div class='info-fields' >
                         <div class='field-a'>
                            <p>First Name</p>
-                           <p style='text-transform: capitalize;'>Joe Arlo </p>
+                           <input type="hidden" id="tempid" value='{{userInfos.shipping.shipping_id}}'>
+                           <input type="hidden" id="fname2" value='{{userInfos.shipping.shipping_fname}}'>
+                           <input type="hidden" id="lname2" value={{userInfos.shipping.shipping_lname}}>
+                           <input type="hidden" id="contact2" value="{{userInfos.shipping.shipping_contact}}">
+                           <input type="hidden" id="landmark2" value={{userInfos.shipping.shipping_landmark}}>
+                           <input type="hidden" id="city2" value={{userInfos.shipping.shipping_city}}>
+                           <input type="hidden" id="zipcode2" value="{{userInfos.shipping.shipping_zipcode}}">
+                           <input type="hidden" id="address2" value="{{userInfos.shipping.shipping_address}}">
+                           <p style='text-transform: capitalize;'>{{userInfos.shipping.shipping_fname}} </p>
                         </div>
                         <div class='field-a'>
                            <p>Last Name</p>
-                           <p style='text-transform: capitalize;'>Baltazar </p>
+                           <p style='text-transform: capitalize;'>{{userInfos.shipping.shipping_lname}} </p>
                         </div>
                      </div>
                      <div class='info-fields'>
                         <div class='field-a'>
                            <p>Contact No.</p>
-                           <p>09223660550 </p>
+                           <p>{{userInfos.shipping.shipping_contact}}</p>
                         </div>
                         <div class='field-a'>
                            <p>Landmark</p>
-                           <p>Red Gate</p>
+                           <p>{{userInfos.shipping.shipping_landmark}}</p>
                         </div>
                      </div>
                      <div class='info-fields'>
                         <div class='field-a'>
                            <p>City</p>
-                           <p style='text-transform: capitalize;'>Makati</p>
+                           <p style='text-transform: capitalize;'>{{userInfos.shipping.shipping_city}}</p>
                         </div>
                         <div class='field-a'>
                            <p>Postal Code</p>
-                           <p>1235</p>
+                           <p>{{userInfos.shipping.shipping_zipcode}}</p>
                         </div>
                      </div>
                      <div class='info-fields' >
@@ -182,7 +202,8 @@
 
 
                   <div class='add-new'>
-                     <a style='font-family: Moon;position: relative;top:40px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">Use another Address</a>
+                     <a style='font-family: Moon;position: relative;top:20px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">Use another Address</a>
+                     <a style='font-family: Moon;position: relative;top:20px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" ng-click="setPrimary()">Set to Primary Address</a>
                   </div>
 
 
@@ -190,18 +211,22 @@
 
                </div>
             </div>
+
             <button class='proceed btn-bill' ng-click='delivery()' >Proceed <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+
+
+
+
             <div>
             </div>
          </div>
       </div>
-      <!--end class-->
 
 
    </div>
    <div style='border-top:solid 1px #dcdcdc;' >
       <div class='checkout-header'>
-         <p style='color:#111;font-family: Moon;'><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span></span> mode of payment</p>
+         <p style='color:#111;font-family: Moon;'><i class="fa fa-credit-card-alt" aria-hidden="true"></i><span></span> Cash on Delivery</p>
       </div>
       <div class='sec-c collapse in' id='method'>
          <div class='select-grp'>
@@ -232,7 +257,7 @@
    </div>
    <div style='border-top:solid 1px #dcdcdc;'>
       
-      <div class='sec-d collapse in' style='display: none;' id='reviewplace'  ng-init='total=0'>
+      <div class='sec-d collapse in' style='display: none;' id='reviewplace'  >
          <div class='flex-set'>
             <div class='left-flex'>
                <ul>
@@ -258,7 +283,7 @@
                         <div class='total-direction'>
                            <div class='total-content-direction'>
                               <p style='font-weight:bold;display: none;'>No. of Items Placed</p>
-                              <!--     <p style='font-weight:bold;'>shipping fee</p> -->
+                              <!--     <p style='font-weight:bold;'>shipping fee</p> 
                               <!--       <p style='font-weight:bold;'>VOUCHER</p> -->
                            </div>
                         </div>
@@ -274,7 +299,7 @@
                   <div class='total-this-menu' style='height:46px;'>
                      <div class='total-this-flex-menu'>
                         <div class='total-direction'>
-                           <p class='total-grand-direction'>Total</p>
+                           <p class='total-grand-direction'>Grand Total</p>
                         </div>
                         <div class='total-this-direction'>
                            <p class='total-grandp-direct'>PHP {{total}}.00</p>
@@ -371,7 +396,7 @@
 
                            </div>
                            <div class='setdatewrap-a' style='margin-top: -44px;'>
-                              <p style='font-family: Coves;font-size: 18px;'>Once your order was already confirmed. You will receive an ongoing call from our Customer Support. For further notice, you might wanted to check your Delivery Status under "Track my Order" module in User Dashboard!. <br>
+                              <p style='font-family: Coves;font-size: 18px;'>Once your order has been placed. You will receive an ongoing call from our Customer Support. For further notice, you might wanted to check your Delivery Status under "Track my Order" module in User Dashboard!. <br>
                                  Thank you and Happy Shopping!</p>
 
                                  <p style='position: relative;top:20px;font-weight: bold;'>Please choose the best time to call:</p>
@@ -382,7 +407,7 @@
 
                                     <select id='timetoCall' style='width:490px;font-family: Moon;padding: 4px;text-align:center;font-weight:bold;font-size:20px;'>
                                        <option id='timetoCall'>01:00 PM - 03:00 PM</option>
-                                       <option id='timetoCall'>03:00 PM - 05:50 PM</option>
+                                       <option id='timetoCall'>03:00 PM - 05:00 PM</option>
                                        <option id='timetoCall'>05:00 PM - 07:00 PM</option>
                                     </select>
 
@@ -402,6 +427,9 @@
             </div>
             <!--  End Modal -->
          </main>
+            <?php include LAYOUT_DIR . 'front-login.ctp'; ?>
+   
+
       </body>
       <script>
          $("[name='my-checkbox']").bootstrapSwitch();

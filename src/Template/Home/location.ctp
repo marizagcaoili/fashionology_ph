@@ -94,7 +94,7 @@
 		<nav class="nav-b" >
 			<ul>
 				<?php include LAYOUT_DIR . 'user_actions_black.ctp'; ?>
-				<a class='cart'href="/cart" style='color:#111;'>
+				<a class='cart'href="/checkout" style='color:#111;'>
 					<li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li>
 				</a>
 				<a class="count-cart" style="position:absolute;

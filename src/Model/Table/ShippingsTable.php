@@ -51,4 +51,19 @@ class ShippingsTable extends Table
   }
 
 
+  public function addressAnother($account_id,$account_fname,$account_lname,$account_address,$account_city,$account_postal, $landmark, $contact)
+  {
+    return $this->query()
+    ->insert(['account_id','shipping_fname','shipping_lname','shipping_address','shipping_city','shipping_zipcode', 'shipping_landmark', 'shipping_contact'])
+    ->values(['account_id'=>$account_id,'shipping_fname'=>$account_fname,'shipping_lname'=>$account_lname,
+     'shipping_address'=>$account_address,'shipping_city'=>$account_city,'shipping_zipcode'=>$account_postal, 'shipping_landmark'=> $landmark, 'shipping_contact' => $contact])
+    ->execute();
+  }
+
+  public function fetchBilling($shipping_id){
+    return $this->find()
+                ->where(['shipping_id'=>$shipping_id])
+                ->toArray();
+  }
+
 }

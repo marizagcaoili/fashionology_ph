@@ -66,4 +66,28 @@ class BillingController extends AppController
 
   }
 
+  public function shippingDetail(){
+
+
+
+    $this->autoRender = false;
+    header('Content-Type: application/json');
+
+    $shipping_id= $this->request->query('shipping_id');
+
+    $shipData=TableRegistry::get('Shippings');
+
+
+    $result = $shipData->fetchBilling($shipping_id);
+
+
+
+    echo json_encode($result);
+
+
+    exit();   
+
+
+  }
+
 }

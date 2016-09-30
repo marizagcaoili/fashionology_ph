@@ -25,7 +25,7 @@ app.filter('startFrom', function() {
 });
 
 // Initialize rootScope
-angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $http) {
+angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $timeout, $http) {
 	var RootManager = {};
 
 	RootManager.Init = function() {
@@ -63,8 +63,10 @@ angular.module('SampleApp').run(function($rootScope, $cookies, $cookieStore, $ht
 				},
 				data : 	{f_account_id : $rootScope.f_account_id} // Data to be passed to API
 			}).then(function(response){
-				$rootScope.userInfos = response.data[0];
-				$rootScope.user = response.data[0].account_fname;
+				$timeout(function () {
+					$rootScope.userInfos = response.data[0];
+					$rootScope.user = response.data[0].account_fname;
+				});
 			});
 		}
 	};
@@ -252,8 +254,21 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 	CheckoutManager.Init = function() {
 		CheckoutManager.LoadOrderedItems();
 		CheckoutManager.PickupTime();
-		CheckoutManager.LoadOrderedItems();
+
+		$scope.f_account_id=$cookies.get('f_account_id');
+
 	}
+
+	CheckoutManager.getFields = function(){
+		$scope.tempid = $('#tempid').val();
+		$scope.tempfname = $('#fname2').val();
+		$scope.templname = $('#lname2').val();
+		$scope.tempcontact = $('#contact2').val();
+		$scope.templandmark = $('#landmark2').val();
+		$scope.tempcity = $('#city2').val();
+		$scope.tempzipcode = $('#zipcode2').val();
+		$scope.tempaddress = $('#address2').val();
+	};
 
 	CheckoutManager.LoadOrderedItems = function () {
 		$http.get("/api/viewToCart")
@@ -299,12 +314,148 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 
 		if($scope.cart_items<0){
-			alert('Hi');
+			
 		}
 
 	}
 
-	$rootScope.cart_items_count = $rootScope.cart_items.length;	
+
+
+
+	$scope.add_quantity = function(item_id, item_quantity, item_price) {
+		if (item_quantity <= 99) {
+			angular.forEach($rootScope.cart_items, function(value, key) {
+				if (item_id === value) {
+					$rootScope.cart_items_quantity[key] = (item_quantity * 1) + 1;
+					$cookies.put('cart_items_quantity', JSON.stringify($rootScope.cart_items_quantity));
+					$scope.total += item_price; 
+				}
+			});
+		}
+	}
+
+	$scope.subtract_quantity = function(item_id, item_quantity, item_price){
+		if (item_quantity > 1) {
+			angular.forEach($rootScope.cart_items, function(value, key) {
+				if (item_id === value) {
+					$rootScope.cart_items_quantity[key] = (item_quantity * 1) - 1;
+					$cookies.put('cart_items_quantity', JSON.stringify($rootScope.cart_items_quantity));
+					$scope.total -= item_price;				
+				}
+			});
+		}
+	}
+
+	$scope.useAnother = function (){
+		var lname = $('#lname1').val();
+		var fname = $('#fname1').val();
+		var contact = $('#contact1').val();
+		var landmark =$('#landmark1').val();
+		var city =$('#city1').val();
+		var postal =$('#postal1').val();
+		var address =$('#address1').val();
+
+		$http({
+			url:'/api/address_another',
+			method:'POST',
+			headers:{'Content-Type':'application/x-www-form-urlencoded'},
+			transformRequest: function(obj) {
+				var str = [];
+				for(var p in obj)
+					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				return str.join("&");
+			},
+			data:{account_id:$scope.f_account_id,account_fname:fname,account_lname:lname,account_address:address,account_city:city,account_zipcode:postal, landmark: landmark, contact:contact}
+		}).then(function(response){
+
+			$scope.shipping_id= response.data;
+
+			$cookies.put('shipping_id', $scope.shipping_id);
+
+			$scope.userInfos.shipping.shipping_lname= lname;
+			$scope.userInfos.shipping.shipping_fname= fname;
+			$scope.userInfos.shipping.shipping_contact= contact;
+			$scope.userInfos.shipping.shipping_landmark= landmark;
+			$scope.userInfos.shipping.shipping_city= city;
+			$scope.userInfos.shipping.shipping_zipcode= postal;
+			$scope.userInfos.shipping.shipping_address= address;
+
+			console.log(lname);
+
+
+		})
+		
+	}
+
+	$scope.setPrimary = function(){
+
+		var primary=$scope.shipping_id= $scope.tempid;
+
+		$cookies.put('shipping_id', primary);
+
+
+
+		$scope.userInfos.shipping.shipping_lname=  $scope.templname;
+		$scope.userInfos.shipping.shipping_fname= $scope.tempfname;
+		$scope.userInfos.shipping.shipping_contact=  $scope.tempcontact;
+		$scope.userInfos.shipping.shipping_landmark= $scope.templandmark;
+		$scope.userInfos.shipping.shipping_city=  $scope.tempcity;
+		$scope.userInfos.shipping.shipping_zipcode=  $scope.tempzipcode;
+		$scope.userInfos.shipping.shipping_address=  $scope.tempaddress;
+
+		console.log($scope.tempid);
+	}
+
+	$scope.removeCart = function(item_id, cart_items_quantity, item_price) {
+
+		alert('Item Deleted!');
+		var cartQuantity = JSON.parse($cookies.get('cart_items_quantity')),
+		cartItems = JSON.parse($cookies.get('cart_items'));
+
+		var index = cartItems.indexOf(item_id);
+
+		if (index >- 1) {
+			cartQuantity.splice(index, 1);
+			cartItems.splice(index, 1);
+
+			$cookies.put('cart_items_quantity', JSON.stringify(cartQuantity));		
+			$cookies.put('cart_items', JSON.stringify(cartItems));
+
+			if (cartItems.length > 0) {
+				$http.get("/api/viewToCart")
+				.then(function(response) {
+					var items = [];
+					angular.forEach($rootScope.cart_items, function(item){
+						angular.forEach(response.data, function(data){
+							if(item == data.item_id) {
+								items.push(data);
+							}
+						});
+					});
+
+					$scope.items = items;
+					$scope.total -= cart_items_quantity * item_price;
+				});
+			} else {
+				$scope.items = [];
+				$scope.total = 0;
+				$('.btn-secure').remove();
+			}
+			
+			// Update root scopes
+			$rootScope.cart_items_quantity = cartQuantity;
+			$rootScope.cart_items = cartItems;
+			$rootScope.cart_items_count = $rootScope.cart_items.length;	
+		}
+	}
+
+
+	if($rootScope.cart_items_count>0){
+
+
+		$rootScope.cart_items_count = $rootScope.cart_items.length;	
+
+	}
 
 	$scope.removeCart = function(item_id, cart_items_quantity, item_price) {
 		$rootScope.cart_items_count = $rootScope.cart_items.length;	
@@ -348,6 +499,8 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 			$rootScope.cart_items_count = $rootScope.cart_items.length;	
 		}
 	}
+
+
 
 	$scope.updateData=function(shipping_id){
 		var fname=$('#fname').val(),
@@ -418,14 +571,29 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 
 	$scope.next=function(){
-		$('.sec-a').collapse('hide');
-		$('.sec-b').collapse('show');
-			
+		
+
+		if($scope.f_account_id==null ){
+
+			$('#loginModal').modal('toggle');
+
+		}
+
+		if($scope.f_account_id!=null && $scope.total<500){
+			alert('The item should not be less than PHP 500.00 !')
+		}else{
+
+
+			$('.sec-a').collapse('hide');
+			$('.sec-b').collapse('show');
+
+		}
+
+		CheckoutManager.getFields();
 	}
 
 	$scope.setDelivery = function() {
 		var timetocall = $('#timetoCall').val();
-		alert(timetocall);
 
 		$cookies.put('time_of_delivery', JSON.stringify(timetocall));
 		$cookies.put('method_payment', 'Delivery');
@@ -447,7 +615,11 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 	};
 
 	$scope.nextStep = function(){
-		window.location='/checkout/process';
+
+		location.href='/checkout/process';
+
+
+
 	}
 
 	$scope.backToStore = function(){
@@ -1452,7 +1624,23 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 		OrderSummary.loadAudit();
 		OrderSummary.LoadOrderedItems();
 		OrderSummary.loadMethod();
+		OrderSummary.loadData();
 	};
+
+	OrderSummary.loadData=function(){
+
+		$scope.shipping=$cookies.get('shipping_id');
+
+		$http.get("/api/loadship",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : {shipping_id: $scope.shipping }
+		}).then(function(response){
+			$scope.billing=response.data[0];
+			console.log($scope.billing);
+		});
+
+	}
 
 	OrderSummary.loadAudit=function(){
 		$rootScope.f_account_id = $cookies.get('f_account_id');
@@ -1516,6 +1704,15 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 		});
 	}
 
+	$scope.print=function(){
+		var printContents = document.getElementById('content').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
+		
+
+	}
 
 	$scope.orderNow=function(total,shipping_id,email){
 
@@ -1565,7 +1762,7 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 				return str.join("&");
 			},
-			data :	{userinfo:userinfo,item:item,grandtotal:$scope.total,shipping_id:$scope.shipping_id,item_id:$scope.item_id,order_payment_method:$scope.PaymentMethod,account_id:$scope.userId,order_reference_number: $scope.reference} // Data to be passed to API
+			data :	{userinfo:userinfo,item:item,grandtotal:total,shipping_id:$scope.shipping_id,item_id:$scope.item_id,order_payment_method:$scope.PaymentMethod,account_id:$scope.userId,order_reference_number: $scope.reference} // Data to be passed to API
 		}).then(function(response) {
 			$scope.item_id = response.data;
 			console.log($scope.item_id);
@@ -1589,45 +1786,47 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 				for (var i = $scope.item.length - 1; i >= 0; i--) {
 					var item_id = $scope.item[i].item_id;
 					var item_quantity = $rootScope.cart_items_quantity[i];
-					$http({
-						url : "/order/process/delivery",
-						method: "POST",
-						headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-						transformRequest: function(obj) {
-							var str = [];
-							for(var p in obj)
-								str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-							return str.join("&");
-						},
+					
+				}
+
+				$http({
+					url : "/order/process/delivery",
+					method: "POST",
+					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+					transformRequest: function(obj) {
+						var str = [];
+						for(var p in obj)
+							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+						return str.join("&");
+					},
 					data : 	{item:$scope.item,delivery_time:$scope.timePick,reference:reference,email_address:email,item_id : item_id, quantity : item_quantity , order_id : $scope.order_id} // Data to be passed to API
 				}).then(function(response){
 
 					console.log(response.data);
 
 				});
+
+
 			}
 
+			$scope.order_id = response.data;
 
-		}
+			for (var i = $scope.item.length - 1; i >= 0; i--) {	
+				var item_id = $scope.item[i].item_id;
+				var item_quantity = $rootScope.cart_items_quantity[i];
 
-		$scope.order_id = response.data;
+			}
 
-		for (var i = $scope.item.length - 1; i >= 0; i--) {	
-			var item_id = $scope.item[i].item_id;
-			var item_quantity = $rootScope.cart_items_quantity[i];
-			
-		}
-
-		$http({
-			url : "/order/add_ordered_item",
-			method: "POST",
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj)
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				return str.join("&");
-			},
+			$http({
+				url : "/order/add_ordered_item",
+				method: "POST",
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				transformRequest: function(obj) {
+					var str = [];
+					for(var p in obj)
+						str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+					return str.join("&");
+				},
 					data : 	{item_id : item_id, quantity : item_quantity , order_id : $scope.order_id,order_reference_number: $scope.reference} // Data to be passed to API
 				}).then(function(response){
 
@@ -1995,6 +2194,7 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 
 		// Check if Cart Cookie exists
 		if ($cookies.get('cart_items') !== undefined && $cookies.get('cart_items_quantity') !== undefined ) {
+			alert('Item added to Cart!');
 			// Get and Convert Cookie to Object
 			cart = JSON.parse($cookies.get('cart_items'));
 			cart_qty = JSON.parse($cookies.get('cart_items_quantity'));
@@ -2111,16 +2311,16 @@ app.controller('InquiryController', function($scope, $http, $cookies, $cookieSto
 	var InquiryController={};
 
 	InquiryController.init=function(){
-		Inquiry.content();
+		// Inquiry.content();
 
 	}
 
 	InquiryController.init();
 
 
-	Inquiry.content =function(){
+	// Inquiry.content =function(){
 		
-	};
+	// };
 
 	$scope.emailInquiry = function() {
 		var email = $('#email').val();

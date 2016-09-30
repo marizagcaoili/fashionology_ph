@@ -171,7 +171,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/data/trackorder', ['controller' => 'order','action' => 'trackOrder']);
 
 
-    //
+    //shipping
+    $routes->connect('/api/loadship', ['controller' => 'billing','action' => 'shippingDetail']);
 
 
 
@@ -277,6 +278,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/api/register', ['controller' => 'order','action' => 'userAdd']);
 
     $routes->connect('/api/address', ['controller' => 'order','action' => 'addressAdd']);
+
+    $routes->connect('/api/address_another', ['controller' => 'order','action' => 'addressAnother']);
 
     $routes->connect('/place/shippingdetail', ['controller' => 'order','action' => 'addShippingDetail']);
 

@@ -870,12 +870,14 @@ body{
 	flex:1 8 46%;
 
 	ul{
+	
 		height:100%;
 		margin:0;
 		padding:0;
 		overflow-y: scroll;
 
 		li{
+			padding:0;
 			list-style:none;
 			margin:0;
 			margin-top: 38px;
@@ -884,7 +886,7 @@ body{
 }
 .item-wrap{
 	border:1px solid #cdcdcd;
-	height:160px;
+	height:180px;
 }
 .loaded-b{
 	flex:1 8 16%;
