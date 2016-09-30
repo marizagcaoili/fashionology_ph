@@ -182,7 +182,7 @@
 
 
                   <div class='add-new'>
-                     <a style='font-family: Moon;position: relative;top:40px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">+ Add a new Address</a>
+                     <a style='font-family: Moon;position: relative;top:40px;font-weight: bold;margin:0 auto;left:94px;'href='' data-toggle="modal" data-target="#myAddress">Use another Address</a>
                   </div>
 
 

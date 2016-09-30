@@ -5,7 +5,7 @@
                      <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         </button>
-                        <h4 class="modal-title" style='color:#898989;'>Add a new Address</h4>
+                        <h4 class="modal-title" style='color:#898989;'>Enter Address Information</h4>
                      </div>
                      <div class="modal-body" >
                         <div class='edit-info' >
