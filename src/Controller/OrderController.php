@@ -45,13 +45,14 @@ class OrderController extends Controller
    $accountId=$this->request->data('account_id');
    $paymentmethod=$this->request->data('order_payment_method');
    $shippingid=$this->request->data('shipping_id');
+   $dateplaced = $this->request->data('date');
 
 
    // $item_code=1;
 
    $item = TableRegistry::get('Orders');
    
-   $result=$item->orderplace($grandtotal,$reference,$accountId,$paymentmethod,$shippingid);
+   $result=$item->orderplace($grandtotal,$reference,$accountId,$paymentmethod,$shippingid, $dateplaced);
 
    $id = $result->lastInsertId('Orders');
 
@@ -147,7 +148,7 @@ public function placeDeliver()
   $this->autoRender=false;
   header('Content-Type: application/json');
 
-  $order=TableRegistry::get('Delivery');
+  $order=TableRegistry::get('Deliveries');
 
   $order_id =$this->request->data('order_id');
 
@@ -159,8 +160,10 @@ public function placeDeliver()
 
   $userinfo=$this->request->data('userinfo');
 
+  $delivery_date = $this->request->data('delivery_date');
 
-  $order->deliveryPlace($call,$order_id);
+
+  $order->deliveryPlace($call,$order_id, $delivery_date);
 
 
 
@@ -168,17 +171,16 @@ public function placeDeliver()
   $message = '
 
 
-  <body>
+  <pre>
 
 
 
-    Thank you for ordering to Fashionology Boutique Molino Branch!.
+    Thank you for ordering to Fashionology Boutique Molino Branch! Your order has been placed. Expect us to call you at '.$call.' for clarification and verification of your order. Your ordered items will be delivered within 2-3 days. 
 
-    This is an automatically generated message to confirm receipt of your order via the Internet. You do not need to reply to this e-mail, but you may wish to save it for your records.
 
-    This is the selected time of your call  <b>'.$call.'</b>
+    *This is an auto generated email. Please do not reply*
 
-  </body>
+  </pre>
 
   ';
   $subject = 'FASHIONOLOGY PH CONTACT SUPPORT!';
@@ -197,7 +199,7 @@ public function placeDeliver()
   ->emailFormat('html')
   ->from(['fashionologyph@gmail.com' => 'Fashionology'])
   ->to($email_address)
-  ->subject('')
+  ->subject('Transaction #'.$reference.'')
   ->attachments(array(
     array(
       'file'=>ROOT.'/webroot/front/public/img/logo-white.png',

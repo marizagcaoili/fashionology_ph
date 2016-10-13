@@ -17,11 +17,11 @@ class OrdersTable extends Table
 
     $this->hasOne('Deliveries');
   }
-  public function orderplace($grandtotal,$reference,$accountId,$paymentmethod,$shippingid)
+  public function orderplace($grandtotal,$reference,$accountId,$paymentmethod,$shippingid, $date)
   {
     return $this->query()
-    ->insert(['account_id','order_subtotal','order_reference_number','order_payment_method','shipping_id'])
-    ->values(['account_id'=>$accountId,'order_subtotal'=>$grandtotal,'order_reference_number'=>$reference,'order_payment_method'=>$paymentmethod,'shipping_id'=>$shippingid])
+    ->insert(['account_id','order_subtotal','order_reference_number','order_payment_method','shipping_id', 'order_placed_date'])
+    ->values(['account_id'=>$accountId,'order_subtotal'=>$grandtotal,'order_reference_number'=>$reference,'order_payment_method'=>$paymentmethod,'shipping_id'=>$shippingid, 'order_placed_date' => $date])
     ->execute();
   }
 
@@ -116,5 +116,15 @@ class OrdersTable extends Table
                     ->where(['order_id' => $order_id])
                     ->execute();
     }  
+
+
+    public function getDeliveriesToday($date)
+    {
+      return $this->find()
+      ->contain(['Accounts', 'Shippings', 'Deliveries'])
+      ->where(['Deliveries.delivery_date' => $date])
+      ->toArray();
+    }
+
 
 }

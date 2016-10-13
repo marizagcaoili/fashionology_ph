@@ -128,7 +128,7 @@
 							</div>
 
 							<div style='width: 88%;'>
-								<p style='font-family: Coves;font-size: 18px;'>When placing an ordering make sure that all the inputs are written in legit. If you mistyped any invalid information this will reflect your profile when placing an order which will cause to customer details interruption. <br>
+								<p style='font-family: Coves;font-size: 18px;'>When placing an order make sure that all the inputs are written in legit. If you mistyped any invalid information this will reflect your profile.<br>
 									Thank you!</p>
 								</div>
 
@@ -210,7 +210,7 @@
 	<div style='position:relative;top:30px;width:80%;left:40px;'>
 
 		<p style='font-family: Moon;
-		font-size: 16px;'>We hope that you really had a good and a great user experience while ordering online in our store. The team Fashionology are looking forward to our next transaction sooner.</p>
+		font-size: 16px;'>We hope that you really had a good and a great user experience while ordering online in our store. The team Fashionology are looking forward to our next transaction with you.</p>
 	</div>
 
 	<div style='position: relative;top:40px;width:80%;left:40px;'>

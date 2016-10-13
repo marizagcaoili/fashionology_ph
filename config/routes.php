@@ -336,7 +336,11 @@ Router::prefix('Admin', function ($routes) {
 
   $routes->connect('/admin/dashboard/archive_orders', ['controller' => 'dashboard', 'action' => 'archiveOrders']);   
 
-  $routes->connect('/admin/dashboard/get_content', ['controller' => 'dashboard', 'action' => 'getContent']);   
+  $routes->connect('/admin/dashboard/get_content', ['controller' => 'dashboard', 'action' => 'getContent']);  
+
+  $routes->connect('/admin/dashboard/reports', ['controller' => 'dashboard', 'action' => 'reports']); 
+
+
     //Catalog
 
         //ITEM
@@ -486,6 +490,11 @@ Router::prefix('Admin', function ($routes) {
   $routes->connect('/admin/order/restore_order', ['controller' => 'order', 'action' => 'restoreOrder']);
 
   $routes->connect('/admin/ordery/delete_order', ['controller' => 'order', 'action' => 'deleteOrder']);
+
+  $routes->connect('/admin/order/count_deliveries', ['controller' => 'order', 'action' => 'countDeliveries']);  
+
+  $routes->connect('/admin/order/get_deliveries_today', ['controller' => 'order', 'action' => 'getDeliveriesToday']);  
+
 
 
 

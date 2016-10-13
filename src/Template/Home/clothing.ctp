@@ -80,19 +80,15 @@
             <ul>
                <?php include LAYOUT_DIR . 'user_actions_black.ctp'; ?>
                <a href="/checkout" style='color:#333;' target='_self'>
-                  <li style='width
-                  :1px;padding:0;'><i class="fa fa-shopping-cart"  aria-hidden="true"></i
-
-                  </a>
+                  <li><i class="fa fa-shopping-cart"  aria-hidden="true"></i></li>
+               </a>
                <a  class="count-cart" style="position:absolute;
                font-size:8px;
-                margin-left:-14px;
                padding: 4px 8px;
                border-radius:50%;
                background: #e74c3c;" ng-if='cart_items_count>0'>
-               {{cart_items_count}}</li>
+               <li>{{cart_items_count}}</li>
             </a>
-               
          </ul>
       </nav>
    </header>
@@ -123,44 +119,21 @@
                            <option>PHP 1200.00 - PHP 12000.00</option>
                         </select>
                      </div>
-                     <div class='category-it-by' ng-controller='CategoryPrintController' >
-                        <p class='category-top'>CATEGORIES</p>
-                        <script type="text/ng-template" id="categoryTree">
-                           <p class='parent'>{{ parent.category_name }}</p>
-                           <ul  ng-if="parent.categories">
-                             <span><li ng-click="changeCategory(parent.category_id)" ng-repeat="parent in parent.categories" ng-include="'categoryTree'" class='child'>   
-                             </li></span>
-                          </ul>
-                       </script>
-                       <ul>
-                        <li ng-repeat="parent in parents" ng-include="'categoryTree'" ></li>
-                     </ul>
                   </div>
- 
-         </section>
-         <section class="group-products">
-            <div class="top-bar-menu" id='getFixed'>
-               <p class="found-count"><span style="color:#a60400;">00{{pages}}</span> PRODUCTS FOUND.</p>
-               <select class="form-control select-sort" style="display:none;width:110px;margin-top: -24px;
-               margin-left: 20px;" >
-               <option value="">sort by</option>
-               <option value="latest">Latest</option>
-               <option value="name">Item Name</option>
-               <option value="print">Price</option>
-            </select>
-            <div class="item-page" style='left:190px;'>
-               <ul class="pagination pagination-info" style=>
-                  <li><a href="javascript:void(0);" 
-                     ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1"
-                     ><i class="fa fa-angle-left" aria-hidden="true"></i>&nbsp; prev</a></li>
-                    <!--  <li class="active"><a href="javascript:void(0);" href=''>1</a></li>
-                     <li><a href="javascript:void(0);">2</a></li>
-                     <li ><a href="javascript:void(0);">3</a></li>
-                     <li><a href="javascript:void(0);">4</a></li>
-                     <li><a href="javascript:void(0);">5</a></li> -->
-                     <li><a ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1" href="javascript:void(0);">next &nbsp;<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                  <div class='category-it-by' ng-controller='CategoryPrintController' >
+                     <p class='category-top'>CATEGORIES</p>
+                     <script type="text/ng-template" id="categoryTree">
+                        <p class='parent'>{{ parent.category_name }}</p>
+                        <ul  ng-if="parent.categories">
+                          <span><li ng-click="changeCategory(parent.category_id)" ng-repeat="parent in parent.categories" ng-include="'categoryTree'" class='child'>   
+                          </li></span>
+                       </ul>
+                    </script>
+                    <ul>
+                     <li ng-repeat="parent in parents" ng-include="'categoryTree'" ></li>
                   </ul>
                </div>
+            </div>
          </div>
          <div class="recent-group" >
             <p class="indicator-by" style="top:16px;width:190px;">Recent Products</p>

@@ -37,7 +37,7 @@ class InquiriesTable extends Table
     public function getRepliedInquiries()
     {
         return $this->find()
-                    ->where(['replied_flag' => 0])
+                    ->where(['replied_flag' => 1])
                     ->andWhere(['archive_flag' => 0])
                     ->toArray();
     }

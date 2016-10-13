@@ -168,26 +168,10 @@ class ItemsTable extends Table
          ->contain(['Brands', 'Categories', 'Images'])
          ->where(['Items.item_id' => $item_id])
          ->toArray();
-        }
 
-    public function updateItemStatus1($item_id, $status)
-    {
-        return $this->query()
-                    ->update()
-                    ->set(['item_status' => $status])
-                    ->where(['item_id' => $item_id])
-                    ->execute();
-}
-    public function getItemModal($item_id)
-    {
-       return $this->find()
-       ->contain(['Brands', 'Categories', 'Images'])
-       ->where(['Items.item_id' => $item_id])
-       ->toArray();
-       
-   }
+     }
 
-   public function itemsCategorized($category_id){
+        public function itemsCategorized($category_id){
 
        return $this->find()
        ->contain(['Brands', 'Categories', 'Images'])
@@ -197,7 +181,4 @@ class ItemsTable extends Table
 
    }
 
-   
-
-}
-
+ }

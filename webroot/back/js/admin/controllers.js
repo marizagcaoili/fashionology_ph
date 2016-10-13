@@ -1452,9 +1452,10 @@ app.controller('OrderController', function($scope, $http, $timeout) {
 				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 				params : { order_id : order_id }
 		}).then(function(response){
-			$scope.ordereditems = response.data;
-			$scope.itemCount = $scope.ordereditems.length;
-			console.log($scope.ordereditems);
+							$scope.ordereditems = response.data;
+						$scope.itemCount = $scope.ordereditems.length;
+
+
 		});
 	}
 
@@ -1550,11 +1551,20 @@ app.controller('OrderController', function($scope, $http, $timeout) {
 		$scope.note = "";
 	};
 
-	$scope.confirmModal = function(ref, order_id, email_address){
+	$scope.generatePDF = function(ref, order_id, email_address){
 		$scope.reference_number =ref;
 		$scope.order_id = order_id;
 		$scope.email_add = email_address;
 		Order.orderDetails(order_id);
+
+		$timeout (function(){
+
+		var printContents = document.getElementById('content').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
+		}, 8000)
 	};
 
 
@@ -1586,14 +1596,6 @@ app.controller('OrderController', function($scope, $http, $timeout) {
 
 	};
 
-	$scope.generatePDF = function(){
-	    	
-		var printContents = document.getElementById('content').innerHTML;
-		var popupWin = window.open('', '_blank', 'width=400,height=500');
-		popupWin.document.open();
-		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
-		popupWin.document.close();
-	};
 
 });
 
@@ -1636,11 +1638,33 @@ app.controller('TestController', function($scope, $http) {
 });
 
 
-app.controller('DashboardController', function($scope, $http,  $cookies, $cookieStore) {
+app.controller('DashboardController', function($scope, $http,  $cookies, $cookieStore, $timeout) {
 		var Dashboard = {};
 		Dashboard.init = function() {
 		Dashboard.count();
+		Dashboard.getDate();
+		Dashboard.getDeliveries();
 		};
+
+
+		Dashboard.getDate = function(){
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+
+			if(dd<10) {
+			    dd='0'+dd
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm
+			} 
+
+
+			$scope.today = yyyy+'-'+mm+'-'+dd;
+		};
+
 
 		Dashboard.count = function (){
 			$http.get("/admin/dashboard/count")
@@ -1648,6 +1672,50 @@ app.controller('DashboardController', function($scope, $http,  $cookies, $cookie
 		        $scope.count = response.data;
 		    });
 		};
+
+
+		Dashboard.getDeliveries = function(){
+			console.log($scope.today);
+			$http.get("/admin/order/get_deliveries_today",
+			{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { date : $scope.today}
+			})
+		    .then(function(response) {
+		        $scope.orders = response.data;
+		        console.log($scope.orders);
+		    });
+		};
+
+
+		Dashboard.orderDetails = function(order_id){
+		$http.get("/admin/order/order_details",
+		{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { order_id : order_id }
+		}).then(function(response) {
+		    $timeout(function () {
+		       		$scope.orderdetails = response.data[0];
+		       		$scope.total = response.data[0].order_subtotal;
+		       		$scope.vat = $scope.total * 0.12;
+		       		$scope.subtotal = $scope.total - $scope.vat;
+		       		console.log($scope.orderdetails);
+
+			     }); 	
+		    });
+
+		$http.get("/admin/order/ordered_items",
+		{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { order_id : order_id }
+		}).then(function(response){
+							$scope.ordereditems = response.data;
+						$scope.itemCount = $scope.ordereditems.length;
+
+
+		});
+	}
+
 
 		Dashboard.init();
 
@@ -1670,6 +1738,22 @@ app.controller('DashboardController', function($scope, $http,  $cookies, $cookie
 				window.location.href = "/admin/login";
 			});
 		};
+
+		$scope.generatePDF = function(ref, order_id, email_address){
+		$scope.reference_number =ref;
+		$scope.order_id = order_id;
+		$scope.email_add = email_address;
+		Dashboard.orderDetails(order_id);
+
+		$timeout (function(){
+
+		var printContents = document.getElementById('content').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
+		}, 8000)
+	};
 
 });
 
@@ -1707,6 +1791,97 @@ app.controller('AccountController', function($scope, $http, $timeout) {
     $scope.inverse = false;
     $scope.canChange = false;
 	// scope Vars to view
+});
+
+app.controller('ReportController', function($scope, $http) {
+	var Report = {};
+	Report.init = function() {
+		Report.ItemList();
+		Report.getAccounts();
+		Report.orderList();
+	};
+
+	Report.ItemList = function(){
+			$http.get("/admin/catalog/get_items")
+		    .then(function(response) {
+		        $scope.items = response.data;
+		        console.log($scope.items);
+
+		    angular.forEach($scope.items, function(value, key) {
+			  if(value.item_status == 1) {
+			  	$scope.items[key].availability = "In Stock";
+			  }
+			  else
+			  {
+				$scope.items[key].availability = "Out Of Stock";
+			  }
+		    });
+			});
+	};
+
+	Report.getAccounts = function(){
+		$http({
+				url : "/admin/account/get_accounts",
+				method: "GET"// Data to be passed to API
+			}).then(function(response){
+				$scope.accounts = response.data;
+				console.log($scope.accounts);
+
+				angular.forEach($scope.accounts, function(value, key) {
+			  if(value.account_activated == 1) {
+			  	$scope.accounts[key].status = "Verified";
+			  }
+			  else
+			  {
+					$scope.accounts[key].status = "Not yet Verified";
+			  }
+		    });
+			});
+	};
+
+	Report.orderList = function (){
+		$http.get("/admin/order/get_orders")
+		    .then(function(response) {
+		        $scope.orders = response.data;
+		        console.log($scope.orders);
+		    });
+	};
+
+	Report.init();
+
+	$scope.printItem=function(){
+		var printContents = document.getElementById('item').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
+		
+
+	}
+
+
+	$scope.printUser=function(){
+		var printContents = document.getElementById('user').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
+		
+
+	}
+
+
+
+	$scope.printOrder=function(){
+		var printContents = document.getElementById('order').innerHTML;
+		var popupWin = window.open('', '_blank', 'width=400,height=500');
+		popupWin.document.open();
+		popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="/front/public/css/order-process.css" /></head><body onload="window.print()"><main>' + printContents + '</main></body></html>');
+		popupWin.document.close();
+		
+
+	}
+
 });
 
 

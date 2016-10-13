@@ -52,9 +52,6 @@
 
 					
 
-							<a ng-click='history()' class='history' href='#'><li>Order History</li></a>
-
-
 							<a ng-click='track()' class='track'><li>Track my Order</li></a>
 
 

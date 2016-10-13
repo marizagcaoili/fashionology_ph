@@ -256,11 +256,32 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 		$scope.f_account_id=$cookies.get('f_account_id');
 
+
 		$('.primary').hide();
+		CheckoutManager.getDate();
 
 	}
 
-	CheckoutManager.getFields = function(){
+	CheckoutManager.getDate = function(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+
+
+		$scope.today = yyyy+'-'+mm+'-'+dd;
+		console.log($scope.plustwo);
+};
+
+CheckoutManager.getFields = function(){
 		$scope.tempid = $('#tempid').val();
 		$scope.tempfname = $('#fname2').val();
 		$scope.templname = $('#lname2').val();
@@ -270,7 +291,6 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 		$scope.tempzipcode = $('#zipcode2').val();
 		$scope.tempaddress = $('#address2').val();
 	};
-
 	CheckoutManager.LoadOrderedItems = function () {
 		$http.get("/api/viewToCart")
 		.then(function(response) {
@@ -315,10 +335,7 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 
 		if($scope.cart_items<0){
-<<<<<<< HEAD
-=======
-			
->>>>>>> origin/feature/joe
+
 		}
 
 	}
@@ -394,7 +411,6 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 		})
 		
 	}
-
 	$scope.setPrimary = function(){
 
 		$('.secondary').show();
@@ -617,6 +633,9 @@ app.controller('CheckoutController',function($scope, $http, $cookies, $cookieSto
 
 		}
 
+		$scope.shipping_id = $('#tempid').val();	
+		console.log($scope.shipping_id);
+		$cookies.put('shipping_id', $scope.shipping_id);
 		CheckoutManager.getFields();
 	}
 
@@ -778,7 +797,7 @@ app.controller('ClothingController', function($timeout, $location, $scope,$http,
 	$scope.changeCategory=function(category_id){
 
 
-
+		console.log(category_id);
 		 		$http({
 		 			url:'/item/categorized',
 		 			method:'POST',
@@ -1676,7 +1695,7 @@ app.controller('CategoryPrintController', function ($scope, $http){
 // -- END : CategoryController //
 
 // -- START : OrderSummaryController -- //
-app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$cookies){
+app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$cookies, $timeout){
 	var OrderSummary = {};
 
 	OrderSummary.init = function(){
@@ -1684,6 +1703,7 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 		OrderSummary.LoadOrderedItems();
 		OrderSummary.loadMethod();
 		OrderSummary.loadData();
+		OrderSummary.getDate();
 	};
 
 	OrderSummary.loadData=function(){
@@ -1700,6 +1720,30 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 		});
 
 	}
+
+
+	OrderSummary.getDate = function(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+
+		$scope.today = yyyy+'-'+mm+'-'+dd;
+		$scope.mm2 = mm + 2;
+
+		$scope.dd2 = '0' + parseInt(parseInt(dd) + 2);
+
+		$scope.plustwo =yyyy+'-'+mm+'-'+$scope.dd2;
+		console.log($scope.plustwo);
+};
 
 	OrderSummary.loadAudit=function(){
 		$rootScope.f_account_id = $cookies.get('f_account_id');
@@ -1799,7 +1843,7 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 			item_ids[i] = $scope.item[i].item_id;
 
 		}
-
+				var reference=$scope.reference;
 
 		$scope.userId = $cookies.get('f_account_id');
 
@@ -1807,7 +1851,7 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 		$scope.item_id = item_ids;
 
 		$scope.PaymentMethod = $cookies.get('method_payment');
-		$scope.timePick=JSON.stringify($cookies.get('time_of_delivery'));
+		$scope.timePick=$cookies.get('time_of_delivery');
 
 
 
@@ -1821,32 +1865,17 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 				return str.join("&");
 			},
-			data :	{userinfo:userinfo,item:item,grandtotal:total,shipping_id:$scope.shipping_id,item_id:$scope.item_id,order_payment_method:$scope.PaymentMethod,account_id:$scope.userId,order_reference_number: $scope.reference} // Data to be passed to API
+			data :	{userinfo:userinfo,item:item,grandtotal:total,shipping_id:$scope.shipping_id,item_id:$scope.item_id,order_payment_method:$scope.PaymentMethod,account_id:$scope.userId,order_reference_number: $scope.reference, date : $scope.today} // Data to be passed to API
 		}).then(function(response) {
-			$scope.item_id = response.data;
-			console.log($scope.item_id);
+			$scope.order_id = response.data;
+			console.log($scope.order_id);
 			// $scope.userId=$cookies.get('f_account_id');
 
 			// $scope.PaymentMethod=$cookies.get('method_payment');
 
 			// $scope.statusDeliver=$cookies.get('delivery_status');
 			// $scope.timePick=$cookies.get('time_of_delivery');
-
-
-			var reference=$scope.reference;
-
-
-			// /**pick up method**/
-
-			if ($scope.PaymentMethod == 'Delivery') {
-
-
-
-				for (var i = $scope.item.length - 1; i >= 0; i--) {
-					var item_id = $scope.item[i].item_id;
-					var item_quantity = $rootScope.cart_items_quantity[i];
-					
-				}
+			$scope.setDeliveryDate = function(date){
 
 				$http({
 					url : "/order/process/delivery",
@@ -1858,17 +1887,69 @@ app.controller('OrderSummaryController', function ($scope, $http,$rootScope,$coo
 							str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 						return str.join("&");
 					},
-					data : 	{item:$scope.item,delivery_time:$scope.timePick,reference:reference,email_address:email,item_id : item_id, quantity : item_quantity , order_id : $scope.order_id} // Data to be passed to API
-				}).then(function(response){
+					data : 	{item:$scope.item,delivery_time:$scope.timePick,reference:reference,email_address:email,item_id : item_id, quantity : item_quantity , order_id : $scope.order_id, delivery_date : date} // Data to be passed to API
+				})
+			}
 
-					console.log(response.data);
+	
 
-				});
 
+			// /**pick up method**/
+
+			if ($scope.PaymentMethod == 'Delivery') {
+						var today = new Date();
+						$scope.dd = today.getDate();
+						var mm = today.getMonth()+1; //January is 0!
+						var yyyy = today.getFullYear();
+
+						if($scope.dd<10) {
+						    $scope.dd='0'+$scope.dd
+						} 
+
+						if(mm<10) {
+						   mm='0'+mm
+						} 
+		
+
+						$scope.dd2 = '0' + parseInt(parseInt($scope.dd) + 2);
+
+						$scope.plustwo =yyyy+'-'+mm+'-'+$scope.dd2;
+						$scope.today =yyyy+'-'+mm+'-'+$scope.dd;
+
+
+
+				for (var i = $scope.item.length - 1; i >= 0; i--) {
+					var item_id = $scope.item[i].item_id;
+					var item_quantity = $rootScope.cart_items_quantity[i];
+					
+				}
+
+
+					$http.get("/admin/order/count_deliveries",
+					{
+						headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+						params : { date : $scope.plustwo }
+					}).then(function(response) {
+						console.log(response.data);
+						if (response.data >= 10)
+						{
+							$scope.dd2++;
+							console.log($scope.dd2);
+							$scope.dd2 = '0' + parseInt($scope.dd2);
+							$scope.plustwo =yyyy+'-'+mm+'-'+$scope.dd2;
+							console.log($scope.plustwo);
+							$scope.setDeliveryDate($scope.plustwo);
+
+						}
+						else{
+							console.log($scope.plustwo);
+							$scope.setDeliveryDate($scope.plustwo);
+							console.log($scope.ifFull);
+						}
+					})
 
 			}
 
-			$scope.order_id = response.data;
 
 			for (var i = $scope.item.length - 1; i >= 0; i--) {	
 				var item_id = $scope.item[i].item_id;
@@ -1990,6 +2071,7 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 	Dashboard.init = function(){
 		Dashboard.Wishlist();
 		Dashboard.trackOrder();
+		Dashboard.getDate();
 	};
 
 
@@ -2014,6 +2096,26 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 			});
 		}
 	}
+
+	Dashboard.getDate = function(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		} 
+
+
+		$scope.today = yyyy+'-'+mm+'-'+dd;
+		console.log($scope.today);
+	};
+
 
 
 	Dashboard.trackOrder=function(){
@@ -2173,7 +2275,32 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 
 		}
 
-		$scope.cancelOrder=function(order_id){
+		$scope.cancelOrder = function (order_id)
+		{
+			$http.get("/admin/order/order_details",
+			{
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				params : { order_id : order_id}
+			}).then(function(response) {
+				$timeout (function(){
+					$scope.order_date= response.data[0].order_placed_date;
+					if($scope.order_date != $scope.today){
+						window.alert("You can only cancel an order within the placing date!")
+					}
+					else
+					{
+						$timeout(function() {
+							$scope.cancelOrder2(order_id);
+						}, 1000);
+						
+
+					}
+				}, 1000);
+				
+			});
+		}
+
+		$scope.cancelOrder2=function(order_id){
 
 
 			$http({
@@ -2213,7 +2340,7 @@ app.controller('UserDashboardController', ['$scope','$http','$timeout', '$cookie
 
 
 
-		})
+		});
 
 
 
@@ -2466,13 +2593,21 @@ $('.loadb').fadeIn('slow');
 // -- END : InquiryController -- //
 
 // -- START : MnMController -- //
-app.controller('MixnMatchController', function($scope, $http, $cookies, $cookieStore, $rootScope) {
+app.controller('MixnMatchController', function($scope, $timeout, $http, $cookies, $cookieStore, $rootScope) {
 	
 	var MixnMatchController={};
 
 	MixnMatchController.init=function(){
 		MixnMatchController.loadItems();
 
+
+	}
+	MixnMatchController.loadItems=function(){
+		$http.get("/admin/catalog/get_items")
+		.then(function(response) {
+			$scope.items = response.data;
+			console.log($scope.items);
+		});
 
 	}
 
@@ -2497,13 +2632,173 @@ app.controller('MixnMatchController', function($scope, $http, $cookies, $cookieS
 	};
 
 
-	MixnMatchController.loadItems=function(){
-		$http.get("/admin/catalog/get_items")
-		.then(function(response) {
-			$scope.items = response.data;
-			console.log($scope.items);
+	$scope.tops=function(){
+		$('.mixn-choice').addClass('extend-chc',function(){
+			$('.extend-chc').slideUp('slow');
+		});
+		$('.set-f-items').addClass('expand-items');
+		$scope.cat = "top";
+
+		$scope.childs = [];
+		$http.get("/admin/catalog/second_category",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { parent_id : 52 }
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.categories = response.data;
+				for (var i = $scope.categories.length - 1; i >= 0; i--) {
+
+					$scope.childs[i]=$scope.categories[i].category_id;
+				}
+
+				var json = JSON.stringify($scope.childs);
+
+				var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
+
+				$http.get("/admin/catalog/get_items",
+				{
+					params : params
+				})
+				.then(function(response) {
+					$scope.results=response.data;
+
+				});
+			});
+		});
+	}
+
+	$scope.gonow=function(){
+		$('.mixn-choice').removeClass('extend-chc');
+		$('.set-f-items').removeClass('expand-items');
+
+
+	}
+
+
+
+	$scope.bottoms=function(){
+		$('.mixn-choice').addClass('extend-chc');
+		$('.set-f-items').addClass('expand-items');
+
+			$scope.cat = "bottom";
+
+		$scope.childs = [];
+		$http.get("/admin/catalog/second_category",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { parent_id : 60 }
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.categories = response.data;
+				for (var i = $scope.categories.length - 1; i >= 0; i--) {
+
+					$scope.childs[i]=$scope.categories[i].category_id;
+				}
+
+				var json = JSON.stringify($scope.childs);
+
+				var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
+
+				$http.get("/admin/catalog/get_items",
+				{
+					params : params
+				})
+				.then(function(response) {
+					$scope.results=response.data;
+
+				});
+			});
 		});
 
+
+	}
+
+	$scope.footwears=function(){
+		$('.mixn-choice').addClass('extend-chc');
+		$('.set-f-items').addClass('expand-items');
+
+	$scope.cat = "footwear";
+
+		$scope.childs = [];
+		$http.get("/admin/catalog/second_category",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { parent_id : 55}
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.categories = response.data;
+				for (var i = $scope.categories.length - 1; i >= 0; i--) {
+
+					$scope.childs[i]=$scope.categories[i].category_id;
+				}
+
+				var json = JSON.stringify($scope.childs);
+
+				var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
+
+				$http.get("/admin/catalog/get_items",
+				{
+					params : params
+				})
+				.then(function(response) {
+					$scope.results=response.data;
+
+				});
+			});
+		});
+
+
+	}
+
+	$scope.accs=function(){
+		$('.mixn-choice').addClass('extend-chc');
+		$('.set-f-items').addClass('expand-items');
+
+	$scope.cat = "accessories";
+
+		$scope.childs = [];
+		$http.get("/admin/catalog/second_category",
+		{
+			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			params : { parent_id : 56 }
+		}).then(function(response) {
+			$timeout(function () {
+				$scope.categories = response.data;
+				for (var i = $scope.categories.length - 1; i >= 0; i--) {
+
+					$scope.childs[i]=$scope.categories[i].category_id;
+				}
+
+				var json = JSON.stringify($scope.childs);
+
+				var params = $rootScope.addAuthCookies({ category : json, mode : 'category' });
+
+				$http.get("/admin/catalog/get_items",
+				{
+					params : params
+				})
+				.then(function(response) {
+					$scope.results=response.data;
+
+				});
+			});
+		});
+
+
+	}
+	
+	$scope.itemchoose=function(category, img){
+
+		if($scope.cat=='top'){
+			$scope.top=img;
+		}else if($scope.cat=='bottom'){
+			$scope.bottom=img;
+		}else if($scope.cat=='footwear'){
+			$scope.footwear=img;
+		}else if($scope.cat=='accessories'){
+			$scope.accessory=img;
+		}
 	}
 
 

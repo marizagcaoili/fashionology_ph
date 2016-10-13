@@ -12,11 +12,12 @@ class DeliveriesTable extends Table
     $this->table('tbl_delivery_details');
   }
 
-  public function deliveryPlace($account_id,$order_id,$delivery_status)
+
+  public function deliveryPlace($call,$order_id, $delivery_date)
   {
     return $this->query()
-               ->insert(['account_id','order_id','delivery_status'])
-               ->values(['account_id'=>$account_id,'order_id'=>$order_id,'delivery_status'=>$delivery_status])
+               ->insert(['order_id','call_time', 'delivery_date'])
+               ->values(['order_id'=>$order_id,'call_time'=>$call, 'delivery_date'=> $delivery_date])
                ->execute();
 
   }
@@ -28,6 +29,15 @@ public function updateDeliveryDetails($order_id, $date)
                   ->where(['order_id' => $order_id])
                   ->execute();
   }  
+
+  public function countDeliveries($date)
+  {
+
+      return $this->find()
+                  ->where(['delivery_date'=>$date])
+                  ->toArray();
+  }  
+
 
 
 }

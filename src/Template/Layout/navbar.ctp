@@ -50,4 +50,10 @@
             <li><a target="_self" href="/admin/dashboard/archive_orders">Orders<!-- <i class="fa fa-phone" style="position:absolute; left:200px;"></i> --></a></li>
           </ul>
         </li>
+
+          <li class="treeview">
+          <a target="_self" href="/admin/dashboard/reports"><i class="fa fa-file-pdf-o"></i> <span>Reports</span>
+          </a>
+
+        </li>
       </ul>

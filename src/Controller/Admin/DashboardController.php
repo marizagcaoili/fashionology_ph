@@ -191,6 +191,12 @@ class DashboardController extends Controller
         exit();   
     }
 
+    public function reports()
+    {
+            $this->render('reports');  
+    }
+
+
 
 
 }

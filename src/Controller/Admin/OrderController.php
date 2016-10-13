@@ -246,5 +246,41 @@ class OrderController extends Controller
     }
 
 
+    public function countDeliveries()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+
+        $deliveries = TableRegistry::get('Deliveries');
+
+        $date = $this->request->query('date');
+
+        $result = $deliveries->countDeliveries($date);
+
+        $size = sizeof($result);
+
+        echo json_encode($size);
+        exit();
+    }
+
+    public function getDeliveriesToday()
+    {
+        $this->autoRender = false;
+        header('Content-Type: application/json');
+        
+        $orders = TableRegistry::get('Orders'); // Create Table Object
+
+        $date = $this->request->query('date');
+
+        $result = $orders->getDeliveriesToday($date);
+
+        // Expose result to UI
+        // $this->set('items', $result);  
+        echo json_encode($result);
+        exit();   
+    }
+
+
+
 }
 

@@ -73,8 +73,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th width= "10%">Status</th>
                   <th width= "10%">Customer Name</th>
                   <th width= "10%">Total Amount</th>
-                  <th width= "10%">Call Time</th>
-                  <th width= "20%"><center>Order Placed</center></th>
+                  <th>Call Time</th>
+                  <th>Order Placed</th>
+                  <th>Delivery Date</th>
                   <th width= "20%" colspan= "4">Action</th>
 
                 </tr>
@@ -87,9 +88,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <td>{{order.order_subtotal}}.00</td>
                 <td>{{order.delivery.call_time}}</td>
                 <td>{{order.order_placed_date}}</td>
+                <td>{{order.delivery.delivery_date}}</td>
                <!--  <td> <md-datepicker ng-model="myDate" md-placeholder="Enter date"
                           md-min-date=0 md-max-date="maxDate"></md-datepicker></td>  -->
-                <td><span data-toggle="modal"  data-target="#confirmOrder"><button data-toggle="tooltip" data-placement="bottom" ng-click= "confirmModal(order.order_reference_number, order.order_id, order.account.account_email)" title="Confirm Order" type="submit" class= "btn btn-success btn-flat" name="" ng-disabled="{{order.confirm}}"><small>CONFIRM</small></button></span></td>
+                <td><span><button data-toggle="tooltip" data-placement="bottom" ng-click= "generatePDF(order.order_reference_number, order.order_id, order.account.account_email)" title="Generate PDF" type="submit" class= "btn btn-success btn-flat" name="" ><i class="fa fa-file-pdf-o"> </i></button></span></td>
+
 
                 <td><button data-toggle="tooltip" data-placement="bottom" ng-click= "updateAsDelivered(order.order_id)" title="Mark as Delivered" type="submit" class= "btn btn-success btn-flat" name="" ng-disabled="{{order.markdelivered}}"><i class="fa fa-check-square-o"> </i></button></td>
 
